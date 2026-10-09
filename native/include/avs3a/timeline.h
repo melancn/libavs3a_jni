@@ -21,8 +21,6 @@ private:
     int64_t anchor_epoch_ = 0;
 };
 
-constexpr int64_t TIME_UNSET = INT64_MIN;
-
 } // namespace avs3a
 
 #endif // AVS3A_TIMELINE_H

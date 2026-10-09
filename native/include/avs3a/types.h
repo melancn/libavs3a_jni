@@ -5,9 +5,12 @@
 #include <cstddef>
 #include <vector>
 #include <string>
+#include <limits>
 #include "status.h"
 
 namespace avs3a {
+
+constexpr int64_t TIME_UNSET = std::numeric_limits<int64_t>::min();
 
 enum ChannelMode : int32_t {
     CHANNEL_MODE_UNKNOWN = 0,

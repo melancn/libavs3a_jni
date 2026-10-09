@@ -75,6 +75,7 @@ elseif(AVS3A_BUILD_HOST_TESTS)
         tests/timeline_test.cpp tests/registry_test.cpp tests/abi_access_test.cpp
         tests/support/fake_backend.cpp)
     target_link_libraries(avs3a_core_tests PRIVATE avs3a_core Threads::Threads)
+    target_include_directories(avs3a_core_tests PRIVATE tests/support)
     add_test(NAME avs3a_core_tests COMMAND avs3a_core_tests)
 else()
     message(FATAL_ERROR "Desktop configure must explicitly select host tests")
