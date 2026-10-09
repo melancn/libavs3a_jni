@@ -1,4 +1,4 @@
-﻿AVS3A_JNI_1 {
+AVS3A_JNI_1 {
   global: JNI_OnLoad;
   local: *;
 };
