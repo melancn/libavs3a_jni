@@ -15,6 +15,7 @@ public:
     Status initialize(const FrameConfig& cfg, const VerifiedModelPath& model) override {
         config_ = cfg;
         initialized_ = true;
+        destroyed_ = false;
         init_count_++;
         return OK;
     }
@@ -31,10 +32,11 @@ public:
     }
 
     void destroy() noexcept override {
-        if (initialized_) {
+        if (!destroyed_) {
             destroy_count_++;
-            initialized_ = false;
+            destroyed_ = true;
         }
+        initialized_ = false;
     }
 
     bool is_ready() const override { return true; }
@@ -46,6 +48,7 @@ public:
 private:
     FrameConfig config_;
     bool initialized_ = false;
+    bool destroyed_ = false;
     std::atomic<int> init_count_{0};
     std::atomic<int> decode_count_{0};
     std::atomic<int> destroy_count_{0};

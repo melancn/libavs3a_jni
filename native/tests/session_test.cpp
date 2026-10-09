@@ -25,6 +25,7 @@ static std::vector<uint8_t> make_test_frame() {
     volatile float ratio = (float)bitrate / (float)rate;
     volatile float total = ratio * 1024.0f;
     uint32_t frame_bits = (uint32_t)total;
+    assert(frame_bits > 56);
     uint32_t payload_bits = frame_bits - 56;
     uint32_t payload_bytes = (payload_bits + 7) / 8;
     uint32_t frame_bytes = 7 + payload_bytes;
@@ -80,7 +81,6 @@ int session_test_main() {
 
     {
         auto backend = std::make_unique<FakeBackend>();
-        int* destroy_count_ptr = nullptr;
         Session session(HandleKind::DECODER, std::move(backend));
         session.set_epoch(1);
         session.close();
@@ -113,16 +113,12 @@ int session_test_main() {
     }
 
     {
-        auto backend = std::make_unique<FakeBackend>();
-        FakeBackend* raw = nullptr;
-        {
-            auto fb = std::make_unique<FakeBackend>();
-            raw = fb.get();
-            Session session(HandleKind::DECODER, std::move(fb));
-            session.set_epoch(1);
-            session.close();
-            assert(raw->destroy_count() == 1);
-        }
+        auto fb = std::make_unique<FakeBackend>();
+        FakeBackend* raw = fb.get();
+        Session session(HandleKind::DECODER, std::move(fb));
+        session.set_epoch(1);
+        session.close();
+        assert(raw->destroy_count() == 1);
         printf("  destroy on close: PASS\n");
     }
 
