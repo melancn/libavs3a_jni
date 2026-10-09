@@ -27,7 +27,11 @@ GROUP_PATH = "com/inlz/avs3a"
 BRIDGE_ARTIFACT = "avs3a-sdk-bridge"
 FULL_ARTIFACT = "avs3a-sdk"
 BRIDGE_LIB = "libavs3a_jni.so"
-ALLOWED_SUFFIXES = (".aar", ".pom", ".module", "-sources.jar", "-javadoc.jar", ".asc")
+# Gradle 9 maven-publish emits checksum files (.md5/.sha1/.sha256/.sha512)
+# next to every artifact; the coordinate check above still requires each file
+# to be prefixed with artifactId-version, so stale/foreign versions fail.
+ALLOWED_SUFFIXES = (".aar", ".pom", ".module", "-sources.jar", "-javadoc.jar", ".asc",
+                    ".md5", ".sha1", ".sha256", ".sha512")
 
 
 class DistError(Exception):
