@@ -1,6 +1,7 @@
 package com.inlz.avs3a;
 
 import android.content.Context;
+import java.io.File;
 
 final class RuntimeVendorVerifier {
     private static volatile String cachedPath;
