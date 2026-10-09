@@ -38,7 +38,15 @@ Status BoundedFramer::queue_input(const uint8_t* data, size_t size, int64_t pts_
 }
 
 Status BoundedFramer::find_sync(size_t& sync_pos) {
-    if (buffer_.size() < 7) return RECEIVE_NEED_INPUT;
+    if (buffer_.size() < 7) {
+        fprintf(stderr, "find_sync: buffer too small (%zu)\n", buffer_.size());
+        return RECEIVE_NEED_INPUT;
+    }
+
+    fprintf(stderr, "find_sync: buffer_size=%zu search_offset=%zu first_bytes=%02x %02x\n",
+            buffer_.size(), search_offset_,
+            buffer_.size() > 0 ? buffer_[0] : 0,
+            buffer_.size() > 1 ? buffer_[1] : 0);
 
     size_t max_search = buffer_.size() - 1;
     for (size_t i = search_offset_; i < max_search; ++i) {
