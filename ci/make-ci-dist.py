@@ -80,7 +80,7 @@ def parse_elf_note_build_id(data: bytes):
             f = struct.unpack_from(endian + "IIQQQQIIQQ", data, off)
         else:
             f = struct.unpack_from(endian + "IIIIIIIIII", data, off)
-        if f[1] != 4:  # SHT_NOTE
+        if f[1] != 7:  # SHT_NOTE (not PT_NOTE which is 4)
             continue
         p, end = f[4], f[4] + f[5]
         while p + 12 <= end:
