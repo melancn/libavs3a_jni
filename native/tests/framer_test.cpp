@@ -73,9 +73,9 @@ int framer_test_main() {
     assert(s == QUEUE_ACCEPTED);
     FramerResult r = framer.next();
     if (r.kind != FramerResult::Ready) {
-        printf("  DEBUG: kind=%d error=%d reason='%s' required=%zu\n",
-               (int)r.kind, (int)r.error, r.reason.c_str(), r.required_minimum);
-        printf("  DEBUG: frame.size()=%zu\n", frame.size());
+        fprintf(stderr, "DEBUG: kind=%d error=%d reason='%s' required=%zu frame_size=%zu\n",
+               (int)r.kind, (int)r.error, r.reason.c_str(), r.required_minimum, frame.size());
+        fflush(stderr);
     }
     assert(r.kind == FramerResult::Ready);
         assert(r.frame.bytes.size() == frame.size());
