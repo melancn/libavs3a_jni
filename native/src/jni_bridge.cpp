@@ -26,6 +26,8 @@ namespace avs3a {
 static Registry g_registry;
 static std::mutex g_registry_mutex;
 
+static int get_process_abi_internal();
+
 static std::string build_info_string() {
     std::string s;
     s += "sdkVersion="; s += AVS3A_SDK_VERSION; s += "\n";
@@ -66,6 +68,9 @@ struct JniString {
 
 static int64_t create_session(JNIEnv* env, const char* model_path, const char* vendor_path,
                               int64_t epoch, HandleKind kind) {
+    (void)env;
+    (void)model_path;
+    (void)vendor_path;
     auto session = std::make_shared<Session>(kind, nullptr);
     session->set_epoch(epoch);
 
@@ -78,25 +83,25 @@ static int64_t create_session(JNIEnv* env, const char* model_path, const char* v
 } // namespace avs3a
 
 static const JNINativeMethod kNativeMethods[] = {
-    {"nContractVersion", "()I", (void*)[](JNIEnv*, jclass) -> jint { return 1; }},
-    {"nProcessAbi", "()I", (void*)[](JNIEnv*, jclass) -> jint {
+    {"nContractVersion", "()I", (void*)(+[](JNIEnv*, jclass) -> jint { return 1; })},
+    {"nProcessAbi", "()I", (void*)(+[](JNIEnv*, jclass) -> jint {
         return avs3a::get_process_abi_internal();
-    }},
-    {"nCapabilities", "()J", (void*)[](JNIEnv*, jclass) -> jlong {
+    })},
+    {"nCapabilities", "()J", (void*)(+[](JNIEnv*, jclass) -> jlong {
         return 0;
-    }},
-    {"nBuildInfo", "()Ljava/lang/String;", (void*)[](JNIEnv* env, jclass) -> jstring {
+    })},
+    {"nBuildInfo", "()Ljava/lang/String;", (void*)(+[](JNIEnv* env, jclass) -> jstring {
         std::string info = avs3a::build_info_string();
         return env->NewStringUTF(info.c_str());
-    }},
+    })},
     {"nCreate", "(Ljava/lang/String;Ljava/lang/String;J)J",
-     (void*)[](JNIEnv* env, jclass, jstring model_path, jstring vendor_path, jlong epoch) -> jlong {
+     (void*)(+[](JNIEnv* env, jclass, jstring model_path, jstring vendor_path, jlong epoch) -> jlong {
         avs3a::JniString mp(env, model_path);
         avs3a::JniString vp(env, vendor_path);
         return avs3a::create_session(env, mp, vp, epoch, avs3a::HandleKind::DECODER);
-    }},
+    })},
     {"nQueue", "(J[BIIJJI)I",
-     (void*)[](JNIEnv* env, jclass, jlong handle, jbyteArray input, jint offset, jint length,
+     (void*)(+[](JNIEnv* env, jclass, jlong handle, jbyteArray input, jint offset, jint length,
               jlong pts_us, jlong epoch, jint flags) -> jint {
         if (handle <= 0) return avs3a::CLOSED_OR_INVALID_HANDLE;
         auto session = avs3a::g_registry.find(handle);
@@ -119,9 +124,9 @@ static const JNINativeMethod kNativeMethods[] = {
 
         if (data) env->ReleaseByteArrayElements(input, data, JNI_ABORT);
         return result;
-    }},
+    })},
     {"nReceive", "(J[BII[J)I",
-     (void*)[](JNIEnv* env, jclass, jlong handle, jbyteArray output, jint offset, jint capacity,
+     (void*)(+[](JNIEnv* env, jclass, jlong handle, jbyteArray output, jint offset, jint capacity,
               jlongArray info) -> jint {
         if (handle <= 0) return avs3a::CLOSED_OR_INVALID_HANDLE;
         auto session = avs3a::g_registry.find(handle);
@@ -155,42 +160,42 @@ static const JNINativeMethod kNativeMethods[] = {
         }
 
         return result;
-    }},
+    })},
     {"nEnd", "(J)I",
-     (void*)[](JNIEnv*, jclass, jlong handle) -> jint {
+     (void*)(+[](JNIEnv*, jclass, jlong handle) -> jint {
         if (handle <= 0) return avs3a::CLOSED_OR_INVALID_HANDLE;
         auto session = avs3a::g_registry.find(handle);
         if (!session) return avs3a::CLOSED_OR_INVALID_HANDLE;
         if (session->kind() != avs3a::HandleKind::DECODER) return avs3a::HANDLE_KIND_MISMATCH;
         return session->end_input();
-    }},
+    })},
     {"nFlush", "(JJ)I",
-     (void*)[](JNIEnv*, jclass, jlong handle, jlong epoch) -> jint {
+     (void*)(+[](JNIEnv*, jclass, jlong handle, jlong epoch) -> jint {
         if (handle <= 0) return avs3a::CLOSED_OR_INVALID_HANDLE;
         auto session = avs3a::g_registry.find(handle);
         if (!session) return avs3a::CLOSED_OR_INVALID_HANDLE;
         if (session->kind() != avs3a::HandleKind::DECODER) return avs3a::HANDLE_KIND_MISMATCH;
         return session->flush(epoch);
-    }},
+    })},
     {"nRelease", "(J)V",
-     (void*)[](JNIEnv*, jclass, jlong handle) -> void {
+     (void*)(+[](JNIEnv*, jclass, jlong handle) -> void {
         if (handle <= 0) return;
         auto session = avs3a::g_registry.remove(handle);
         if (session) {
             std::lock_guard<std::mutex> lock(session->mutex());
             session->close();
         }
-    }},
+    })},
     {"nParserCreate", "(J)J",
-     (void*)[](JNIEnv*, jclass, jlong epoch) -> jlong {
+     (void*)(+[](JNIEnv*, jclass, jlong epoch) -> jlong {
         auto session = std::make_shared<avs3a::Session>(avs3a::HandleKind::PARSER, nullptr);
         session->set_epoch(epoch);
         std::lock_guard<std::mutex> lock(avs3a::g_registry_mutex);
         int64_t id = avs3a::g_registry.register_session(session);
         return id;
-    }},
+    })},
     {"nParserQueue", "(J[BIIJJI)I",
-     (void*)[](JNIEnv* env, jclass, jlong handle, jbyteArray input, jint offset, jint length,
+     (void*)(+[](JNIEnv* env, jclass, jlong handle, jbyteArray input, jint offset, jint length,
               jlong pts_us, jlong epoch, jint flags) -> jint {
         if (handle <= 0) return avs3a::CLOSED_OR_INVALID_HANDLE;
         auto session = avs3a::g_registry.find(handle);
@@ -212,9 +217,9 @@ static const JNINativeMethod kNativeMethods[] = {
             reinterpret_cast<const uint8_t*>(data), length, pts_us, epoch, flags);
         if (data) env->ReleaseByteArrayElements(input, data, JNI_ABORT);
         return result;
-    }},
+    })},
     {"nParserReceive", "(J[BII[J)I",
-     (void*)[](JNIEnv* env, jclass, jlong handle, jbyteArray output, jint offset, jint capacity,
+     (void*)(+[](JNIEnv* env, jclass, jlong handle, jbyteArray output, jint offset, jint capacity,
               jlongArray info) -> jint {
         if (handle <= 0) return avs3a::CLOSED_OR_INVALID_HANDLE;
         auto session = avs3a::g_registry.find(handle);
@@ -248,32 +253,32 @@ static const JNINativeMethod kNativeMethods[] = {
         }
 
         return result;
-    }},
+    })},
     {"nParserEnd", "(J)I",
-     (void*)[](JNIEnv*, jclass, jlong handle) -> jint {
+     (void*)(+[](JNIEnv*, jclass, jlong handle) -> jint {
         if (handle <= 0) return avs3a::CLOSED_OR_INVALID_HANDLE;
         auto session = avs3a::g_registry.find(handle);
         if (!session) return avs3a::CLOSED_OR_INVALID_HANDLE;
         if (session->kind() != avs3a::HandleKind::PARSER) return avs3a::HANDLE_KIND_MISMATCH;
         return session->end_input();
-    }},
+    })},
     {"nParserFlush", "(JJ)I",
-     (void*)[](JNIEnv*, jclass, jlong handle, jlong epoch) -> jint {
+     (void*)(+[](JNIEnv*, jclass, jlong handle, jlong epoch) -> jint {
         if (handle <= 0) return avs3a::CLOSED_OR_INVALID_HANDLE;
         auto session = avs3a::g_registry.find(handle);
         if (!session) return avs3a::CLOSED_OR_INVALID_HANDLE;
         if (session->kind() != avs3a::HandleKind::PARSER) return avs3a::HANDLE_KIND_MISMATCH;
         return session->flush(epoch);
-    }},
+    })},
     {"nParserRelease", "(J)V",
-     (void*)[](JNIEnv*, jclass, jlong handle) -> void {
+     (void*)(+[](JNIEnv*, jclass, jlong handle) -> void {
         if (handle <= 0) return;
         auto session = avs3a::g_registry.remove(handle);
         if (session) {
             std::lock_guard<std::mutex> lock(session->mutex());
             session->close();
         }
-    }},
+    })},
 };
 
 extern "C" JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved) {

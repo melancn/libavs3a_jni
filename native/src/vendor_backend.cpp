@@ -113,8 +113,8 @@ public:
     bool is_ready() const override { return abi_.ready() && api_.alloc != nullptr; }
 
 private:
-    int process_abi_;
-    void* lib_handle_;
+    [[maybe_unused]] int process_abi_;
+    [[maybe_unused]] void* lib_handle_;
     VendorApi api_;
     AbiAccessor abi_;
     void* handle_ = nullptr;
