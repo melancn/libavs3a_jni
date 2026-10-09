@@ -42,7 +42,7 @@ private:
     int64_t pending_epoch_ = 0;
     HeaderParser parser_;
 
-    Status find_sync(size_t& sync_pos);
+    Status find_sync(size_t& sync_pos, bool& found);
     bool validate_frame_bytes(size_t frame_bytes) const;
 };
 

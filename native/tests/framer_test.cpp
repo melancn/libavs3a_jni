@@ -73,11 +73,8 @@ int framer_test_main() {
     assert(s == QUEUE_ACCEPTED);
     FramerResult r = framer.next();
     if (r.kind != FramerResult::Ready) {
-        fprintf(stderr, "DEBUG: kind=%d error=%d reason='%s' required=%zu frame_size=%zu\n",
+        fprintf(stderr, "FAIL: kind=%d error=%d reason='%s' required=%zu frame_size=%zu\n",
                (int)r.kind, (int)r.error, r.reason.c_str(), r.required_minimum, frame.size());
-        fprintf(stderr, "DEBUG: frame[0]=0x%02x frame[1]=0x%02x frame[2]=0x%02x\n",
-               frame.size() > 0 ? frame[0] : 0, frame.size() > 1 ? frame[1] : 0,
-               frame.size() > 2 ? frame[2] : 0);
         fflush(stderr);
     }
     assert(r.kind == FramerResult::Ready);
