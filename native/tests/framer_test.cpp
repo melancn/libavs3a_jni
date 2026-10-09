@@ -7,10 +7,6 @@
 
 using namespace avs3a;
 
-static uint8_t make_header_byte(int bit_offset) {
-    return 0;
-}
-
 static std::vector<uint8_t> make_valid_frame(int32_t bitrate, int32_t rate,
                                               int32_t channel_config, int32_t neural_type) {
     const int32_t rates[9] = {192000,96000,48000,44100,32000,24000,22050,16000,8000};
@@ -29,6 +25,7 @@ static std::vector<uint8_t> make_valid_frame(int32_t bitrate, int32_t rate,
     volatile float ratio = (float)bitrate / (float)rate;
     volatile float total = ratio * 1024.0f;
     uint32_t frame_bits = (uint32_t)total;
+    assert(frame_bits > 56);
     uint32_t payload_bits = frame_bits - 56;
     uint32_t payload_bytes = (payload_bits + 7) / 8;
     uint32_t frame_bytes = 7 + payload_bytes;
@@ -69,15 +66,10 @@ int framer_test_main() {
     {
         BoundedFramer framer;
         auto frame = make_valid_frame(128000, 48000, 1, 0);
-    Status s = framer.queue_input(frame.data(), frame.size(), 1000, 0, 0);
-    assert(s == QUEUE_ACCEPTED);
-    FramerResult r = framer.next();
-    if (r.kind != FramerResult::Ready) {
-        fprintf(stderr, "FAIL: kind=%d error=%d reason='%s' required=%zu frame_size=%zu\n",
-               (int)r.kind, (int)r.error, r.reason.c_str(), r.required_minimum, frame.size());
-        fflush(stderr);
-    }
-    assert(r.kind == FramerResult::Ready);
+        Status s = framer.queue_input(frame.data(), frame.size(), 1000, 0, 0);
+        assert(s == QUEUE_ACCEPTED);
+        FramerResult r = framer.next();
+        assert(r.kind == FramerResult::Ready);
         assert(r.frame.bytes.size() == frame.size());
         assert(r.frame.config.sample_rate == 48000);
         assert(r.frame.config.channels == 2);
@@ -122,8 +114,9 @@ int framer_test_main() {
         FramerResult r1 = framer.next();
         assert(r1.kind == FramerResult::Ready);
         r1 = framer.next();
-        r1 = framer.next();
         assert(r1.kind == FramerResult::Ready);
+        r1 = framer.next();
+        assert(r1.kind == FramerResult::NeedMore);
         printf("  multi-frame: PASS\n");
     }
 

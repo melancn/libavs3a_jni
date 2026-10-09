@@ -16,15 +16,8 @@ int64_t Timeline::compute_pts(int64_t frame_index, int32_t sample_rate, int32_t 
     if (sample_rate <= 0 || samples_per_channel <= 0) return TIME_UNSET;
 
     int64_t total_samples = frame_index * static_cast<int64_t>(samples_per_channel);
-    int64_t numerator = anchor_pts_ * static_cast<int64_t>(sample_rate) + total_samples * 1000000LL;
-    int64_t denominator = static_cast<int64_t>(sample_rate);
-
-    if (denominator == 0) return TIME_UNSET;
-
-    if (numerator > 0 && numerator > std::numeric_limits<int64_t>::max() - anchor_pts_)
-        return TIME_UNSET;
-
-    return numerator / denominator;
+    int64_t frame_duration_us = total_samples * 1000000LL / static_cast<int64_t>(sample_rate);
+    return anchor_pts_ + frame_duration_us;
 }
 
 void Timeline::flush() {

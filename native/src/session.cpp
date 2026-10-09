@@ -64,8 +64,7 @@ Status Session::receive(MutableByteSpan output, PcmMetadata& meta) {
         FramerResult fr = framer_.next();
 
         if (fr.kind == FramerResult::Invalid) {
-            if (is_error(fr.error))
-                return fail(fr.error);
+            return fail(is_error(fr.error) ? fr.error : INVALID_HEADER);
         }
 
         if (fr.kind == FramerResult::NeedMore) {
@@ -161,8 +160,7 @@ Status Session::receive_frame(MutableByteSpan output, FrameMetadata& meta) {
         FramerResult fr = framer_.next();
 
         if (fr.kind == FramerResult::Invalid) {
-            if (is_error(fr.error))
-                return fail(fr.error);
+            return fail(is_error(fr.error) ? fr.error : INVALID_HEADER);
         }
 
         if (fr.kind == FramerResult::NeedMore) {
@@ -266,7 +264,6 @@ void Session::close() {
     std::lock_guard<std::mutex> lock(mutex_);
     if (backend_) {
         backend_->destroy();
-        backend_.reset();
     }
     pending_.reset();
     pending_frame_.reset();
