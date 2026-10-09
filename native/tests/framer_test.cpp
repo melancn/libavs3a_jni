@@ -69,10 +69,15 @@ int framer_test_main() {
     {
         BoundedFramer framer;
         auto frame = make_valid_frame(128000, 48000, 1, 0);
-        Status s = framer.queue_input(frame.data(), frame.size(), 1000, 0, 0);
-        assert(s == QUEUE_ACCEPTED);
-        FramerResult r = framer.next();
-        assert(r.kind == FramerResult::Ready);
+    Status s = framer.queue_input(frame.data(), frame.size(), 1000, 0, 0);
+    assert(s == QUEUE_ACCEPTED);
+    FramerResult r = framer.next();
+    if (r.kind != FramerResult::Ready) {
+        printf("  DEBUG: kind=%d error=%d reason='%s' required=%zu\n",
+               (int)r.kind, (int)r.error, r.reason.c_str(), r.required_minimum);
+        printf("  DEBUG: frame.size()=%zu\n", frame.size());
+    }
+    assert(r.kind == FramerResult::Ready);
         assert(r.frame.bytes.size() == frame.size());
         assert(r.frame.config.sample_rate == 48000);
         assert(r.frame.config.channels == 2);
