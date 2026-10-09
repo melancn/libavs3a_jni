@@ -9,8 +9,8 @@ public class PcmResultTest {
     public void testNeedInput() {
         PcmResult r = PcmResult.needInput();
         assertEquals(PcmResult.Kind.NEED_INPUT, r.kind());
-        try { r.info(); fail(); } catch (IllegalStateException e) {}
-        try { r.requiredBytes(); fail(); } catch (IllegalStateException e) {}
+        try { r.info(); fail("expected IllegalStateException"); } catch (IllegalStateException e) {}
+        try { r.requiredBytes(); fail("expected IllegalStateException"); } catch (IllegalStateException e) {}
     }
 
     @Test
@@ -38,9 +38,5 @@ public class PcmResultTest {
     @Test(expected = IllegalStateException.class)
     public void testReadyRequiredBytesFails() {
         PcmResult.ready(new PcmInfo(new long[]{0, 48000, 1, 1024, 2048, 1, 0, 1})).requiredBytes();
-    }
-
-    private static void fail() {
-        fail("expected exception");
     }
 }
