@@ -22,7 +22,9 @@ from pathlib import Path
 
 EXPECTED_ABIS_DEFAULT = ["arm64-v8a", "armeabi-v7a"]
 HEX64_RE = re.compile(r"^[0-9a-fA-F]{64}$")
-ALLOWED_TOP_LEVEL = {"AndroidManifest.xml", "classes.jar", "R.txt", "jni"}
+# "assets" is tolerated at top level (full needs model.bin); the bridge-specific
+# content check below still forbids any assets entry for bridge distributions.
+ALLOWED_TOP_LEVEL = {"AndroidManifest.xml", "classes.jar", "R.txt", "jni", "assets"}
 BRIDGE_LIB = "libavs3a_jni.so"
 DECODER_LIB = "libavs3a_decoder.so"
 MODEL_ENTRY = "assets/avs3a/model.bin"
