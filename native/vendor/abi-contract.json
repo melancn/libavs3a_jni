@@ -1,0 +1,1052 @@
+{
+  "schemaVersion": 1,
+  "vendorId": "avs3a-ystpzs-1.4.1",
+  "requiredFieldsResolved": true,
+  "verificationLevel": "static_binary_cross_check_and_layout_compile",
+  "runtimeValidation": "NOT_RUN",
+  "scope": "profile0/channelConfig0-or-1/sourcePrecision16/nn0-or-1",
+  "requiredFields": [
+    "sampleRate",
+    "sourceBits",
+    "totalBitrate",
+    "bitrateCopy",
+    "channelConfig",
+    "channelCount",
+    "objectCount",
+    "objectBitrate",
+    "bedBitrate",
+    "mixedContentType",
+    "mixedContent",
+    "lfeFlag",
+    "decoderFormat",
+    "option44",
+    "hoaOrder",
+    "frameSamples",
+    "payloadBits",
+    "neuralCodecType",
+    "modelType",
+    "bitstreamPointer"
+  ],
+  "abis": {
+    "arm64-v8a": {
+      "ready": true,
+      "pointerBytes": 8,
+      "decoderStateBytes": 264,
+      "payloadCapacityBytes": 12300,
+      "bitstreamStateBytes": 12304,
+      "bitCursorOffset": 12300,
+      "bitCursorStorage": "int32",
+      "callingConventionVerified": true,
+      "callingConvention": "AAPCS64; pointer arguments x0/x1",
+      "fields": {
+        "firstFrame": {
+          "offset": 0,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": false,
+          "initial": "library: calloc=0; Init=1; Decode=0",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "sampleRate": {
+          "offset": 4,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "header.sampleRateHz",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "sourceBits": {
+          "offset": 8,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 16,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "totalBitrate": {
+          "offset": 12,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "header.bitrateBps",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "bitrateCopy": {
+          "offset": 16,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "header.bitrateBps (also assigned by Init)",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "channelConfig": {
+          "offset": 20,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "header.channelConfig (0 mono, 1 stereo)",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "channelCount": {
+          "offset": 24,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "header.channelConfig + 1",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "objectCount": {
+          "offset": 26,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "objectBitrate": {
+          "offset": 28,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "bedBitrate": {
+          "offset": 32,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "mixedContentType": {
+          "offset": 36,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "mixedContent": {
+          "offset": 38,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "lfeFlag": {
+          "offset": 40,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "decoderFormat": {
+          "offset": 42,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "0 mono, 1 stereo",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "option44": {
+          "offset": 44,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "hoaOrder": {
+          "offset": 46,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "frameSamples": {
+          "offset": 48,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 1024,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "payloadBits": {
+          "offset": 52,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "truncate(f32(f32(bitrate/rate)*1024))-56; Init recomputes, must match",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "neuralCodecType": {
+          "offset": 56,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "header.neuralType (0 Hyper, 1 HyperLc)",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "modelType": {
+          "offset": 60,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 1,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "baseModel": {
+          "offset": 64,
+          "size": 8,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "hyperModel": {
+          "offset": 72,
+          "size": 8,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "bitstreamPointer": {
+          "offset": 80,
+          "size": 8,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "hoaDecoder": {
+          "offset": 88,
+          "size": 8,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "mcDecoder": {
+          "offset": 96,
+          "size": 8,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "stereoDecoder": {
+          "offset": 104,
+          "size": 8,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "monoAux": {
+          "offset": 112,
+          "size": 8,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "corePointers": {
+          "offset": 120,
+          "size": 128,
+          "count": 16,
+          "storage": "pointerArray",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "metadata": {
+          "offset": 248,
+          "size": 8,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "modelFile": {
+          "offset": 256,
+          "size": 8,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        }
+      },
+      "opaqueRanges": [
+        {
+          "offset": 2,
+          "size": 2
+        },
+        {
+          "offset": 10,
+          "size": 2
+        },
+        {
+          "offset": 50,
+          "size": 2
+        }
+      ],
+      "entryPoints": {
+        "Avs3AllocDecoder": {
+          "symbolValue": "0xa8c0",
+          "codeAddress": "0xa8c0"
+        },
+        "Avs3InitDecoder": {
+          "symbolValue": "0xa8cc",
+          "codeAddress": "0xa8cc"
+        },
+        "Avs3Decode": {
+          "symbolValue": "0x94b0",
+          "codeAddress": "0x94b0"
+        },
+        "Avs3DecoderDestroy": {
+          "symbolValue": "0xb078",
+          "codeAddress": "0xb078"
+        },
+        "ResetBitstream": {
+          "symbolValue": "0x5bcc",
+          "codeAddress": "0x5bcc"
+        }
+      },
+      "evidence": [
+        "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+        "evidence/armv7.decoder.thumb.txt",
+        "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+        "evidence/armv7.apk.decoder-callbacks.txt"
+      ]
+    },
+    "armeabi-v7a": {
+      "ready": true,
+      "pointerBytes": 4,
+      "decoderStateBytes": 164,
+      "payloadCapacityBytes": 12300,
+      "bitstreamStateBytes": 12304,
+      "bitCursorOffset": 12300,
+      "bitCursorStorage": "int32",
+      "callingConventionVerified": true,
+      "callingConvention": "AAPCS32 base PCS; Thumb-2 entry; pointer arguments r0/r1; preserve symbol bit0",
+      "fields": {
+        "firstFrame": {
+          "offset": 0,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": false,
+          "initial": "library: calloc=0; Init=1; Decode=0",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "sampleRate": {
+          "offset": 4,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "header.sampleRateHz",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "sourceBits": {
+          "offset": 8,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 16,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "totalBitrate": {
+          "offset": 12,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "header.bitrateBps",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "bitrateCopy": {
+          "offset": 16,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "header.bitrateBps (also assigned by Init)",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "channelConfig": {
+          "offset": 20,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "header.channelConfig (0 mono, 1 stereo)",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "channelCount": {
+          "offset": 24,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "header.channelConfig + 1",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "objectCount": {
+          "offset": 26,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "objectBitrate": {
+          "offset": 28,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "bedBitrate": {
+          "offset": 32,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "mixedContentType": {
+          "offset": 36,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "mixedContent": {
+          "offset": 38,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "lfeFlag": {
+          "offset": 40,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "decoderFormat": {
+          "offset": 42,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "0 mono, 1 stereo",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "option44": {
+          "offset": 44,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "hoaOrder": {
+          "offset": 46,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 0,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "frameSamples": {
+          "offset": 48,
+          "storage": "int16",
+          "size": 2,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 1024,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "payloadBits": {
+          "offset": 52,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "truncate(f32(f32(bitrate/rate)*1024))-56; Init recomputes, must match",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "neuralCodecType": {
+          "offset": 56,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": "header.neuralType (0 Hyper, 1 HyperLc)",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "modelType": {
+          "offset": 60,
+          "storage": "int32",
+          "size": 4,
+          "verified": true,
+          "callerWrites": true,
+          "initial": 1,
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "baseModel": {
+          "offset": 64,
+          "size": 4,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "hyperModel": {
+          "offset": 68,
+          "size": 4,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "bitstreamPointer": {
+          "offset": 72,
+          "size": 4,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "hoaDecoder": {
+          "offset": 76,
+          "size": 4,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "mcDecoder": {
+          "offset": 80,
+          "size": 4,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "stereoDecoder": {
+          "offset": 84,
+          "size": 4,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "monoAux": {
+          "offset": 88,
+          "size": 4,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "corePointers": {
+          "offset": 92,
+          "size": 64,
+          "count": 16,
+          "storage": "pointerArray",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "metadata": {
+          "offset": 156,
+          "size": 4,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        },
+        "modelFile": {
+          "offset": 160,
+          "size": 4,
+          "storage": "pointer",
+          "verified": true,
+          "callerWrites": false,
+          "owner": "SDK",
+          "evidence": [
+            "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+            "evidence/armv7.decoder.thumb.txt",
+            "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+            "evidence/armv7.apk.decoder-callbacks.txt"
+          ]
+        }
+      },
+      "opaqueRanges": [
+        {
+          "offset": 2,
+          "size": 2
+        },
+        {
+          "offset": 10,
+          "size": 2
+        },
+        {
+          "offset": 50,
+          "size": 2
+        }
+      ],
+      "entryPoints": {
+        "Avs3AllocDecoder": {
+          "symbolValue": "0x6015",
+          "codeAddress": "0x6014"
+        },
+        "Avs3InitDecoder": {
+          "symbolValue": "0x601d",
+          "codeAddress": "0x601c"
+        },
+        "Avs3Decode": {
+          "symbolValue": "0x57b5",
+          "codeAddress": "0x57b4"
+        },
+        "Avs3DecoderDestroy": {
+          "symbolValue": "0x6609",
+          "codeAddress": "0x6608"
+        },
+        "ResetBitstream": {
+          "symbolValue": "0x46c5",
+          "codeAddress": "0x46c4"
+        }
+      },
+      "evidence": [
+        "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+        "evidence/armv7.decoder.thumb.txt",
+        "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+        "evidence/armv7.apk.decoder-callbacks.txt"
+      ]
+    }
+  },
+  "functions": {
+    "Avs3AllocDecoder": {
+      "arguments": [],
+      "return": "pointer or null"
+    },
+    "Avs3InitDecoder": {
+      "arguments": [
+        "decoder pointer",
+        "const char* model absolute path"
+      ],
+      "return": "ignored; not a recoverable status"
+    },
+    "Avs3Decode": {
+      "arguments": [
+        "decoder pointer",
+        "int16_t* interleaved PCM output"
+      ],
+      "return": "ignored; not a recoverable status"
+    },
+    "Avs3DecoderDestroy": {
+      "arguments": [
+        "decoder pointer"
+      ],
+      "return": "ignored; frees top allocation"
+    },
+    "ResetBitstream": {
+      "arguments": [
+        "bitstream pointer"
+      ],
+      "return": "ignored"
+    }
+  },
+  "bitstream": {
+    "size": 12304,
+    "payload": {
+      "offset": 0,
+      "bytes": 12300
+    },
+    "cursor": {
+      "offset": 12300,
+      "bytes": 4
+    },
+    "proof": "ARMv7 ResetBitstream @0x46c4 clears exactly 12300 bytes then stores word at +12300; decoder readers load/store bit cursor at +12300; ARM64 Init allocates 12304."
+  },
+  "initialization": {
+    "freshAllocationRequired": true,
+    "preserveOpaqueBytes": true,
+    "preserveAllManagedPointers": true,
+    "firstFrameCallerWrites": false,
+    "modelPathMustBeReadable": true,
+    "modelTypeForcedByInit": 1,
+    "postconditions": [
+      "bitstreamPointer != null",
+      "baseModel != null",
+      "hyperModel != null",
+      "modelFile != null",
+      "metadata != null",
+      "corePointers[0..channelCount) != null",
+      "stereoDecoder != null when stereo",
+      "payloadBits equals parsed budget",
+      "firstFrame == 1 before first Decode"
+    ],
+    "afterEachDecode": [
+      "ResetBitstream; do not reinitialize decoder or reset overlap",
+      "firstFrame becomes 0"
+    ],
+    "flush": "Destroy, allocate, initialize on next valid header; original APK flush callback does not reset state"
+  }
+}

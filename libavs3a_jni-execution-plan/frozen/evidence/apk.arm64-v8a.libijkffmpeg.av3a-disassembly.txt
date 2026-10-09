@@ -1,0 +1,1113 @@
+
+D:\gitlab\MediaHub\plans\av3a\analysis\apk-root\lib\arm64-v8a\libijkffmpeg.so:	file format elf64-littleaarch64
+
+
+Disassembly of section .text:
+
+0000000000134934 <ff_adts_header_parse>:
+  134b00:      	ldr	w11, [x0, #24]
+  134b04:      	lsr	x12, x8, #3
+  134b08:      	ldr	w9, [x9, x12]
+  134b0c:      	add	w12, w8, w1
+  134b10:      	cmp	w11, w12
+  134b14:      	csel	w11, w12, w11, hi
+  134b18:      	str	w11, [x0, #16]
+  134b1c:      	ldr	x10, [x10, #40]
+  134b20:      	ldr	x11, [sp, #8]
+  134b24:      	cmp	x10, x11
+  134b28:      	b.ne	0x134b4c <ff_adts_header_parse+0x218>
+  134b2c:      	ldr	x30, [sp, #16]
+  134b30:      	rev	w9, w9
+  134b34:      	and	x8, x8, #0x7
+  134b38:      	lsl	w8, w9, w8
+  134b3c:      	neg	w9, w1
+  134b40:      	lsr	w0, w8, w9
+  134b44:      	add	sp, sp, #32
+  134b48:      	ret
+  134b4c:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+  134b50:      	add	w10, w8, #1
+  134b54:      	cmp	w9, w10
+  134b58:      	csinc	w8, w9, w8, ls
+  134b5c:      	mov	x0, x20
+  134b60:      	str	w8, [x20, #16]
+  134b64:      	b	0x134ae4 <ff_adts_header_parse+0x1b0>
+  134b68:      	ldr	w8, [x20, #16]
+  134b6c:      	ldr	w9, [x20, #24]
+  134b70:      	ret
+
+0000000000134b74 <av_adts_header_parse>:
+  134b74:      	sub	sp, sp, #96
+  134b78:      	stp	x21, x20, [sp, #64]
+  134b7c:      	stp	x19, x30, [sp, #80]
+  134b80:      	mrs	x21, TPIDR_EL0
+  134b84:      	ldr	x8, [x21, #40]
+  134b88:      	cmp	x0, #0
+  134b8c:      	mov	w9, #56
+  134b90:      	csel	w9, wzr, w9, eq
+  134b94:      	lsr	w10, w9, #3
+  134b98:      	str	x8, [sp, #56]
+  134b9c:      	add	w8, w9, #8
+  134ba0:      	add	x10, x0, x10
+  134ba4:      	stp	x0, x10, [sp, #24]
+  134ba8:      	stp	w9, w8, [sp, #44]
+  134bac:      	str	wzr, [sp, #40]
+  134bb0:      	cbz	x0, 0x134be4 <av_adts_header_parse+0x70>
+  134bb4:      	mov	x20, x1
+  134bb8:      	add	x0, sp, #24
+  134bbc:      	mov	x1, sp
+  134bc0:      	mov	x19, x2
+  134bc4:      	bl	0x134934 <ff_adts_header_parse>
+  134bc8:      	tbnz	w0, #31, 0x134bec <av_adts_header_parse+0x78>
+  134bcc:      	ldr	w8, [sp, #4]
+  134bd0:      	mov	w0, wzr
+  134bd4:      	str	w8, [x20]
+  134bd8:      	ldrb	w8, [sp, #16]
+  134bdc:      	strb	w8, [x19]
+  134be0:      	b	0x134bec <av_adts_header_parse+0x78>
+  134be4:      	mov	w0, #45495
+  134be8:      	movk	w0, #48827, lsl #16
+  134bec:      	ldr	x8, [x21, #40]
+  134bf0:      	ldr	x9, [sp, #56]
+  134bf4:      	cmp	x8, x9
+  134bf8:      	b.ne	0x134c0c <av_adts_header_parse+0x98>
+  134bfc:      	ldp	x19, x30, [sp, #80]
+  134c00:      	ldp	x21, x20, [sp, #64]
+  134c04:      	add	sp, sp, #96
+  134c08:      	ret
+  134c0c:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+
+0000000000134c10 <av_codec_iterate>:
+  134c10:      	sub	sp, sp, #48
+  134c14:      	stp	x21, x20, [sp, #16]
+  134c18:      	stp	x19, x30, [sp, #32]
+  134c1c:      	mrs	x21, TPIDR_EL0
+  134c20:      	ldr	x8, [x21, #40]
+  134c24:      	mov	x19, x0
+  134c28:      	adrp	x1, #0
+  134c2c:      	add	x1, x1, #3200
+  134c30:      	str	x8, [sp, #8]
+  134c34:      	ldr	x20, [x0]
+  134c38:      	adrp	x0, #6201344
+  134c3c:      	add	x0, x0, #2144
+  134c40:      	bl	0x11ccc0 <pthread_once@LIBC@plt>
+  134c44:      	cmp	x20, #49
+  134c48:      	b.eq	0x134c54 <av_codec_iterate+0x44>
+  134c4c:      	add	x8, x20, #1
+  134c50:      	str	x8, [x19]
+  134c54:      	ldr	x8, [x21, #40]
+  134c58:      	bl	0x134fa4 <avcodec_find_decoder_by_name+0x4c>
+  134c5c:      	b.ne	0x134c7c <av_codec_iterate+0x6c>
+  134c60:      	adrp	x8, #5464064
+  134c64:      	add	x8, x8, #776
+  134c68:      	ldr	x0, [x8, x20, lsl #3]
+  134c6c:      	ldp	x19, x30, [sp, #32]
+  134c70:      	ldp	x21, x20, [sp, #16]
+  134c74:      	add	sp, sp, #48
+  134c78:      	ret
+  134c7c:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+  134c80:      	sub	sp, sp, #48
+  134c84:      	stp	x21, x20, [sp, #16]
+  134c88:      	stp	x19, x30, [sp, #32]
+  134c8c:      	mrs	x19, TPIDR_EL0
+  134c90:      	ldr	x8, [x19, #40]
+  134c94:      	adrp	x21, #5464064
+  134c98:      	mov	x20, xzr
+  134c9c:      	add	x21, x21, #776
+  134ca0:      	str	x8, [sp, #8]
+  134ca4:      	cmp	x20, #392
+  134ca8:      	b.eq	0x134cc4 <av_codec_iterate+0xb4>
+  134cac:      	ldr	x0, [x21, x20]
+  134cb0:      	ldr	x8, [x0, #144]
+  134cb4:      	cbz	x8, 0x134cbc <av_codec_iterate+0xac>
+  134cb8:      	blr	x8
+  134cbc:      	add	x20, x20, #8
+  134cc0:      	b	0x134ca4 <av_codec_iterate+0x94>
+  134cc4:      	bl	0x134f7c <avcodec_find_decoder_by_name+0x24>
+  134cc8:      	b.ne	0x134cdc <av_codec_iterate+0xcc>
+  134ccc:      	ldp	x19, x30, [sp, #32]
+  134cd0:      	ldp	x21, x20, [sp, #16]
+  134cd4:      	add	sp, sp, #48
+  134cd8:      	ret
+  134cdc:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+
+0000000000134ce0 <avcodec_register>:
+  134ce0:      	sub	sp, sp, #32
+  134ce4:      	stp	x19, x30, [sp, #16]
+  134ce8:      	mrs	x19, TPIDR_EL0
+  134cec:      	ldr	x8, [x19, #40]
+  134cf0:      	bl	0x134f8c <avcodec_find_decoder_by_name+0x34>
+  134cf4:      	bl	0x134f7c <avcodec_find_decoder_by_name+0x24>
+  134cf8:      	b.ne	0x134d08 <avcodec_register+0x28>
+  134cfc:      	ldp	x19, x30, [sp, #16]
+  134d00:      	add	sp, sp, #32
+  134d04:      	ret
+  134d08:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+  134d0c:      	sub	sp, sp, #48
+  134d10:      	str	x20, [sp, #16]
+  134d14:      	stp	x19, x30, [sp, #32]
+  134d18:      	mrs	x19, TPIDR_EL0
+  134d1c:      	ldr	x8, [x19, #40]
+  134d20:      	mov	x0, xzr
+  134d24:      	str	x8, [sp, #8]
+  134d28:      	str	xzr, [sp]
+  134d2c:      	mov	x20, x0
+  134d30:      	bl	0x134fe8 <avcodec_find_decoder_by_name+0x90>
+  134d34:      	cbz	x0, 0x134d44 <avcodec_register+0x64>
+  134d38:      	cbz	x20, 0x134d2c <avcodec_register+0x4c>
+  134d3c:      	str	x0, [x20, #112]
+  134d40:      	b	0x134d2c <avcodec_register+0x4c>
+  134d44:      	bl	0x134f7c <avcodec_find_decoder_by_name+0x24>
+  134d48:      	b.ne	0x134d5c <avcodec_register+0x7c>
+  134d4c:      	ldp	x19, x30, [sp, #32]
+  134d50:      	ldr	x20, [sp, #16]
+  134d54:      	add	sp, sp, #48
+  134d58:      	ret
+  134d5c:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+
+0000000000134d60 <av_codec_next>:
+  134d60:      	sub	sp, sp, #48
+  134d64:      	str	x20, [sp, #16]
+  134d68:      	stp	x19, x30, [sp, #32]
+  134d6c:      	mrs	x20, TPIDR_EL0
+  134d70:      	ldr	x8, [x20, #40]
+  134d74:      	mov	x19, x0
+  134d78:      	bl	0x134f8c <avcodec_find_decoder_by_name+0x34>
+  134d7c:      	cbz	x19, 0x134d88 <av_codec_next+0x28>
+  134d80:      	ldr	x0, [x19, #112]
+  134d84:      	b	0x134d90 <av_codec_next+0x30>
+  134d88:      	adrp	x0, #5963776
+  134d8c:      	ldr	x0, [x0, #2872]
+  134d90:      	ldr	x8, [x20, #40]
+  134d94:      	bl	0x134fa4 <avcodec_find_decoder_by_name+0x4c>
+  134d98:      	b.ne	0x134dac <av_codec_next+0x4c>
+  134d9c:      	ldp	x19, x30, [sp, #32]
+  134da0:      	ldr	x20, [sp, #16]
+  134da4:      	add	sp, sp, #48
+  134da8:      	ret
+  134dac:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+
+0000000000134db0 <avcodec_register_all>:
+  134db0:      	sub	sp, sp, #32
+  134db4:      	stp	x19, x30, [sp, #16]
+  134db8:      	mrs	x19, TPIDR_EL0
+  134dbc:      	ldr	x8, [x19, #40]
+  134dc0:      	bl	0x134f8c <avcodec_find_decoder_by_name+0x34>
+  134dc4:      	bl	0x134f7c <avcodec_find_decoder_by_name+0x24>
+  134dc8:      	b.ne	0x134dd8 <avcodec_register_all+0x28>
+  134dcc:      	ldp	x19, x30, [sp, #16]
+  134dd0:      	add	sp, sp, #32
+  134dd4:      	ret
+  134dd8:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+
+0000000000134ddc <avcodec_find_encoder>:
+  134ddc:      	sub	sp, sp, #32
+  134de0:      	stp	x19, x30, [sp, #16]
+  134de4:      	bl	0x134fd0 <avcodec_find_decoder_by_name+0x78>
+  134de8:      	bl	0x134e00 <avcodec_find_encoder+0x24>
+  134dec:      	bl	0x134f7c <avcodec_find_decoder_by_name+0x24>
+  134df0:      	b.ne	0x134dfc <avcodec_find_encoder+0x20>
+  134df4:      	ldp	x19, x30, [sp, #16]
+  134df8:      	b	0x134fb0 <avcodec_find_decoder_by_name+0x58>
+  134dfc:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+  134e00:      	sub	sp, sp, #64
+  134e04:      	stp	x23, x22, [sp, #16]
+  134e08:      	stp	x21, x20, [sp, #32]
+  134e0c:      	stp	x19, x30, [sp, #48]
+  134e10:      	mrs	x22, TPIDR_EL0
+  134e14:      	ldr	x8, [x22, #40]
+  134e18:      	mov	x19, x1
+  134e1c:      	mov	w20, w0
+  134e20:      	mov	x23, xzr
+  134e24:      	str	x8, [sp, #8]
+  134e28:      	str	xzr, [sp]
+  134e2c:      	bl	0x134fe8 <avcodec_find_decoder_by_name+0x90>
+  134e30:      	cbz	x0, 0x134e60 <avcodec_find_encoder+0x84>
+  134e34:      	mov	x21, x0
+  134e38:      	blr	x19
+  134e3c:      	cbz	w0, 0x134e2c <avcodec_find_encoder+0x50>
+  134e40:      	ldr	w8, [x21, #20]
+  134e44:      	cmp	w8, w20
+  134e48:      	b.ne	0x134e2c <avcodec_find_encoder+0x50>
+  134e4c:      	cbnz	x23, 0x134e64 <avcodec_find_encoder+0x88>
+  134e50:      	ldr	w8, [x21, #24]
+  134e54:      	mov	x23, x21
+  134e58:      	tbnz	w8, #9, 0x134e2c <avcodec_find_encoder+0x50>
+  134e5c:      	b	0x134e64 <avcodec_find_encoder+0x88>
+  134e60:      	mov	x21, x23
+  134e64:      	ldr	x8, [x22, #40]
+  134e68:      	bl	0x134fa4 <avcodec_find_decoder_by_name+0x4c>
+  134e6c:      	b.ne	0x134e88 <avcodec_find_encoder+0xac>
+  134e70:      	mov	x0, x21
+  134e74:      	ldp	x19, x30, [sp, #48]
+  134e78:      	ldp	x21, x20, [sp, #32]
+  134e7c:      	ldp	x23, x22, [sp, #16]
+  134e80:      	add	sp, sp, #64
+  134e84:      	ret
+  134e88:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+
+0000000000134e8c <avcodec_find_decoder>:
+  134e8c:      	sub	sp, sp, #32
+  134e90:      	stp	x19, x30, [sp, #16]
+  134e94:      	bl	0x134fb8 <avcodec_find_decoder_by_name+0x60>
+  134e98:      	bl	0x134e00 <avcodec_find_encoder+0x24>
+  134e9c:      	bl	0x134f7c <avcodec_find_decoder_by_name+0x24>
+  134ea0:      	b.ne	0x134eac <avcodec_find_decoder+0x20>
+  134ea4:      	ldp	x19, x30, [sp, #16]
+  134ea8:      	b	0x134fb0 <avcodec_find_decoder_by_name+0x58>
+  134eac:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+
+0000000000134eb0 <avcodec_find_encoder_by_name>:
+  134eb0:      	sub	sp, sp, #32
+  134eb4:      	stp	x19, x30, [sp, #16]
+  134eb8:      	bl	0x134fd0 <avcodec_find_decoder_by_name+0x78>
+  134ebc:      	bl	0x134ed4 <avcodec_find_encoder_by_name+0x24>
+  134ec0:      	bl	0x134f7c <avcodec_find_decoder_by_name+0x24>
+  134ec4:      	b.ne	0x134ed0 <avcodec_find_encoder_by_name+0x20>
+  134ec8:      	ldp	x19, x30, [sp, #16]
+  134ecc:      	b	0x134fb0 <avcodec_find_decoder_by_name+0x58>
+  134ed0:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+  134ed4:      	sub	sp, sp, #64
+  134ed8:      	str	x22, [sp, #16]
+  134edc:      	stp	x21, x20, [sp, #32]
+  134ee0:      	stp	x19, x30, [sp, #48]
+  134ee4:      	mrs	x22, TPIDR_EL0
+  134ee8:      	ldr	x8, [x22, #40]
+  134eec:      	str	x8, [sp, #8]
+  134ef0:      	str	xzr, [sp]
+  134ef4:      	cbz	x0, 0x134f2c <avcodec_find_encoder_by_name+0x7c>
+  134ef8:      	mov	x19, x1
+  134efc:      	mov	x20, x0
+  134f00:      	bl	0x134fe8 <avcodec_find_decoder_by_name+0x90>
+  134f04:      	mov	x21, x0
+  134f08:      	cbz	x0, 0x134f30 <avcodec_find_encoder_by_name+0x80>
+  134f0c:      	mov	x0, x21
+  134f10:      	blr	x19
+  134f14:      	cbz	w0, 0x134f00 <avcodec_find_encoder_by_name+0x50>
+  134f18:      	ldr	x1, [x21]
+  134f1c:      	mov	x0, x20
+  134f20:      	bl	0x11cbb0 <strcmp@LIBC@plt>
+  134f24:      	cbnz	w0, 0x134f00 <avcodec_find_encoder_by_name+0x50>
+  134f28:      	b	0x134f30 <avcodec_find_encoder_by_name+0x80>
+  134f2c:      	mov	x21, xzr
+  134f30:      	ldr	x8, [x22, #40]
+  134f34:      	bl	0x134fa4 <avcodec_find_decoder_by_name+0x4c>
+  134f38:      	b.ne	0x134f54 <avcodec_find_encoder_by_name+0xa4>
+  134f3c:      	mov	x0, x21
+  134f40:      	ldp	x19, x30, [sp, #48]
+  134f44:      	ldp	x21, x20, [sp, #32]
+  134f48:      	ldr	x22, [sp, #16]
+  134f4c:      	add	sp, sp, #64
+  134f50:      	ret
+  134f54:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+
+0000000000134f58 <avcodec_find_decoder_by_name>:
+  134f58:      	sub	sp, sp, #32
+  134f5c:      	stp	x19, x30, [sp, #16]
+  134f60:      	bl	0x134fb8 <avcodec_find_decoder_by_name+0x60>
+  134f64:      	bl	0x134ed4 <avcodec_find_encoder_by_name+0x24>
+  134f68:      	bl	0x134f7c <avcodec_find_decoder_by_name+0x24>
+  134f6c:      	b.ne	0x134f78 <avcodec_find_decoder_by_name+0x20>
+  134f70:      	ldp	x19, x30, [sp, #16]
+  134f74:      	b	0x134fb0 <avcodec_find_decoder_by_name+0x58>
+  134f78:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+  134f7c:      	ldr	x8, [x19, #40]
+  134f80:      	ldr	x9, [sp, #8]
+  134f84:      	cmp	x8, x9
+  134f88:      	ret
+  134f8c:      	adrp	x0, #6201344
+  134f90:      	adrp	x1, #0
+  134f94:      	add	x0, x0, #2148
+  134f98:      	add	x1, x1, #3340
+  134f9c:      	str	x8, [sp, #8]
+  134fa0:      	b	0x11ccc0 <pthread_once@LIBC@plt>
+  134fa4:      	ldr	x9, [sp, #8]
+  134fa8:      	cmp	x8, x9
+  134fac:      	ret
+  134fb0:      	add	sp, sp, #32
+  134fb4:      	ret
+  134fb8:      	mrs	x19, TPIDR_EL0
+  134fbc:      	ldr	x8, [x19, #40]
+  134fc0:      	adrp	x1, #5963776
+  134fc4:      	str	x8, [sp, #8]
+  134fc8:      	ldr	x1, [x1, #3736]
+  134fcc:      	ret
+  134fd0:      	mrs	x19, TPIDR_EL0
+  134fd4:      	ldr	x8, [x19, #40]
+  134fd8:      	adrp	x1, #5963776
+  134fdc:      	str	x8, [sp, #8]
+  134fe0:      	ldr	x1, [x1, #2208]
+  134fe4:      	ret
+  134fe8:      	mov	x0, sp
+  134fec:      	b	0x134c10 <av_codec_iterate>
+  134ff0:      	sub	sp, sp, #48
+  134ff4:      	str	x20, [sp, #16]
+  134ff8:      	stp	x19, x30, [sp, #32]
+  134ffc:      	bl	0x135880 <avcodec_find_decoder_by_name+0x928>
+  135000:      	str	x0, [x20, #64]
+  135004:      	bl	0x11cb10 <Avs3AllocDecoder@plt>
+  135008:      	str	x0, [x20, #72]
+  13500c:      	cbz	x0, 0x135028 <avcodec_find_decoder_by_name+0xd0>
+  135010:      	mov	x8, x0
+  135014:      	mov	w0, wzr
+  135018:      	stp	xzr, xzr, [x20, #48]
+  13501c:      	strh	wzr, [x8, #44]
+  135020:      	str	wzr, [x20, #8]
+  135024:      	b	0x13502c <avcodec_find_decoder_by_name+0xd4>
+  135028:      	mov	w0, #-12
+  13502c:      	ldr	x8, [x19, #40]
+  135030:      	bl	0x135874 <avcodec_find_decoder_by_name+0x91c>
+  135034:      	b.ne	0x135048 <avcodec_find_decoder_by_name+0xf0>
+  135038:      	ldp	x19, x30, [sp, #32]
+  13503c:      	ldr	x20, [sp, #16]
+  135040:      	add	sp, sp, #48
+  135044:      	ret
+  135048:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+  13504c:      	sub	sp, sp, #128
+  135050:      	str	d8, [sp, #16]
+  135054:      	stp	x28, x27, [sp, #32]
+  135058:      	stp	x26, x25, [sp, #48]
+  13505c:      	stp	x24, x23, [sp, #64]
+  135060:      	stp	x22, x21, [sp, #80]
+  135064:      	stp	x20, x19, [sp, #96]
+  135068:      	stp	x29, x30, [sp, #112]
+  13506c:      	mrs	x24, TPIDR_EL0
+  135070:      	ldr	x8, [x24, #40]
+  135074:      	mov	x19, x2
+  135078:      	str	x8, [sp, #8]
+  13507c:      	cbz	x1, 0x135154 <avcodec_find_decoder_by_name+0x1fc>
+  135080:      	ldr	x23, [x3, #24]
+  135084:      	ldr	x25, [x0, #32]
+  135088:      	mov	x20, x1
+  13508c:      	mov	x21, x0
+  135090:      	add	x1, sp, #4
+  135094:      	mov	w2, #12
+  135098:      	mov	x0, x23
+  13509c:      	mov	x22, x3
+  1350a0:      	str	wzr, [sp, #4]
+  1350a4:      	bl	0x11ca90 <GetNextIndice@plt>
+  1350a8:      	and	w8, w0, #0xffff
+  1350ac:      	cmp	w8, #4095
+  1350b0:      	b.ne	0x135468 <avcodec_find_decoder_by_name+0x510>
+  1350b4:      	add	x1, sp, #4
+  1350b8:      	mov	w2, #4
+  1350bc:      	bl	0x13586c <avcodec_find_decoder_by_name+0x914>
+  1350c0:      	and	w8, w0, #0xffff
+  1350c4:      	cmp	w8, #2
+  1350c8:      	b.ne	0x135468 <avcodec_find_decoder_by_name+0x510>
+  1350cc:      	add	x1, sp, #4
+  1350d0:      	mov	w2, #1
+  1350d4:      	bl	0x13586c <avcodec_find_decoder_by_name+0x914>
+  1350d8:      	and	w8, w0, #0xffff
+  1350dc:      	cmp	w8, #1
+  1350e0:      	b.eq	0x135468 <avcodec_find_decoder_by_name+0x510>
+  1350e4:      	add	x1, sp, #4
+  1350e8:      	mov	w2, #3
+  1350ec:      	bl	0x13586c <avcodec_find_decoder_by_name+0x914>
+  1350f0:      	strh	w0, [x25, #12]
+  1350f4:      	add	x1, sp, #4
+  1350f8:      	mov	w2, #3
+  1350fc:      	bl	0x13586c <avcodec_find_decoder_by_name+0x914>
+  135100:      	strh	w0, [x25, #14]
+  135104:      	add	x1, sp, #4
+  135108:      	mov	w2, #4
+  13510c:      	bl	0x13586c <avcodec_find_decoder_by_name+0x914>
+  135110:      	strh	w0, [x25, #16]
+  135114:      	add	x1, sp, #4
+  135118:      	mov	w2, #8
+  13511c:      	bl	0x13586c <avcodec_find_decoder_by_name+0x914>
+  135120:      	ldrh	w8, [x25, #14]
+  135124:      	lsl	w9, w0, #8
+  135128:      	strh	w9, [x25, #18]
+  13512c:      	cmp	w8, #2
+  135130:      	b.eq	0x135160 <avcodec_find_decoder_by_name+0x208>
+  135134:      	cmp	w8, #1
+  135138:      	b.eq	0x135190 <avcodec_find_decoder_by_name+0x238>
+  13513c:      	cbnz	w8, 0x135220 <avcodec_find_decoder_by_name+0x2c8>
+  135140:      	add	x1, sp, #4
+  135144:      	mov	w2, #7
+  135148:      	bl	0x13586c <avcodec_find_decoder_by_name+0x914>
+  13514c:      	strh	w0, [x25, #20]
+  135150:      	b	0x135220 <avcodec_find_decoder_by_name+0x2c8>
+  135154:      	mov	w0, wzr
+  135158:      	str	wzr, [x19]
+  13515c:      	b	0x13546c <avcodec_find_decoder_by_name+0x514>
+  135160:      	add	x1, sp, #4
+  135164:      	mov	w2, #4
+  135168:      	bl	0x13586c <avcodec_find_decoder_by_name+0x914>
+  13516c:      	tst	w0, #0xffff
+  135170:      	add	w8, w0, #1
+  135174:      	strh	w8, [x25, #28]
+  135178:      	b.eq	0x1351b4 <avcodec_find_decoder_by_name+0x25c>
+  13517c:      	and	w8, w8, #0xffff
+  135180:      	cmp	w8, #2
+  135184:      	b.ne	0x135208 <avcodec_find_decoder_by_name+0x2b0>
+  135188:      	mov	w8, #12
+  13518c:      	b	0x13521c <avcodec_find_decoder_by_name+0x2c4>
+  135190:      	add	x1, sp, #4
+  135194:      	mov	w2, #2
+  135198:      	bl	0x13586c <avcodec_find_decoder_by_name+0x914>
+  13519c:      	and	w8, w0, #0xffff
+  1351a0:      	cmp	w8, #1
+  1351a4:      	strh	w0, [x25, #22]
+  1351a8:      	b.eq	0x1351bc <avcodec_find_decoder_by_name+0x264>
+  1351ac:      	cbz	w8, 0x1351dc <avcodec_find_decoder_by_name+0x284>
+  1351b0:      	b	0x135220 <avcodec_find_decoder_by_name+0x2c8>
+  1351b4:      	mov	w8, #11
+  1351b8:      	b	0x13521c <avcodec_find_decoder_by_name+0x2c4>
+  1351bc:      	add	x1, sp, #4
+  1351c0:      	mov	w2, #7
+  1351c4:      	bl	0x13586c <avcodec_find_decoder_by_name+0x914>
+  1351c8:      	strh	w0, [x25, #20]
+  1351cc:      	add	x1, sp, #4
+  1351d0:      	mov	w2, #4
+  1351d4:      	bl	0x13586c <avcodec_find_decoder_by_name+0x914>
+  1351d8:      	strh	w0, [x25, #32]
+  1351dc:      	add	x1, sp, #4
+  1351e0:      	mov	w2, #7
+  1351e4:      	bl	0x13586c <avcodec_find_decoder_by_name+0x914>
+  1351e8:      	add	w8, w0, #1
+  1351ec:      	add	x1, sp, #4
+  1351f0:      	mov	w2, #4
+  1351f4:      	mov	x0, x23
+  1351f8:      	strh	w8, [x25, #24]
+  1351fc:      	bl	0x11ca90 <GetNextIndice@plt>
+  135200:      	strh	w0, [x25, #26]
+  135204:      	b	0x135220 <avcodec_find_decoder_by_name+0x2c8>
+  135208:      	cmp	w8, #3
+  13520c:      	b.ne	0x135218 <avcodec_find_decoder_by_name+0x2c0>
+  135210:      	mov	w8, #13
+  135214:      	b	0x13521c <avcodec_find_decoder_by_name+0x2c4>
+  135218:      	mov	w8, #14
+  13521c:      	strh	w8, [x25, #20]
+  135220:      	add	x1, sp, #4
+  135224:      	mov	w2, #2
+  135228:      	bl	0x13586c <avcodec_find_decoder_by_name+0x914>
+  13522c:      	ldrh	w8, [x25, #14]
+  135230:      	strh	w0, [x25, #30]
+  135234:      	cmp	w8, #1
+  135238:      	b.eq	0x13524c <avcodec_find_decoder_by_name+0x2f4>
+  13523c:      	add	x1, sp, #4
+  135240:      	mov	w2, #4
+  135244:      	bl	0x13586c <avcodec_find_decoder_by_name+0x914>
+  135248:      	strh	w0, [x25, #32]
+  13524c:      	add	x1, sp, #4
+  135250:      	mov	w2, #8
+  135254:      	bl	0x13586c <avcodec_find_decoder_by_name+0x914>
+  135258:      	ldrh	w8, [x25, #18]
+  13525c:      	ldrh	w9, [x25, #16]
+  135260:      	fmov	s8, #0.12500000
+  135264:      	add	w8, w8, w0
+  135268:      	strh	w8, [x25, #18]
+  13526c:      	adrp	x8, #5951488
+  135270:      	ldr	s0, [sp, #4]
+  135274:      	ldr	x8, [x8, #3456]
+  135278:      	ldr	x26, [x25, #72]
+  13527c:      	ucvtf	s0, s0
+  135280:      	ldr	w27, [x8, x9, lsl #2]
+  135284:      	fmul	s0, s0, s8
+  135288:      	fcvtps	w8, s0
+  13528c:      	str	w8, [x25, #36]
+  135290:      	mov	w8, #1024
+  135294:      	str	w27, [x26, #4]
+  135298:      	strh	w8, [x26, #48]
+  13529c:      	ldrh	w8, [x25, #30]
+  1352a0:      	cmp	w8, #2
+  1352a4:      	b.hi	0x1352b4 <avcodec_find_decoder_by_name+0x35c>
+  1352a8:      	lsl	w8, w8, #3
+  1352ac:      	add	w8, w8, #8
+  1352b0:      	strh	w8, [x26, #8]
+  1352b4:      	ldrh	w8, [x25, #12]
+  1352b8:      	adrp	x28, #5955584
+  1352bc:      	str	w8, [x26, #56]
+  1352c0:      	ldrh	w8, [x25, #14]
+  1352c4:      	ldr	x28, [x28, #1688]
+  1352c8:      	cmp	w8, #2
+  1352cc:      	b.eq	0x135300 <avcodec_find_decoder_by_name+0x3a8>
+  1352d0:      	cmp	w8, #1
+  1352d4:      	b.eq	0x135328 <avcodec_find_decoder_by_name+0x3d0>
+  1352d8:      	cbnz	w8, 0x135448 <avcodec_find_decoder_by_name+0x4f0>
+  1352dc:      	strh	wzr, [x26, #38]
+  1352e0:      	ldrh	w23, [x25, #20]
+  1352e4:      	cmp	w23, #1
+  1352e8:      	str	w23, [x26, #20]
+  1352ec:      	b.eq	0x135364 <avcodec_find_decoder_by_name+0x40c>
+  1352f0:      	cbnz	w23, 0x135378 <avcodec_find_decoder_by_name+0x420>
+  1352f4:      	strh	wzr, [x26, #42]
+  1352f8:      	mov	w8, #1
+  1352fc:      	b	0x135320 <avcodec_find_decoder_by_name+0x3c8>
+  135300:      	mov	w8, #3
+  135304:      	strh	wzr, [x26, #38]
+  135308:      	strh	w8, [x26, #42]
+  13530c:      	ldrh	w8, [x25, #20]
+  135310:      	str	w8, [x26, #20]
+  135314:      	ldrh	w8, [x25, #28]
+  135318:      	add	w8, w8, #1
+  13531c:      	mul	w8, w8, w8
+  135320:      	strh	w8, [x26, #24]
+  135324:      	b	0x135448 <avcodec_find_decoder_by_name+0x4f0>
+  135328:      	strh	w8, [x26, #38]
+  13532c:      	ldrh	w8, [x25, #22]
+  135330:      	cmp	w8, #1
+  135334:      	strh	w8, [x26, #36]
+  135338:      	b.eq	0x1353a0 <avcodec_find_decoder_by_name+0x448>
+  13533c:      	cbnz	w8, 0x135448 <avcodec_find_decoder_by_name+0x4f0>
+  135340:      	ldrh	w8, [x25, #24]
+  135344:      	cmp	w8, #1
+  135348:      	strh	w8, [x26, #26]
+  13534c:      	strh	w8, [x26, #24]
+  135350:      	b.eq	0x13540c <avcodec_find_decoder_by_name+0x4b4>
+  135354:      	cmp	w8, #2
+  135358:      	b.ne	0x135414 <avcodec_find_decoder_by_name+0x4bc>
+  13535c:      	mov	w9, #1
+  135360:      	b	0x135420 <avcodec_find_decoder_by_name+0x4c8>
+  135364:      	mov	w8, #1
+  135368:      	mov	w9, #2
+  13536c:      	strh	w8, [x26, #42]
+  135370:      	strh	w9, [x26, #24]
+  135374:      	b	0x135448 <avcodec_find_decoder_by_name+0x4f0>
+  135378:      	cmp	w23, #10
+  13537c:      	b.hi	0x135468 <avcodec_find_decoder_by_name+0x510>
+  135380:      	mov	w8, #2
+  135384:      	mov	w0, w23
+  135388:      	strh	w8, [x26, #42]
+  13538c:      	bl	0x135800 <avcodec_find_decoder_by_name+0x8a8>
+  135390:      	cmp	w23, #6
+  135394:      	strh	w0, [x26, #24]
+  135398:      	b.ne	0x135400 <avcodec_find_decoder_by_name+0x4a8>
+  13539c:      	b	0x135444 <avcodec_find_decoder_by_name+0x4ec>
+  1353a0:      	mov	w8, #2
+  1353a4:      	strh	w8, [x26, #42]
+  1353a8:      	ldrh	w23, [x25, #20]
+  1353ac:      	str	w23, [x26, #20]
+  1353b0:      	add	x8, x28, x23, lsl #4
+  1353b4:      	ldr	x8, [x8, #8]
+  1353b8:      	ldrh	w9, [x25, #32]
+  1353bc:      	mov	w0, w23
+  1353c0:      	ldr	w29, [x8, x9, lsl #2]
+  1353c4:      	str	w29, [x26, #32]
+  1353c8:      	bl	0x135800 <avcodec_find_decoder_by_name+0x8a8>
+  1353cc:      	ldrsh	w8, [x25, #24]
+  1353d0:      	ldr	x9, [x28, #8]
+  1353d4:      	cmp	w23, #6
+  1353d8:      	ccmp	w23, #1, #4, ne
+  1353dc:      	strh	w8, [x26, #26]
+  1353e0:      	ldrh	w10, [x25, #26]
+  1353e4:      	ldr	w9, [x9, x10, lsl #2]
+  1353e8:      	add	w10, w8, w0
+  1353ec:      	strh	w10, [x26, #24]
+  1353f0:      	madd	w8, w9, w8, w29
+  1353f4:      	str	w9, [x26, #28]
+  1353f8:      	str	w8, [x26, #12]
+  1353fc:      	b.eq	0x135444 <avcodec_find_decoder_by_name+0x4ec>
+  135400:      	mov	w8, #1
+  135404:      	strh	w8, [x26, #40]
+  135408:      	b	0x135448 <avcodec_find_decoder_by_name+0x4f0>
+  13540c:      	mov	w9, wzr
+  135410:      	b	0x135420 <avcodec_find_decoder_by_name+0x4c8>
+  135414:      	cmp	w8, #3
+  135418:      	b.lo	0x135424 <avcodec_find_decoder_by_name+0x4cc>
+  13541c:      	mov	w9, #2
+  135420:      	strh	w9, [x26, #42]
+  135424:      	mov	w9, #14
+  135428:      	ldr	x10, [x28, #8]
+  13542c:      	str	w9, [x26, #20]
+  135430:      	ldrh	w9, [x25, #26]
+  135434:      	ldr	w9, [x10, x9, lsl #2]
+  135438:      	mul	w8, w9, w8
+  13543c:      	str	w9, [x25, #40]
+  135440:      	str	w8, [x26, #12]
+  135444:      	strh	wzr, [x26, #40]
+  135448:      	ldrsh	w0, [x26, #24]
+  13544c:      	cmp	w0, #1
+  135450:      	b.lt	0x135468 <avcodec_find_decoder_by_name+0x510>
+  135454:      	ldrh	w8, [x26, #38]
+  135458:      	cbz	w8, 0x13549c <avcodec_find_decoder_by_name+0x544>
+  13545c:      	ldr	w10, [x26, #12]
+  135460:      	ldr	w8, [x26, #20]
+  135464:      	b	0x1354b4 <avcodec_find_decoder_by_name+0x55c>
+  135468:      	mov	w0, #-22
+  13546c:      	ldr	x8, [x24, #40]
+  135470:      	bl	0x135874 <avcodec_find_decoder_by_name+0x91c>
+  135474:      	b.ne	0x135774 <avcodec_find_decoder_by_name+0x81c>
+  135478:      	ldp	x29, x30, [sp, #112]
+  13547c:      	ldp	x20, x19, [sp, #96]
+  135480:      	ldp	x22, x21, [sp, #80]
+  135484:      	ldp	x24, x23, [sp, #64]
+  135488:      	ldp	x26, x25, [sp, #48]
+  13548c:      	ldp	x28, x27, [sp, #32]
+  135490:      	ldr	d8, [sp, #16]
+  135494:      	add	sp, sp, #128
+  135498:      	ret
+  13549c:      	ldr	w8, [x26, #20]
+  1354a0:      	ldrh	w10, [x25, #32]
+  1354a4:      	add	x9, x28, x8, lsl #4
+  1354a8:      	ldr	x9, [x9, #8]
+  1354ac:      	ldr	w10, [x9, x10, lsl #2]
+  1354b0:      	str	w10, [x26, #12]
+  1354b4:      	sxtw	x10, w10
+  1354b8:      	str	w27, [x21, #400]
+  1354bc:      	str	x10, [x21, #56]
+  1354c0:      	ldrsh	w10, [x26, #8]
+  1354c4:      	mov	x9, xzr
+  1354c8:      	str	w0, [x21, #404]
+  1354cc:      	str	w10, [x21, #764]
+  1354d0:      	adrp	x10, #4636672
+  1354d4:      	add	x10, x10, #1816
+  1354d8:      	cmp	x9, #240
+  1354dc:      	b.eq	0x135518 <avcodec_find_decoder_by_name+0x5c0>
+  1354e0:      	add	x11, x10, x9
+  1354e4:      	ldr	w11, [x11, #4]
+  1354e8:      	add	x9, x9, #16
+  1354ec:      	cmp	w11, w8
+  1354f0:      	b.ne	0x1354d8 <avcodec_find_decoder_by_name+0x580>
+  1354f4:      	add	x8, x10, x9
+  1354f8:      	ldur	x8, [x8, #-8]
+  1354fc:      	add	x23, x21, #432
+  135500:      	cmp	x9, #240
+  135504:      	str	x8, [x21, #432]
+  135508:      	b.eq	0x135520 <avcodec_find_decoder_by_name+0x5c8>
+  13550c:      	ldrh	w9, [x25, #24]
+  135510:      	cbnz	w9, 0x135520 <avcodec_find_decoder_by_name+0x5c8>
+  135514:      	b	0x13552c <avcodec_find_decoder_by_name+0x5d4>
+  135518:      	add	x23, x21, #432
+  13551c:      	str	xzr, [x21, #432]
+  135520:      	bl	0x41af9c <av_get_default_channel_layout>
+  135524:      	mov	x8, x0
+  135528:      	str	x0, [x23]
+  13552c:      	cbnz	x8, 0x135560 <avcodec_find_decoder_by_name+0x608>
+  135530:      	ldr	w10, [x21, #404]
+  135534:      	mov	w9, wzr
+  135538:      	mov	w11, #1
+  13553c:      	str	xzr, [x21, #432]
+  135540:      	cmp	w9, w10
+  135544:      	b.ge	0x135560 <avcodec_find_decoder_by_name+0x608>
+  135548:      	lsl	w12, w11, w9
+  13554c:      	sxtw	x12, w12
+  135550:      	orr	x8, x8, x12
+  135554:      	str	x8, [x23]
+  135558:      	add	w9, w9, #1
+  13555c:      	b	0x135540 <avcodec_find_decoder_by_name+0x5e8>
+  135560:      	ldr	w8, [x21, #764]
+  135564:      	mov	w9, #1024
+  135568:      	str	w9, [x21, #412]
+  13556c:      	cmp	w8, #8
+  135570:      	b.eq	0x13558c <avcodec_find_decoder_by_name+0x634>
+  135574:      	cmp	w8, #24
+  135578:      	b.eq	0x135594 <avcodec_find_decoder_by_name+0x63c>
+  13557c:      	cmp	w8, #16
+  135580:      	b.ne	0x13559c <avcodec_find_decoder_by_name+0x644>
+  135584:      	mov	w8, #1
+  135588:      	b	0x135598 <avcodec_find_decoder_by_name+0x640>
+  13558c:      	mov	w8, wzr
+  135590:      	b	0x135598 <avcodec_find_decoder_by_name+0x640>
+  135594:      	mov	w8, #2
+  135598:      	str	w8, [x21, #408]
+  13559c:      	ldr	x0, [x25, #72]
+  1355a0:      	mov	w8, #1149239296
+  1355a4:      	fmov	s2, w8
+  1355a8:      	ldr	s0, [x0, #12]
+  1355ac:      	ldr	s1, [x0, #4]
+  1355b0:      	ldrh	w9, [x0, #38]
+  1355b4:      	scvtf	s0, s0
+  1355b8:      	scvtf	s1, s1
+  1355bc:      	fmul	s0, s0, s2
+  1355c0:      	fdiv	s0, s0, s1
+  1355c4:      	fcvtzs	w8, s0
+  1355c8:      	str	w8, [x0, #52]
+  1355cc:      	cbz	w9, 0x1355e8 <avcodec_find_decoder_by_name+0x690>
+  1355d0:      	ldrh	w9, [x25, #22]
+  1355d4:      	cmp	w9, #1
+  1355d8:      	b.eq	0x135614 <avcodec_find_decoder_by_name+0x6bc>
+  1355dc:      	cbnz	w9, 0x13561c <avcodec_find_decoder_by_name+0x6c4>
+  1355e0:      	sub	w8, w8, #64
+  1355e4:      	b	0x135618 <avcodec_find_decoder_by_name+0x6c0>
+  1355e8:      	ldrh	w9, [x0, #42]
+  1355ec:      	cmp	w9, #3
+  1355f0:      	b.hi	0x13561c <avcodec_find_decoder_by_name+0x6c4>
+  1355f4:      	adrp	x10, #4636672
+  1355f8:      	add	x10, x10, #1736
+  1355fc:      	adr	x11, #16
+  135600:      	ldrb	w12, [x10, x9]
+  135604:      	add	x11, x11, x12, lsl #2
+  135608:      	br	x11
+  13560c:      	sub	w8, w8, #56
+  135610:      	b	0x135618 <avcodec_find_decoder_by_name+0x6c0>
+  135614:      	sub	w8, w8, #72
+  135618:      	str	w8, [x0, #52]
+  13561c:      	ldr	w9, [x25, #8]
+  135620:      	scvtf	s0, w8
+  135624:      	fmul	s0, s0, s8
+  135628:      	fcvtpu	w8, s0
+  13562c:      	strh	w8, [x25, #34]
+  135630:      	cbnz	w9, 0x13564c <avcodec_find_decoder_by_name+0x6f4>
+  135634:      	ldr	x1, [x21, #1056]
+  135638:      	bl	0x11ccb0 <Avs3InitDecoder@plt>
+  13563c:      	ldr	x0, [x25, #72]
+  135640:      	ldrh	w8, [x25, #34]
+  135644:      	mov	w9, #1
+  135648:      	str	w9, [x25, #8]
+  13564c:      	ldr	x9, [x22, #24]
+  135650:      	ldrsw	x10, [x25, #36]
+  135654:      	ldr	x0, [x0, #80]
+  135658:      	and	x2, x8, #0xffff
+  13565c:      	add	x1, x9, x10
+  135660:      	bl	0x11c930 <memcpy@LIBC@plt>
+  135664:      	ldr	x1, [x25, #56]
+  135668:      	cbnz	x1, 0x135690 <avcodec_find_decoder_by_name+0x738>
+  13566c:      	ldrsw	x8, [x21, #404]
+  135670:      	ldrsw	x9, [x21, #412]
+  135674:      	mul	x8, x8, x9
+  135678:      	lsl	x0, x8, #1
+  13567c:      	str	x0, [x25, #48]
+  135680:      	bl	0x428944 <av_mallocz>
+  135684:      	mov	x1, x0
+  135688:      	str	x0, [x25, #56]
+  13568c:      	cbz	x0, 0x13576c <avcodec_find_decoder_by_name+0x814>
+  135690:      	ldr	x0, [x25, #72]
+  135694:      	bl	0x11d090 <Avs3Decode@plt>
+  135698:      	ldr	x8, [x25, #72]
+  13569c:      	ldr	x9, [x8, #248]
+  1356a0:      	cbz	x9, 0x135700 <avcodec_find_decoder_by_name+0x7a8>
+  1356a4:      	ldrsh	w4, [x9]
+  1356a8:      	ldrsh	w5, [x9, #2]
+  1356ac:      	orr	w9, w4, w5
+  1356b0:      	cbz	w9, 0x135700 <avcodec_find_decoder_by_name+0x7a8>
+  1356b4:      	ldr	x3, [x22, #8]
+  1356b8:      	adrp	x2, #4636672
+  1356bc:      	add	x2, x2, #2077
+  1356c0:      	mov	w1, #56
+  1356c4:      	mov	x0, x21
+  1356c8:      	bl	0x427144 <av_log>
+  1356cc:      	mov	w1, #19
+  1356d0:      	mov	w2, #19824
+  1356d4:      	mov	x0, x20
+  1356d8:      	bl	0x421744 <av_frame_new_side_data>
+  1356dc:      	cbz	x0, 0x13576c <avcodec_find_decoder_by_name+0x814>
+  1356e0:      	ldr	x8, [x25, #72]
+  1356e4:      	ldr	x0, [x0, #8]
+  1356e8:      	mov	w2, #19824
+  1356ec:      	ldr	x1, [x8, #248]
+  1356f0:      	bl	0x11c930 <memcpy@LIBC@plt>
+  1356f4:      	mov	w8, #1
+  1356f8:      	str	w8, [x20, #540]
+  1356fc:      	ldr	x8, [x25, #72]
+  135700:      	ldr	x0, [x8, #80]
+  135704:      	bl	0x11d540 <ResetBitstream@plt>
+  135708:      	ldr	w8, [x21, #412]
+  13570c:      	mov	w22, #1
+  135710:      	mov	x0, x21
+  135714:      	mov	x1, x20
+  135718:      	str	w8, [x20, #112]
+  13571c:      	ldr	w8, [x21, #400]
+  135720:      	mov	w2, wzr
+  135724:      	str	w8, [x20, #272]
+  135728:      	ldr	w8, [x21, #404]
+  13572c:      	str	w22, [x20, #536]
+  135730:      	str	w8, [x20, #444]
+  135734:      	bl	0x154b80 <ff_get_buffer>
+  135738:      	tbnz	w0, #31, 0x13546c <avcodec_find_decoder_by_name+0x514>
+  13573c:      	ldr	x0, [x20]
+  135740:      	ldr	x1, [x25, #56]
+  135744:      	ldrsw	x2, [x20, #64]
+  135748:      	bl	0x11c930 <memcpy@LIBC@plt>
+  13574c:      	ldp	x2, x0, [x25, #48]
+  135750:      	mov	w1, wzr
+  135754:      	bl	0x11d0e0 <memset@LIBC@plt>
+  135758:      	str	w22, [x19]
+  13575c:      	ldr	w8, [x25, #36]
+  135760:      	ldrh	w9, [x25, #34]
+  135764:      	add	w0, w8, w9
+  135768:      	b	0x13546c <avcodec_find_decoder_by_name+0x514>
+  13576c:      	mov	w0, #-12
+  135770:      	b	0x13546c <avcodec_find_decoder_by_name+0x514>
+  135774:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+  135778:      	sub	sp, sp, #48
+  13577c:      	str	x20, [sp, #16]
+  135780:      	stp	x19, x30, [sp, #32]
+  135784:      	bl	0x135880 <avcodec_find_decoder_by_name+0x928>
+  135788:      	ldr	x0, [x20, #56]
+  13578c:      	cbz	x0, 0x135798 <avcodec_find_decoder_by_name+0x840>
+  135790:      	bl	0x4287e8 <av_free>
+  135794:      	stp	xzr, xzr, [x20, #48]
+  135798:      	ldr	x0, [x20, #72]
+  13579c:      	cbz	x0, 0x1357a8 <avcodec_find_decoder_by_name+0x850>
+  1357a0:      	bl	0x11d3b0 <Avs3DecoderDestroy@plt>
+  1357a4:      	str	xzr, [x20, #72]
+  1357a8:      	str	wzr, [x20, #8]
+  1357ac:      	ldr	x8, [x19, #40]
+  1357b0:      	bl	0x135874 <avcodec_find_decoder_by_name+0x91c>
+  1357b4:      	b.ne	0x1357cc <avcodec_find_decoder_by_name+0x874>
+  1357b8:      	ldp	x19, x30, [sp, #32]
+  1357bc:      	ldr	x20, [sp, #16]
+  1357c0:      	mov	w0, wzr
+  1357c4:      	add	sp, sp, #48
+  1357c8:      	ret
+  1357cc:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+  1357d0:      	sub	sp, sp, #32
+  1357d4:      	str	x30, [sp, #16]
+  1357d8:      	mrs	x8, TPIDR_EL0
+  1357dc:      	ldr	x9, [x8, #40]
+  1357e0:      	str	x9, [sp, #8]
+  1357e4:      	ldr	x8, [x8, #40]
+  1357e8:      	bl	0x135874 <avcodec_find_decoder_by_name+0x91c>
+  1357ec:      	b.ne	0x1357fc <avcodec_find_decoder_by_name+0x8a4>
+  1357f0:      	ldr	x30, [sp, #16]
+  1357f4:      	add	sp, sp, #32
+  1357f8:      	ret
+  1357fc:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+  135800:      	sub	sp, sp, #32
+  135804:      	str	x30, [sp, #16]
+  135808:      	mrs	x8, TPIDR_EL0
+  13580c:      	ldr	x10, [x8, #40]
+  135810:      	mov	x9, xzr
+  135814:      	str	x10, [sp, #8]
+  135818:      	adrp	x10, #5951488
+  13581c:      	ldr	x10, [x10, #1816]
+  135820:      	add	x11, x9, #20
+  135824:      	cmp	x11, #220
+  135828:      	b.eq	0x13584c <avcodec_find_decoder_by_name+0x8f4>
+  13582c:      	add	x9, x10, x9
+  135830:      	ldr	w9, [x9, #12]
+  135834:      	cmp	w9, w0
+  135838:      	mov	x9, x11
+  13583c:      	b.ne	0x135820 <avcodec_find_decoder_by_name+0x8c8>
+  135840:      	add	x9, x10, x11
+  135844:      	ldurh	w0, [x9, #-4]
+  135848:      	b	0x135850 <avcodec_find_decoder_by_name+0x8f8>
+  13584c:      	mov	w0, wzr
+  135850:      	ldr	x8, [x8, #40]
+  135854:      	bl	0x135874 <avcodec_find_decoder_by_name+0x91c>
+  135858:      	b.ne	0x135868 <avcodec_find_decoder_by_name+0x910>
+  13585c:      	ldr	x30, [sp, #16]
+  135860:      	add	sp, sp, #32
+  135864:      	ret
+  135868:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+  13586c:      	mov	x0, x23
+  135870:      	b	0x11ca90 <GetNextIndice@plt>
+  135874:      	ldr	x9, [sp, #8]
+  135878:      	cmp	x8, x9
+  13587c:      	ret
+  135880:      	mrs	x19, TPIDR_EL0
+  135884:      	ldr	x8, [x19, #40]
+  135888:      	str	x8, [sp, #8]
+  13588c:      	ldr	x20, [x0, #32]
+  135890:      	ret
+  135894:      	sub	sp, sp, #32
+  135898:      	str	x30, [sp, #16]
+  13589c:      	mrs	x8, TPIDR_EL0
+  1358a0:      	ldr	x9, [x8, #40]
+  1358a4:      	str	x9, [sp, #8]
+  1358a8:      	bl	0x136084 <avcodec_find_decoder_by_name+0x112c>
+  1358ac:      	b.ne	0x1358c0 <avcodec_find_decoder_by_name+0x968>
+  1358b0:      	ldr	x30, [sp, #16]
+  1358b4:      	mov	w0, wzr
+  1358b8:      	add	sp, sp, #32
+  1358bc:      	ret
+  1358c0:      	bl	0x11d4c0 <__stack_chk_fail@LIBC@plt>
+  1358c4:      	sub	sp, sp, #144
+  1358c8:      	str	d8, [sp, #32]
+  1358cc:      	stp	x28, x27, [sp, #48]
+  1358d0:      	stp	x26, x25, [sp, #64]
+  1358d4:      	stp	x24, x23, [sp, #80]
+  1358d8:      	stp	x22, x21, [sp, #96]
+  1358dc:      	stp	x20, x19, [sp, #112]
+  1358e0:      	stp	x29, x30, [sp, #128]
+  1358e4:      	mrs	x25, TPIDR_EL0
+  1358e8:      	ldr	x8, [x25, #40]
+  1358ec:      	mov	x22, x1
+  1358f0:      	add	x1, sp, #20
+  1358f4:      	mov	w19, w5
+  1358f8:      	str	x8, [sp, #24]
+  1358fc:      	ldr	x26, [x0]
+  135900:      	str	x4, [x2]
+  135904:      	mov	w2, #12
+  135908:      	mov	x0, x4
+  13590c:      	mov	x21, x4
+  135910:      	mov	x20, x3
+  135914:      	str	wzr, [sp, #20]
+  135918:      	bl	0x11ca90 <GetNextIndice@plt>
+  13591c:      	and	w8, w0, #0xffff
+  135920:      	cmp	w8, #4095
+  135924:      	b.ne	0x135958 <avcodec_find_decoder_by_name+0xa00>
+  135928:      	add	x1, sp, #20
+  13592c:      	mov	w2, #4
+  135930:      	bl	0x13607c <avcodec_find_decoder_by_name+0x1124>
+  135934:      	and	w8, w0, #0xffff
+  135938:      	cmp	w8, #2
+  13593c:      	b.ne	0x135958 <avcodec_find_decoder_by_name+0xa00>
+  135940:      	add	x1, sp, #20
+  135944:      	mov	w2, #1
+  135948:      	bl	0x13607c <avcodec_find_decoder_by_name+0x1124>
+  13594c:      	and	w8, w0, #0xffff
+  135950:      	cmp	w8, #1
+  135954:      	b.ne	0x1359b0 <avcodec_find_decoder_by_name+0xa58>
+  135958:      	adrp	x2, #4636672
+  13595c:      	add	x2, x2, #2162
+  135960:      	mov	w1, #24
+  135964:      	mov	x0, xzr
+  135968:      	mov	x3, x21
+  13596c:      	mov	w4, w19
+  135970:      	bl	0x427144 <av_log>
+  135974:      	str	w19, [x20]
+  135978:      	ldr	x8, [x25, #40]
+  13597c:      	ldr	x9, [sp, #24]
+  135980:      	cmp	x8, x9
+  135984:      	b.ne	0x135fd8 <avcodec_find_decoder_by_name+0x1080>
+  135988:      	mov	w0, w19
+  13598c:      	ldp	x29, x30, [sp, #128]
+  135990:      	ldp	x20, x19, [sp, #112]
+  135994:      	ldp	x22, x21, [sp, #96]
+  135998:      	ldp	x24, x23, [sp, #80]
+  13599c:      	ldp	x26, x25, [sp, #64]
+  1359a0:      	ldp	x28, x27, [sp, #48]
+  1359a4:      	ldr	d8, [sp, #32]
+  1359a8:      	add	sp, sp, #144
+  1359ac:      	ret
+  1359b0:      	add	x1, sp, #20
+  1359b4:      	mov	w2, #3
+  1359b8:      	bl	0x13607c <avcodec_find_decoder_by_name+0x1124>
+  1359bc:      	strh	w0, [x26, #48]
+  1359c0:      	add	x1, sp, #20
+  1359c4:      	mov	w2, #3
+  1359c8:      	bl	0x13607c <avcodec_find_decoder_by_name+0x1124>
+  1359cc:      	strh	w0, [x26, #50]
+  1359d0:      	add	x1, sp, #20
+  1359d4:      	mov	w2, #4
+  1359d8:      	bl	0x13607c <avcodec_find_decoder_by_name+0x1124>
+  1359dc:      	strh	w0, [x26, #52]
+  1359e0:      	add	x1, sp, #20
+  1359e4:      	mov	w2, #8
+  1359e8:      	bl	0x13607c <avcodec_find_decoder_by_name+0x1124>
+  1359ec:      	ldrh	w8, [x26, #50]
+  1359f0:      	lsl	w9, w0, #8
+  1359f4:      	strh	w9, [x26, #54]
+  1359f8:      	cmp	w8, #2
+  1359fc:      	b.eq	0x135a20 <avcodec_find_decoder_by_name+0xac8>
+  135a00:      	cmp	w8, #1
+  135a04:      	b.eq	0x135a50 <avcodec_find_decoder_by_name+0xaf8>
+  135a08:      	cbnz	w8, 0x135ae0 <avcodec_find_decoder_by_name+0xb88>
+  135a0c:      	add	x1, sp, #20
+  135a10:      	mov	w2, #7
+  135a14:      	bl	0x13607c <avcodec_find_decoder_by_name+0x1124>
+  135a18:      	strh	w0, [x26, #56]
+  135a1c:      	b	0x135ae0 <avcodec_find_decoder_by_name+0xb88>
+  135a20:      	add	x1, sp, #20
+  135a24:      	mov	w2, #4
+  135a28:      	bl	0x13607c <avcodec_find_decoder_by_name+0x1124>
+  135a2c:      	tst	w0, #0xffff
+  135a30:      	add	w8, w0, #1
+  135a34:      	strh	w8, [x26, #64]
+  135a38:      	b.eq	0x135a74 <avcodec_find_decoder_by_name+0xb1c>
+  135a3c:      	and	w8, w8, #0xffff
+  135a40:      	cmp	w8, #2
+  135a44:      	b.ne	0x135ac8 <avcodec_find_decoder_by_name+0xb70>
+  135a48:      	mov	w8, #12
+  135a4c:      	b	0x135adc <avcodec_find_decoder_by_name+0xb84>
+  135a50:      	add	x1, sp, #20
+  135a54:      	mov	w2, #2
+  135a58:      	bl	0x13607c <avcodec_find_decoder_by_name+0x1124>
+  135a5c:      	and	w8, w0, #0xffff
+  135a60:      	cmp	w8, #1
+  135a64:      	strh	w0, [x26, #58]
+  135a68:      	b.eq	0x135a7c <avcodec_find_decoder_by_name+0xb24>
+  135a6c:      	cbz	w8, 0x135a9c <avcodec_find_decoder_by_name+0xb44>
+  135a70:      	b	0x135ae0 <avcodec_find_decoder_by_name+0xb88>
+  135a74:      	mov	w8, #11
+  135a78:      	b	0x135adc <avcodec_find_decoder_by_name+0xb84>
+  135a7c:      	add	x1, sp, #20
+  135a80:      	mov	w2, #7
+  135a84:      	bl	0x13607c <avcodec_find_decoder_by_name+0x1124>
+  135a88:      	strh	w0, [x26, #56]
+  135a8c:      	add	x1, sp, #20
+  135a90:      	mov	w2, #4
+  135a94:      	bl	0x13607c <avcodec_find_decoder_by_name+0x1124>
+  135a98:      	strh	w0, [x26, #68]
+  135a9c:      	add	x1, sp, #20
+  135aa0:      	mov	w2, #7
+  135aa4:      	bl	0x13607c <avcodec_find_decoder_by_name+0x1124>
+  135aa8:      	add	w8, w0, #1
+  135aac:      	add	x1, sp, #20
+  135ab0:      	mov	w2, #4
+  135ab4:      	mov	x0, x21
+  135ab8:      	strh	w8, [x26, #60]
+  135abc:      	bl	0x11ca90 <GetNextIndice@plt>
+  135ac0:      	strh	w0, [x26, #62]
+  135ac4:      	b	0x135ae0 <avcodec_find_decoder_by_name+0xb88>
+  135ac8:      	cmp	w8, #3
+  135acc:      	b.ne	0x135ad8 <avcodec_find_decoder_by_name+0xb80>
+  135ad0:      	mov	w8, #13
+  135ad4:      	b	0x135adc <avcodec_find_decoder_by_name+0xb84>
+  135ad8:      	mov	w8, #14
+  135adc:      	strh	w8, [x26, #56]
+  135ae0:      	add	x1, sp, #20
+  135ae4:      	mov	w2, #2
+  135ae8:      	bl	0x13607c <avcodec_find_decoder_by_name+0x1124>
+  135aec:      	ldrh	w8, [x26, #50]
+  135af0:      	strh	w0, [x26, #66]
+  135af4:      	cmp	w8, #1
+  135af8:      	b.eq	0x135b0c <avcodec_find_decoder_by_name+0xbb4>
+  135afc:      	add	x1, sp, #20
+  135b00:      	mov	w2, #4
+  135b04:      	bl	0x13607c <avcodec_find_decoder_by_name+0x1124>
+  135b08:      	strh	w0, [x26, #68]
+  135b0c:      	add	x1, sp, #20
+  135b10:      	mov	w2, #8
+  135b14:      	bl	0x13607c <avcodec_find_decoder_by_name+0x1124>
+  135b18:      	ldrh	w9, [x26, #54]
+  135b1c:      	fmov	s8, #0.12500000
+  135b20:      	ldrh	w8, [x26, #50]
+  135b24:      	adrp	x11, #5955584
+  135b28:      	add	w9, w9, w0
+  135b2c:      	strh	w9, [x26, #54]
+  135b30:      	ldr	s0, [sp, #20]
+  135b34:      	ldrh	w27, [x26, #52]
+  135b38:      	ldrh	w28, [x26, #66]
+  135b3c:      	cmp	w8, #2
+  135b40:      	ucvtf	s0, s0
+  135b44:      	fmul	s0, s0, s8
+  135b48:      	fcvtps	w9, s0
+  135b4c:      	str	w9, [x26, #72]
+  135b50:      	ldr	x11, [x11, #1688]
+  135b54:      	b.eq	0x135b88 <avcodec_find_decoder_by_name+0xc30>
+  135b58:      	cmp	w8, #1
+  135b5c:      	b.eq	0x135ba4 <avcodec_find_decoder_by_name+0xc4c>
+  135b60:      	cbnz	w8, 0x135bec <avcodec_find_decoder_by_name+0xc94>
+  135b64:      	ldrh	w23, [x26, #56]
+  135b68:      	cbz	w23, 0x135bf0 <avcodec_find_decoder_by_name+0xc98>
+  135b6c:      	cmp	w23, #1
+  135b70:      	b.ne	0x135bfc <avcodec_find_decoder_by_name+0xca4>
+  135b74:      	mov	w0, #2
+  135b78:      	mov	w23, #1
+  135b7c:      	mov	w8, #1
+  135b80:      	str	w8, [sp, #16]
+  135b84:      	b	0x135bf8 <avcodec_find_decoder_by_name+0xca0>
+  135b88:      	ldrh	w8, [x26, #64]
+  135b8c:      	ldrh	w23, [x26, #56]
+  135b90:      	mov	w9, wzr
+  135b94:      	mov	w10, #3
+  135b98:      	add	w8, w8, #1
+  135b9c:      	mul	w0, w8, w8
+  135ba0:      	b	0x135c68 <avcodec_find_decoder_by_name+0xd10>
+  135ba4:      	ldrh	w8, [x26, #58]
+  135ba8:      	cmp	w8, #1
+  135bac:      	b.eq	0x135c24 <avcodec_find_decoder_by_name+0xccc>
+  135bb0:      	cbnz	w8, 0x135f94 <avcodec_find_decoder_by_name+0x103c>
+  135bb4:      	ldr	x8, [x11, #8]
+  135bb8:      	ldrh	w10, [x26, #62]
+  135bbc:      	ldrh	w0, [x26, #60]
+  135bc0:      	mov	w9, #1
+  135bc4:      	mov	w23, #14
+  135bc8:      	ldr	w8, [x8, x10, lsl #2]
+  135bcc:      	cmp	w0, #2
+  135bd0:      	cinc	w10, w9, ne
+  135bd4:      	cmp	w0, #1
+  135bd8:      	csel	w10, wzr, w10, eq
+  135bdc:      	str	w8, [x26, #76]
+  135be0:      	mul	w29, w8, w0
+  135be4:      	mov	w8, w0
+  135be8:      	b	0x135c68 <avcodec_find_decoder_by_name+0xd10>
+  135bec:      	b	0x135bf8 <avcodec_find_decoder_by_name+0xca0>
+  135bf0:      	str	wzr, [sp, #16]
+  135bf4:      	mov	w0, #1
+  135bf8:      	b	0x135c80 <avcodec_find_decoder_by_name+0xd28>
+  135bfc:      	cmp	w23, #10

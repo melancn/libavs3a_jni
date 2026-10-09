@@ -1,0 +1,163 @@
+name: Release SDK (full)
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      sdkVersion:
+        description: 'SDK version (e.g. 0.1.0-rc.1)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-sdk-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build-full:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    environment: release
+    env:
+      ANDROID_COMPILE_SDK: '36'
+      ANDROID_MIN_SDK: '24'
+      ANDROID_NDK_VERSION: '27.2.12479018'
+      ANDROID_CMAKE_VERSION: '3.22.1'
+      SDK_VERSION: ${{ inputs.sdkVersion || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/wrapper-validation@v4
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-read-only: false
+
+      - name: Verify toolchain locks
+        shell: bash
+        run: python3 ci/verify-wrapper-and-locks.py
+
+      - name: Install pinned Android toolchain
+        shell: bash
+        run: |
+          set -euo pipefail
+          sdkmanager \
+            "platforms;android-${ANDROID_COMPILE_SDK}" \
+            "ndk;${ANDROID_NDK_VERSION}" \
+            "cmake;${ANDROID_CMAKE_VERSION}"
+          java -version
+          ./gradlew --version
+
+      - name: Host C++ tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          CMAKE="$ANDROID_HOME/cmake/$ANDROID_CMAKE_VERSION/bin/cmake"
+          CTEST="$ANDROID_HOME/cmake/$ANDROID_CMAKE_VERSION/bin/ctest"
+          "$CMAKE" -S native -B build/host -DAVS3A_BUILD_HOST_TESTS=ON
+          "$CMAKE" --build build/host --parallel 2
+          "$CTEST" --test-dir build/host --output-on-failure
+
+      - name: Stage vendor inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 ci/verify-vendor-inputs.py \
+            --lock vendor/manifest.lock.json \
+            --input-root vendor-inputs \
+            --stage-root .
+
+      - name: Build full AAR
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./gradlew --no-daemon \
+            :sdk:assembleFullRelease \
+            :sdk:publishFullReleasePublicationToCiRepository \
+            -PsdkVersion="$SDK_VERSION" \
+            -PsourceCommit="$GITHUB_SHA" \
+            -PandroidNdkVersion="$ANDROID_NDK_VERSION" \
+            -PandroidCmakeVersion="$ANDROID_CMAKE_VERSION"
+
+      - name: Verify full AAR
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 ci/verify-aar.py \
+            --aar sdk/build/outputs/aar/sdk-full-release.aar \
+            --distribution full \
+            --expected-abis arm64-v8a armeabi-v7a \
+            --ndk "$ANDROID_HOME/ndk/$ANDROID_NDK_VERSION"
+
+      - name: Produce distribution
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 ci/make-ci-dist.py \
+            --aar sdk/build/outputs/aar/sdk-full-release.aar \
+            --maven-dir build/ci-maven \
+            --version "$SDK_VERSION" \
+            --source-commit "$GITHUB_SHA" \
+            --distribution full \
+            --output dist
+
+      - name: Verify device evidence (if reports provided)
+        shell: bash
+        continue-on-error: true
+        run: |
+          if [ -f private-validation/devices/arm64-v8a/report.json ] && \
+             [ -f private-validation/devices/armeabi-v7a/report.json ]; then
+            python3 ci/verify-device-evidence.py \
+              --aar sdk/build/outputs/aar/sdk-full-release.aar \
+              --manifest dist/sdk-manifest.json \
+              --device-report private-validation/devices \
+              --fixture-manifest private-validation/fixture-manifest.json
+          else
+            echo "Device reports not provided; device validation remains NOT_RUN"
+          fi
+
+      - name: Upload full artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: avs3a-full-${{ env.SDK_VERSION }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 30
+
+  publish:
+    needs: build-full
+    runs-on: ubuntu-24.04
+    if: github.event_name == 'push'
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: avs3a-full-${{ github.ref_name }}
+          path: dist
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/**
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

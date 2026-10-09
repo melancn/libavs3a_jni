@@ -1,0 +1,10 @@
+﻿{
+  "schemaVersion": 1,
+  "vendorId": "avs3a-ystpzs-1.4.1",
+  "redistributionApproved": false,
+  "files": [
+    {"source": "arm64-v8a/libavs3a_decoder.so", "destination": "sdk/src/full/jniLibs/arm64-v8a/libavs3a_decoder.so", "size": 259992, "sha256": "4368cd990adcbd841e618bc2de81a96019b24c70b5487912e7ef603067a0eb23", "abi": "arm64-v8a"},
+    {"source": "armeabi-v7a/libavs3a_decoder.so", "destination": "sdk/src/full/jniLibs/armeabi-v7a/libavs3a_decoder.so", "size": 194176, "sha256": "0b32d35280486c7b36033ceb6c9e82ac4d4d55a7a7749a06eb29ab0e9495dccc", "abi": "armeabi-v7a"},
+    {"source": "model.bin", "destination": "sdk/src/full/assets/avs3a/model.bin", "size": 79930, "sha256": "55d56a17dbfa22da21f2fa945ebe13824d246fe8b2669a63e0440316282ae068"}
+  ]
+}

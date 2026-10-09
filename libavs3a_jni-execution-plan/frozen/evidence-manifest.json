@@ -1,0 +1,58 @@
+[
+    {
+        "file":  "evidence/apk.arm64-v8a.libijkffmpeg.av3a-disassembly.txt",
+        "sha256":  "6f65d10df6eed95b85f84b482318770c6245955e25257efac126f71a55098b6e"
+    },
+    {
+        "file":  "evidence/arm64-v8a.decoder.symbols-relocations.txt",
+        "sha256":  "993ed6589a41b8df72a967cd68cc5799baaca1fe23aea6052a68fcba1cc950d3"
+    },
+    {
+        "file":  "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+        "sha256":  "731f566f01da9bc60a7b770c31bf0ed1781f7b39e017415b404d7b5306ebcf24"
+    },
+    {
+        "file":  "evidence/arm64-v8a.libavs3a_decoder.exports.txt",
+        "sha256":  "73d758a27ebbd06de9626feee8957c27bbcfafd38f7f020bbd6db6699b742305"
+    },
+    {
+        "file":  "evidence/armeabi-v7a.decoder.symbols-relocations.txt",
+        "sha256":  "530c486a81a3ece92b82326c95c196ee7b29b5b09cbd8f3306e7f3872ee0b295"
+    },
+    {
+        "file":  "evidence/armeabi-v7a.libavs3a_decoder.exports.txt",
+        "sha256":  "83977ceb6a45fac6ac3372f628f08ae9db73b0e34abfa6f4275d93d546527e0d"
+    },
+    {
+        "file":  "evidence/armv7.apk.decoder-callbacks.txt",
+        "sha256":  "de6e04be8d97a518c4934af46c5f01ac4858b2ed63b7ffef588a8dd7222ee9c2"
+    },
+    {
+        "file":  "evidence/armv7.decoder.thumb.txt",
+        "sha256":  "85060fdc9e09f6cf991be92cfa7875f50609a5a230075374ce603a8c2261c543"
+    },
+    {
+        "file":  "evidence/handoff-tools-test-report.json",
+        "sha256":  "89109b5d923f10431504bbc133377abb1467d3484e53f5f4e4a49eb7599a6d76"
+    },
+    {
+        "file":  "evidence/README.md",
+        "sha256":  "bf2ee0a53903be0540af8ddc53025cac212710d4fa8ad8ed04821a5dab0b9e32"
+    },
+    {
+        "file":  "evidence/reference-test-report.json",
+        "sha256":  "528f9a913c3c24191776db17499ae69603b8ee14f37b364095069acbe05ecbb5"
+    },
+    {
+        "file":  "evidence/reference-test-result.txt",
+        "sha256":  "69f8d72d7942664cc7eda865e157805c1dab2fe5204cc5f3bef4d1328111e69c"
+    },
+    {
+        "file":  "evidence/table-and-vector-check.json",
+        "sha256":  "6321aabd55158d5cff98413852b8a4fff37ed4ca6dfd66a6ca3a8a62a3b7d9f6"
+    },
+    {
+        "file":  "evidence/tables.extracted.json",
+        "sha256":  "d5807b032fc69a253b54e8e63543e53459a66a748ea8cd49a97353ba89d88dd9"
+    }
+]

@@ -1,0 +1,16 @@
+{
+    "kind":  "HANDOFF_TOOLS_UNIT_ONLY",
+    "status":  "PASS",
+    "vendorExecuted":  false,
+    "deviceValidation":  "NOT_RUN",
+    "results":  [
+                    "PASS PCM_COMPARATOR_UNIT checks=61; synthetic PCM only; vendor NOT executed",
+                    "PASS STATIC_HANDOFF_UNIT baseline=1 rejectedMutations=15; vendor NOT executed"
+                ],
+    "inputSha256":  {
+                        "verify-contracts.cjs":  "4e9d799e0445434e9d16f91f94d1c29428aa4054910fce441c249d70cbf34dff",
+                        "test-compare-pcm.cjs":  "e4ee4d8960614cca1844226f093344cab322493e03471a439620566f91e3ce92",
+                        "test-verify-contracts.cjs":  "53a2119b643782dfcf826cf251cfba649be1ebbd7ceaaf7da1d19e5061354258",
+                        "compare-pcm.cjs":  "5abfa6d817179d3a4751bc2161deb7104df81a8acfb58bded93e8fb977fd4997"
+                    }
+}

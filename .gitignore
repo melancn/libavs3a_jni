@@ -1,0 +1,44 @@
+# Build outputs
+build/
+.gradle/
+*.apk
+*.aab
+*.aar
+*.dex
+local.properties
+
+# Native build
+native/generated/
+.cxx/
+
+# Vendor inputs (never commit)
+vendor-inputs/
+sdk/src/full/jniLibs/
+sdk/src/full/assets/
+
+# Private validation (T08)
+private-validation/
+
+# Private reference evidence (not published)
+reference/evidence/
+
+# Vendor binaries in execution plan package (never commit)
+libavs3a_jni-execution-plan/root/
+
+# IDE
+.idea/
+*.iml
+.vs/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+
+# Test artifacts
+dist/
+*.tmp

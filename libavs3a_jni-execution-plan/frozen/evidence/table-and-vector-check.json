@@ -1,0 +1,9 @@
+{
+  "cases": 414,
+  "maxFrameBytes": 5120,
+  "minFrameBytes": 11,
+  "crc123456789": "a69d",
+  "allTablesEqual": true,
+  "crcTableVerifiedAgainstPolynomial": true,
+  "realAudioFixtures": false
+}

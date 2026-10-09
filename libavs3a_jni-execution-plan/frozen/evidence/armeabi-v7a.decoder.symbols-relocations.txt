@@ -1,0 +1,653 @@
+﻿
+Relocation section '.rel.dyn' at offset 0x3674 contains 96 entries:
+ Offset     Info    Type                Sym. Value  Symbol's Name
+0002fab0  00000017 R_ARM_RELATIVE                    
+0002fb2c  00000017 R_ARM_RELATIVE                    
+0002fb30  00000017 R_ARM_RELATIVE                    
+0002fb34  00000017 R_ARM_RELATIVE                    
+0002fb38  00000017 R_ARM_RELATIVE                    
+0002fb3c  00000017 R_ARM_RELATIVE                    
+0002fb40  00000017 R_ARM_RELATIVE                    
+0002fb44  00000017 R_ARM_RELATIVE                    
+0002fb48  00000017 R_ARM_RELATIVE                    
+0002fb4c  00000017 R_ARM_RELATIVE                    
+0002fb50  00000017 R_ARM_RELATIVE                    
+0002fb54  00000017 R_ARM_RELATIVE                    
+0002fb58  00000017 R_ARM_RELATIVE                    
+0002fb5c  00000017 R_ARM_RELATIVE                    
+0002fb60  00000017 R_ARM_RELATIVE                    
+0002fb64  00000017 R_ARM_RELATIVE                    
+0002fb68  00000017 R_ARM_RELATIVE                    
+0002fb6c  00000017 R_ARM_RELATIVE                    
+0002fb70  00000017 R_ARM_RELATIVE                    
+0002fd50  00000017 R_ARM_RELATIVE                    
+0002fd54  00000017 R_ARM_RELATIVE                    
+0002fd58  00000017 R_ARM_RELATIVE                    
+00030028  00000017 R_ARM_RELATIVE                    
+0002fc7c  00000515 R_ARM_GLOB_DAT         00000000   __stack_chk_guard@LIBC
+0002fcd4  00000715 R_ARM_GLOB_DAT         00000000   fread@LIBC
+0002fca8  00000915 R_ARM_GLOB_DAT         00000000   __sF@LIBC
+0002fd44  00000f15 R_ARM_GLOB_DAT         00000000   free@LIBC
+0002fcac  00001a15 R_ARM_GLOB_DAT         00000000   __strncpy_chk2@LIBC
+0002fd3c  00003115 R_ARM_GLOB_DAT         0002d190   mcr_codebook_8bit
+0002fcf8  00003515 R_ARM_GLOB_DAT         000157e0   fft_reordertbl64
+0002faf0  00003602 R_ARM_ABS32            00014828   bitrateTableMC5P1P2
+0002fd04  00003815 R_ARM_GLOB_DAT         00020564   lsf_stage1_CB1_hbr
+0002fc84  00003915 R_ARM_GLOB_DAT         00014ab0   avs3SamplingRateTable
+0002faf8  00003a02 R_ARM_ABS32            00014868   bitrateTableMC5P1P4
+0002fcc4  00003b15 R_ARM_GLOB_DAT         0002b564   bweTargetTileTable
+0002fcb0  00003c15 R_ARM_GLOB_DAT         0002b744   crc16Table
+0002fd28  00003d15 R_ARM_GLOB_DAT         00027be4   lsf_stage1_CB2_lbr
+0002fcbc  00003f15 R_ARM_GLOB_DAT         0002004c   avs3_hoa3_group_config
+0002fc98  00004215 R_ARM_GLOB_DAT         0001fde2   hoa_sfb_table_low_bitrate
+0002fac8  00004802 R_ARM_ABS32            00014768   bitrateTableMC5P1
+0002fcb4  00004d15 R_ARM_GLOB_DAT         00010d33   SetShort
+0002fd24  00005215 R_ARM_GLOB_DAT         000257e4   lsf_stage1_CB1_lbr
+0002fad0  00005402 R_ARM_ABS32            000147a8   bitrateTableMC7P1
+0002fd00  00006b15 R_ARM_GLOB_DAT         00015a60   fft_reordertbl512
+0002fd20  00007115 R_ARM_GLOB_DAT         000204e4   mean_lsf
+0002fcd8  00007e15 R_ARM_GLOB_DAT         0002041c   sfb_table_fb_long
+0002fab8  00008102 R_ARM_ABS32            000146e8   bitrateTableMono
+0002fce4  00008315 R_ARM_GLOB_DAT         00014ae0   fft_cos_table32
+0002fd1c  00008615 R_ARM_GLOB_DAT         000255e4   lsf_stage2_CB5_hbr
+0002fcfc  00008715 R_ARM_GLOB_DAT         00015860   fft_reordertbl256
+0002fb10  00008902 R_ARM_ABS32            00014928   bitrateTableFoa
+0002fd38  00008a15 R_ARM_GLOB_DAT         0002b990   mcr_codebook_9bit
+0002fcec  00008e15 R_ARM_GLOB_DAT         00014b60   fft_cos_table128
+0002fcc8  00009115 R_ARM_GLOB_DAT         0002b424   bweSfbTable
+0002fcdc  00009215 R_ARM_GLOB_DAT         00020480   sfb_len_fb_long
+0002fcf4  00009415 R_ARM_GLOB_DAT         00014d60   fft_cos_table256
+0002fce0  00009815 R_ARM_GLOB_DAT         00015160   fft_sin_table32
+0002fd18  00009a15 R_ARM_GLOB_DAT         00025464   lsf_stage2_CB4_hbr
+0002fac0  0000a402 R_ARM_ABS32            00014728   bitrateTableStereo
+0002fd48  0000a715 R_ARM_GLOB_DAT         00030020   FilterBorders
+0002fae8  0000b002 R_ARM_ABS32            000147e8   bitrateTableMC4P0
+0002fd0c  0000b715 R_ARM_GLOB_DAT         00025164   lsf_stage2_CB3_hbr
+0002fcd0  0000b815 R_ARM_GLOB_DAT         0002b6a4   bweSfbTileWrapTable
+0002fc8c  0000ba15 R_ARM_GLOB_DAT         0002fab4   codecBitrateConfigTable
+0002fca0  0000be15 R_ARM_GLOB_DAT         00010d09   SetZero
+0002fcc0  0000c315 R_ARM_GLOB_DAT         0001f984   avs3_hoa_sin_table
+0002fc9c  0000c815 R_ARM_GLOB_DAT         0002dd90   mcIldCodebook
+0002fd10  0000cb15 R_ARM_GLOB_DAT         00024b64   lsf_stage2_CB2_hbr
+0002fd34  0000cc15 R_ARM_GLOB_DAT         0002a9e4   lsf_stage2_CB3_lbr
+0002fc94  0000d515 R_ARM_GLOB_DAT         00010d61   Mvf2f
+0002fb18  0000de02 R_ARM_ABS32            00014968   bitrateTableHoa2
+0002fd14  0000df15 R_ARM_GLOB_DAT         00024564   lsf_stage2_CB1_hbr
+0002fb20  0000e102 R_ARM_ABS32            000149a8   bitrateTableHoa3
+00030000  0000e202 R_ARM_ABS32            0002b124   tnsCodingTable0
+00030004  0000e302 R_ARM_ABS32            0002b184   tnsCodingTable1
+0002fd30  0000e515 R_ARM_GLOB_DAT         0002a1e4   lsf_stage2_CB2_lbr
+00030008  0000e602 R_ARM_ABS32            0002b1e4   tnsCodingTable2
+0003000c  0000e702 R_ARM_ABS32            0002b244   tnsCodingTable3
+00030010  0000e902 R_ARM_ABS32            0002b2a4   tnsCodingTable4
+00030014  0000ec02 R_ARM_ABS32            0002b304   tnsCodingTable5
+00030018  0000ee02 R_ARM_ABS32            0002b364   tnsCodingTable6
+0002fb00  0000f002 R_ARM_ABS32            000148a8   bitrateTableMC7P1P2
+0002fd40  0000f115 R_ARM_GLOB_DAT         0002b944   mcr_sfb_table_fb
+0003001c  0000f202 R_ARM_ABS32            0002b3c4   tnsCodingTable7
+0002fd4c  0000f315 R_ARM_GLOB_DAT         0002b0e4   tnsCoeff4
+0002fcb8  0000f615 R_ARM_GLOB_DAT         0001fe10   avs3_hoa2_group_config
+0002fb08  0000f702 R_ARM_ABS32            000148e8   bitrateTableMC7P1P4
+0002fc90  0000fd15 R_ARM_GLOB_DAT         00030000   tnsCodingTable
+0002fccc  00010015 R_ARM_GLOB_DAT         0002b624   bweSrcTileTable
+0002fd2c  00010315 R_ARM_GLOB_DAT         000297e4   lsf_stage2_CB1_lbr
+0002fce8  00010615 R_ARM_GLOB_DAT         000151e0   fft_sin_table128
+0002fc80  00010715 R_ARM_GLOB_DAT         00004b65   GetNextIndice
+0002fc88  00010815 R_ARM_GLOB_DAT         000149e8   mcChannelConfigTable
+0002fca4  00010915 R_ARM_GLOB_DAT         0001e488   avs3_hoa_fixed_angle_basis_matrix
+0002fcf0  00010d15 R_ARM_GLOB_DAT         000153e0   fft_sin_table256
+0002fd08  00010e15 R_ARM_GLOB_DAT         00022964   lsf_stage1_CB2_hbr
+
+Relocation section '.rel.plt' at offset 0x3974 contains 166 entries:
+ Offset     Info    Type                Sym. Value  Symbol's Name
+0002fd68  00000216 R_ARM_JUMP_SLOT        00000000   __cxa_finalize@LIBC
+0002fd6c  00000116 R_ARM_JUMP_SLOT        00000000   __cxa_atexit@LIBC
+0002fd70  00000716 R_ARM_JUMP_SLOT        00000000   fread@LIBC
+0002fd74  00010716 R_ARM_JUMP_SLOT        00004b65   GetNextIndice
+0002fd78  00000616 R_ARM_JUMP_SLOT        00000000   ceilf@LIBC
+0002fd7c  00000816 R_ARM_JUMP_SLOT        00000000   fseek@LIBC
+0002fd80  00006c16 R_ARM_JUMP_SLOT        00008b79   GetFrameLength
+0002fd84  00000416 R_ARM_JUMP_SLOT        00000000   __stack_chk_fail@LIBC
+0002fd88  0000d416 R_ARM_JUMP_SLOT        000046e1   Avs3ParseBsFrameHeader
+0002fd8c  00003e16 R_ARM_JUMP_SLOT        000094cd   Crc16
+0002fd90  00007716 R_ARM_JUMP_SLOT        00009d09   Index2PairMapping
+0002fd94  00004d16 R_ARM_JUMP_SLOT        00010d33   SetShort
+0002fd98  00011216 R_ARM_JUMP_SLOT        0000ca1d   InitNeuralQcData
+0002fd9c  00006416 R_ARM_JUMP_SLOT        0000dba1   MdctDequantDecodeHyper
+0002fda0  00006f16 R_ARM_JUMP_SLOT        0000e035   MdctDequantDecodeHyperLc
+0002fda4  0000fc16 R_ARM_JUMP_SLOT        00009315   SpectrumDegroupingDec
+0002fda8  00011316 R_ARM_JUMP_SLOT        0000a901   BweApplyDec
+0002fdac  00004e16 R_ARM_JUMP_SLOT        00010cb7   TnsDec
+0002fdb0  00002f16 R_ARM_JUMP_SLOT        0000c15d   Avs3FdInvSpectrumShaping
+0002fdb4  0000ed16 R_ARM_JUMP_SLOT        0000a245   McLfeProc
+0002fdb8  00010116 R_ARM_JUMP_SLOT        00008fed   MdctSpectrumDeinterleave
+0002fdbc  0000fb16 R_ARM_JUMP_SLOT        00005575   Avs3InverseMdctDecoder
+0002fdc0  0000be16 R_ARM_JUMP_SLOT        00010d09   SetZero
+0002fdc4  0000d516 R_ARM_JUMP_SLOT        00010d61   Mvf2f
+0002fdc8  00003016 R_ARM_JUMP_SLOT        00008c0d   GetWindowShape
+0002fdcc  0000c916 R_ARM_JUMP_SLOT        0000d4ed   IMDCT
+0002fdd0  00007216 R_ARM_JUMP_SLOT        00010f45   VMult
+0002fdd4  00005f16 R_ARM_JUMP_SLOT        00010f21   Vadd
+0002fdd8  00007d16 R_ARM_JUMP_SLOT        00008cd9   WindowSignal
+0002fddc  00006d16 R_ARM_JUMP_SLOT        000070f5   Avs3MetadataDec
+0002fde0  00010416 R_ARM_JUMP_SLOT        000082a1   Avs3MonoDec
+0002fde4  0000a616 R_ARM_JUMP_SLOT        00008459   Avs3StereoMcrDec
+0002fde8  00008c16 R_ARM_JUMP_SLOT        000069e1   Avs3McDec
+0002fdec  0000bb16 R_ARM_JUMP_SLOT        0000585d   Avs3HoaDec
+0002fdf0  00002e16 R_ARM_JUMP_SLOT        0000829d   Avs3MixDec
+0002fdf4  0000dd16 R_ARM_JUMP_SLOT        00008349   Avs3StereoDec
+0002fdf8  00007816 R_ARM_JUMP_SLOT        00008ed9   Avs3SynthOutput
+0002fdfc  00007b16 R_ARM_JUMP_SLOT        000096c1   HoaBitrateConfigTable
+0002fe00  0000d216 R_ARM_JUMP_SLOT        00005081   DecodeCoreSideBits
+0002fe04  0000eb16 R_ARM_JUMP_SLOT        000052a9   DecodeGroupBits
+0002fe08  0000f916 R_ARM_JUMP_SLOT        00004e55   DecodeHoaSideBits
+0002fe0c  00010c16 R_ARM_JUMP_SLOT        00009499   GetAvailableBits
+0002fe10  0000bd16 R_ARM_JUMP_SLOT        000094fd   HoaSplitBytesGroup
+0002fe14  00008816 R_ARM_JUMP_SLOT        00005319   DecodeQcBits
+0002fe18  0000d116 R_ARM_JUMP_SLOT        000053fd   Avs3InverseQC
+0002fe1c  00009b16 R_ARM_JUMP_SLOT        000054e5   Avs3PostSynthesis
+0002fe20  00009f16 R_ARM_JUMP_SLOT        0000d705   MDCT
+0002fe24  00005916 R_ARM_JUMP_SLOT        00010d1f   SetFloat
+0002fe28  00010a16 R_ARM_JUMP_SLOT        00010de9   MvShort2Short
+0002fe2c  0000bc16 R_ARM_JUMP_SLOT        00009b01   GetSingleNeighborBasisCoeff
+0002fe30  0000d916 R_ARM_JUMP_SLOT        00010db9   Dotp
+0002fe34  00000a16 R_ARM_JUMP_SLOT        00000000   calloc@LIBC
+0002fe38  00000e16 R_ARM_JUMP_SLOT        00000000   fopen@LIBC
+0002fe3c  00010f16 R_ARM_JUMP_SLOT        0000c5dd   InitNeuralCodec
+0002fe40  00001216 R_ARM_JUMP_SLOT        00000000   malloc@LIBC
+0002fe44  0000cd16 R_ARM_JUMP_SLOT        000046c5   ResetBitstream
+0002fe48  0000cf16 R_ARM_JUMP_SLOT        000097dd   Avs3HoaInitConfig
+0002fe4c  00009616 R_ARM_JUMP_SLOT        0000ce09   InitMcrConfig
+0002fe50  00011116 R_ARM_JUMP_SLOT        0000ce4d   InitMcrData
+0002fe54  00001016 R_ARM_JUMP_SLOT        00000000   fwrite@LIBC
+0002fe58  00000b16 R_ARM_JUMP_SLOT        00000000   exit@LIBC
+0002fe5c  00003716 R_ARM_JUMP_SLOT        0000a221   GetLfeAllocBytes
+0002fe60  00001116 R_ARM_JUMP_SLOT        00000000   log@LIBC
+0002fe64  00000d16 R_ARM_JUMP_SLOT        00000000   floor@LIBC
+0002fe68  00000c16 R_ARM_JUMP_SLOT        00000000   fclose@LIBC
+0002fe6c  00000f16 R_ARM_JUMP_SLOT        00000000   free@LIBC
+0002fe70  00005b16 R_ARM_JUMP_SLOT        0000c87d   DestroyNeuralCodec
+0002fe74  00007a16 R_ARM_JUMP_SLOT        000104c1   TnsParaInit
+0002fe78  0000a016 R_ARM_JUMP_SLOT        0000a4d9   GetBwePresent
+0002fe7c  00007516 R_ARM_JUMP_SLOT        0000a53d   BweGetConfig
+0002fe80  00008016 R_ARM_JUMP_SLOT        0000a8c9   InitBweDecData
+0002fe84  00010b16 R_ARM_JUMP_SLOT        00008ea3   InitCoreConfig
+0002fe88  00001316 R_ARM_JUMP_SLOT        00000000   __strlen_chk@LIBC
+0002fe8c  00001616 R_ARM_JUMP_SLOT        00000000   strncmp@LIBC
+0002fe90  00001716 R_ARM_JUMP_SLOT        00000000   strrchr@LIBC
+0002fe94  00004016 R_ARM_JUMP_SLOT        00008561   WriteWavHeader
+0002fe98  00001416 R_ARM_JUMP_SLOT        00000000   fprintf@LIBC
+0002fe9c  00001516 R_ARM_JUMP_SLOT        00000000   ftell@LIBC
+0002fea0  0000c516 R_ARM_JUMP_SLOT        00004cd5   DecodeMcSideBits
+0002fea4  00003416 R_ARM_JUMP_SLOT        00009f1d   McBitsAllocationHasSiL
+0002fea8  00006916 R_ARM_JUMP_SLOT        00009d45   Avs3McacDec
+0002feac  00001916 R_ARM_JUMP_SLOT        00000000   powf@LIBC
+0002feb0  00004116 R_ARM_JUMP_SLOT        00006b35   Avs3VrExtEqEffectDec
+0002feb4  00001816 R_ARM_JUMP_SLOT        00000000   floorf@LIBC
+0002feb8  00005d16 R_ARM_JUMP_SLOT        00006dc9   Avs3VrExtVertexDec
+0002febc  00006716 R_ARM_JUMP_SLOT        00006c19   Avs3VrExtAudioEffectDec
+0002fec0  0000d016 R_ARM_JUMP_SLOT        00006e51   Avs3VrExtSurfaceDec
+0002fec4  00010516 R_ARM_JUMP_SLOT        00006fb5   Avs3VrExtAcousticEnvDec
+0002fec8  00004516 R_ARM_JUMP_SLOT        00006f59   Avs3VrExtRenderInfoDec
+0002fecc  00004316 R_ARM_JUMP_SLOT        00007091   Avs3VrExtDec
+0002fed0  0000c416 R_ARM_JUMP_SLOT        00004c31   DecodeStereoSideBits
+0002fed4  00008d16 R_ARM_JUMP_SLOT        0000a30f   StereoBitsAllocation
+0002fed8  0000fe16 R_ARM_JUMP_SLOT        0000a439   StereoInvMsProcess
+0002fedc  0000ad16 R_ARM_JUMP_SLOT        0000d315   McrDecode
+0002fee0  00001b16 R_ARM_JUMP_SLOT        00000000   fflush@LIBC
+0002fee4  00007016 R_ARM_JUMP_SLOT        00008675   ApplyReluActFuncVec
+0002fee8  0000aa16 R_ARM_JUMP_SLOT        000086d3   ApplyLinearActFuncVec
+0002feec  00001c16 R_ARM_JUMP_SLOT        00000000   exp@LIBC
+0002fef0  00009716 R_ARM_JUMP_SLOT        00008719   ApplySigmoidActFuncVec
+0002fef4  00009316 R_ARM_JUMP_SLOT        0000879b   ApplyTanhActFuncVec
+0002fef8  00005016 R_ARM_JUMP_SLOT        00011015   MatrixMult
+0002fefc  00001e16 R_ARM_JUMP_SLOT        00000000   sin@LIBC
+0002ff00  0000e016 R_ARM_JUMP_SLOT        00008ba1   GetMdctWindow
+0002ff04  00002c16 R_ARM_JUMP_SLOT        00010e1d   MvFloat2Short
+0002ff08  00001d16 R_ARM_JUMP_SLOT        00000000   __aeabi_memclr8
+0002ff0c  00009916 R_ARM_JUMP_SLOT        00008f61   MdctSpectrumInterleave
+0002ff10  00006216 R_ARM_JUMP_SLOT        00010ff5   VMultC
+0002ff14  0000af16 R_ARM_JUMP_SLOT        00009de9   CalcChannelEnergies
+0002ff18  0000d316 R_ARM_JUMP_SLOT        00010fd1   SumFloat
+0002ff1c  0000b116 R_ARM_JUMP_SLOT        00009fdd   McBitsAllocation
+0002ff20  00004916 R_ARM_JUMP_SLOT        0000a259   CalculateEnergyRatio
+0002ff24  00001f16 R_ARM_JUMP_SLOT        00000000   exp2@LIBC
+0002ff28  00002016 R_ARM_JUMP_SLOT        00000000   rand@LIBC
+0002ff2c  0000ae16 R_ARM_JUMP_SLOT        0000882d   InitGdnParam
+0002ff30  0000ff16 R_ARM_JUMP_SLOT        0000abc9   CnnMallocRuntimeBuffer
+0002ff34  00005e16 R_ARM_JUMP_SLOT        000086a5   ApplyReluActFunc2D
+0002ff38  00008516 R_ARM_JUMP_SLOT        00008911   ApplyGdnActFunc
+0002ff3c  00006816 R_ARM_JUMP_SLOT        000086eb   ApplyLinearActFunc2D
+0002ff40  00004416 R_ARM_JUMP_SLOT        00008a45   ApplyIgdnActFunc
+0002ff44  00005c16 R_ARM_JUMP_SLOT        000088cb   DestroyGdnParam
+0002ff48  0000c016 R_ARM_JUMP_SLOT        0000ae75   CnnFreeRuntimeBuffer
+0002ff4c  00002216 R_ARM_JUMP_SLOT        00000000   cos@LIBC
+0002ff50  00002316 R_ARM_JUMP_SLOT        00000000   sincos@LIBC
+0002ff54  00005716 R_ARM_JUMP_SLOT        0000c22d   FFT
+0002ff58  0000d716 R_ARM_JUMP_SLOT        0000cdf1   LsfQuantDec
+0002ff5c  0000f816 R_ARM_JUMP_SLOT        0000bca1   LsfToLsp
+0002ff60  00008f16 R_ARM_JUMP_SLOT        0000bd05   LspToLpc
+0002ff64  00007316 R_ARM_JUMP_SLOT        0000be7d   SpectrumShaping
+0002ff68  0000b416 R_ARM_JUMP_SLOT        0000b155   InitCnnLayer
+0002ff6c  0000ef16 R_ARM_JUMP_SLOT        0000c429   InitQuantizer
+0002ff70  00010216 R_ARM_JUMP_SLOT        0000fb39   InitRangeCoderConfig
+0002ff74  0000db16 R_ARM_JUMP_SLOT        0000bbe5   DestroyCnnLayer
+0002ff78  00007916 R_ARM_JUMP_SLOT        0000c5c9   DestroyQuantizer
+0002ff7c  00009d16 R_ARM_JUMP_SLOT        0000fc69   DestroyRangeCoderConfig
+0002ff80  00004c16 R_ARM_JUMP_SLOT        00010d53   SetUC
+0002ff84  00006616 R_ARM_JUMP_SLOT        0000ca75   LsfQuantDecHbr
+0002ff88  00008216 R_ARM_JUMP_SLOT        0000cc8d   LsfQuantDecLbr
+0002ff8c  00002416 R_ARM_JUMP_SLOT        00000000   atan@LIBC
+0002ff90  00008416 R_ARM_JUMP_SLOT        0000c3d5   IFFT
+0002ff94  0000ab16 R_ARM_JUMP_SLOT        00010237   RangeDecodeProcess
+0002ff98  00009c16 R_ARM_JUMP_SLOT        0000c545   LatentDequantize
+0002ff9c  0000ea16 R_ARM_JUMP_SLOT        0000b8f9   Conv1DTranspose2Part
+0002ffa0  0000f416 R_ARM_JUMP_SLOT        0000b6a5   Conv1DTranspose
+0002ffa4  00007f16 R_ARM_JUMP_SLOT        0000f9bd   LatentNoiseFilling
+0002ffa8  00002516 R_ARM_JUMP_SLOT        00000000   pow@LIBC
+0002ffac  0000ac16 R_ARM_JUMP_SLOT        0000b3b1   Conv1D
+0002ffb0  0000c716 R_ARM_JUMP_SLOT        0000c499   LatentQuantize
+0002ffb4  0000a216 R_ARM_JUMP_SLOT        0000fccd   RangeEncodeProcess
+0002ffb8  0000b916 R_ARM_JUMP_SLOT        0000ffaf   RangeEncodeProcessBrEst
+0002ffbc  00000316 R_ARM_JUMP_SLOT        00000000   log10@LIBC
+0002ffc0  0000fa16 R_ARM_JUMP_SLOT        0000f699   ExtractNfParam
+0002ffc4  00006316 R_ARM_JUMP_SLOT        0000a7d1   BweGetSfm
+0002ffc8  00006116 R_ARM_JUMP_SLOT        0000a861   BweGetPeakAvgRatio
+0002ffcc  00004716 R_ARM_JUMP_SLOT        00010521   ClearTnsFilterCoefficients
+0002ffd0  00004f16 R_ARM_JUMP_SLOT        00010671   GetTnsData
+0002ffd4  0000f516 R_ARM_JUMP_SLOT        00010bdd   TnsJudge
+0002ffd8  0000b316 R_ARM_JUMP_SLOT        00010a05   RunTnsFilter
+0002ffdc  0000c116 R_ARM_JUMP_SLOT        00010531   TnsEncodeParam
+0002ffe0  0000ce16 R_ARM_JUMP_SLOT        000105cd   TnsDecodeParam
+0002ffe4  00002116 R_ARM_JUMP_SLOT        00000000   abort@LIBC
+0002ffe8  00002716 R_ARM_JUMP_SLOT        00000000   __aeabi_memcpy
+0002ffec  00002616 R_ARM_JUMP_SLOT        00000000   __aeabi_memclr
+0002fff0  00002916 R_ARM_JUMP_SLOT        00000000   dladdr@LIBC
+0002fff4  00002a16 R_ARM_JUMP_SLOT        00000000   snprintf@LIBC
+0002fff8  00002816 R_ARM_JUMP_SLOT        00000000   __gnu_Unwind_Find_exidx
+0002fffc  00002b16 R_ARM_JUMP_SLOT        00000000   raise@LIBC
+
+Symbol table '.dynsym' contains 276 entries:
+   Num:    Value  Size Type    Bind   Vis       Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT   UND 
+     1: 00000000     0 FUNC    GLOBAL DEFAULT   UND __cxa_atexit@LIBC
+     2: 00000000     0 FUNC    GLOBAL DEFAULT   UND __cxa_finalize@LIBC
+     3: 00000000     0 FUNC    GLOBAL DEFAULT   UND log10@LIBC
+     4: 00000000     0 FUNC    GLOBAL DEFAULT   UND __stack_chk_fail@LIBC
+     5: 00000000     0 OBJECT  GLOBAL DEFAULT   UND __stack_chk_guard@LIBC
+     6: 00000000     0 FUNC    GLOBAL DEFAULT   UND ceilf@LIBC
+     7: 00000000     0 FUNC    GLOBAL DEFAULT   UND fread@LIBC
+     8: 00000000     0 FUNC    GLOBAL DEFAULT   UND fseek@LIBC
+     9: 00000000     0 OBJECT  GLOBAL DEFAULT   UND __sF@LIBC
+    10: 00000000     0 FUNC    GLOBAL DEFAULT   UND calloc@LIBC
+    11: 00000000     0 FUNC    GLOBAL DEFAULT   UND exit@LIBC
+    12: 00000000     0 FUNC    GLOBAL DEFAULT   UND fclose@LIBC
+    13: 00000000     0 FUNC    GLOBAL DEFAULT   UND floor@LIBC
+    14: 00000000     0 FUNC    GLOBAL DEFAULT   UND fopen@LIBC
+    15: 00000000     0 FUNC    GLOBAL DEFAULT   UND free@LIBC
+    16: 00000000     0 FUNC    GLOBAL DEFAULT   UND fwrite@LIBC
+    17: 00000000     0 FUNC    GLOBAL DEFAULT   UND log@LIBC
+    18: 00000000     0 FUNC    GLOBAL DEFAULT   UND malloc@LIBC
+    19: 00000000     0 FUNC    GLOBAL DEFAULT   UND __strlen_chk@LIBC
+    20: 00000000     0 FUNC    GLOBAL DEFAULT   UND fprintf@LIBC
+    21: 00000000     0 FUNC    GLOBAL DEFAULT   UND ftell@LIBC
+    22: 00000000     0 FUNC    GLOBAL DEFAULT   UND strncmp@LIBC
+    23: 00000000     0 FUNC    GLOBAL DEFAULT   UND strrchr@LIBC
+    24: 00000000     0 FUNC    GLOBAL DEFAULT   UND floorf@LIBC
+    25: 00000000     0 FUNC    GLOBAL DEFAULT   UND powf@LIBC
+    26: 00000000     0 FUNC    GLOBAL DEFAULT   UND __strncpy_chk2@LIBC
+    27: 00000000     0 FUNC    GLOBAL DEFAULT   UND fflush@LIBC
+    28: 00000000     0 FUNC    GLOBAL DEFAULT   UND exp@LIBC
+    29: 00000000     0 FUNC    GLOBAL DEFAULT   UND __aeabi_memclr8
+    30: 00000000     0 FUNC    GLOBAL DEFAULT   UND sin@LIBC
+    31: 00000000     0 FUNC    GLOBAL DEFAULT   UND exp2@LIBC
+    32: 00000000     0 FUNC    GLOBAL DEFAULT   UND rand@LIBC
+    33: 00000000     0 FUNC    GLOBAL DEFAULT   UND abort@LIBC
+    34: 00000000     0 FUNC    GLOBAL DEFAULT   UND cos@LIBC
+    35: 00000000     0 FUNC    GLOBAL DEFAULT   UND sincos@LIBC
+    36: 00000000     0 FUNC    GLOBAL DEFAULT   UND atan@LIBC
+    37: 00000000     0 FUNC    GLOBAL DEFAULT   UND pow@LIBC
+    38: 00000000     0 FUNC    GLOBAL DEFAULT   UND __aeabi_memclr
+    39: 00000000     0 FUNC    GLOBAL DEFAULT   UND __aeabi_memcpy
+    40: 00000000     0 FUNC    GLOBAL DEFAULT   UND __gnu_Unwind_Find_exidx
+    41: 00000000     0 FUNC    GLOBAL DEFAULT   UND dladdr@LIBC
+    42: 00000000     0 FUNC    GLOBAL DEFAULT   UND snprintf@LIBC
+    43: 00000000     0 FUNC    GLOBAL DEFAULT   UND raise@LIBC
+    44: 00010e1d   260 FUNC    GLOBAL DEFAULT    13 MvFloat2Short
+    45: 00020288   404 OBJECT  GLOBAL DEFAULT    16 grid100
+    46: 0000829d     4 FUNC    GLOBAL DEFAULT    13 Avs3MixDec
+    47: 0000c15d   208 FUNC    GLOBAL DEFAULT    13 Avs3FdInvSpectrumShaping
+    48: 00008c0d   202 FUNC    GLOBAL DEFAULT    13 GetWindowShape
+    49: 0002d190  3072 OBJECT  GLOBAL DEFAULT    16 mcr_codebook_8bit
+    50: 0002b96a    36 OBJECT  GLOBAL DEFAULT    16 mcr_sfb_len_fb
+    51: 0000efa9  1776 FUNC    GLOBAL DEFAULT    13 MdctQuantEncodeHyperLc
+    52: 00009f1d   192 FUNC    GLOBAL DEFAULT    13 McBitsAllocationHasSiL
+    53: 000157e0   128 OBJECT  GLOBAL DEFAULT    16 fft_reordertbl64
+    54: 00014828    64 OBJECT  GLOBAL DEFAULT    16 bitrateTableMC5P1P2
+    55: 0000a221    36 FUNC    GLOBAL DEFAULT    13 GetLfeAllocBytes
+    56: 00020564  9216 OBJECT  GLOBAL DEFAULT    16 lsf_stage1_CB1_hbr
+    57: 00014ab0    36 OBJECT  GLOBAL DEFAULT    16 avs3SamplingRateTable
+    58: 00014868    64 OBJECT  GLOBAL DEFAULT    16 bitrateTableMC5P1P4
+    59: 0002b564   192 OBJECT  GLOBAL DEFAULT    16 bweTargetTileTable
+    60: 0002b744   512 OBJECT  GLOBAL DEFAULT    16 crc16Table
+    61: 00027be4  7168 OBJECT  GLOBAL DEFAULT    16 lsf_stage1_CB2_lbr
+    62: 000094cd    48 FUNC    GLOBAL DEFAULT    13 Crc16
+    63: 0002004c   572 OBJECT  GLOBAL DEFAULT    16 avs3_hoa3_group_config
+    64: 00008561   276 FUNC    GLOBAL DEFAULT    13 WriteWavHeader
+    65: 00006b35   228 FUNC    GLOBAL DEFAULT    13 Avs3VrExtEqEffectDec
+    66: 0001fde2    44 OBJECT  GLOBAL DEFAULT    16 hoa_sfb_table_low_bitrate
+    67: 00007091   100 FUNC    GLOBAL DEFAULT    13 Avs3VrExtDec
+    68: 00008a45   308 FUNC    GLOBAL DEFAULT    13 ApplyIgdnActFunc
+    69: 00006f59    92 FUNC    GLOBAL DEFAULT    13 Avs3VrExtRenderInfoDec
+    70: 0001fd88    90 OBJECT  GLOBAL DEFAULT    16 avs3_mp_vl_sfb
+    71: 00010521    14 FUNC    GLOBAL DEFAULT    13 ClearTnsFilterCoefficients
+    72: 00014768    64 OBJECT  GLOBAL DEFAULT    16 bitrateTableMC5P1
+    73: 0000a259    84 FUNC    GLOBAL DEFAULT    13 CalculateEnergyRatio
+    74: 00006015     8 FUNC    GLOBAL DEFAULT    13 Avs3AllocDecoder
+    75: 000111c7    32 FUNC    GLOBAL DEFAULT    13 Mean
+    76: 00010d53    14 FUNC    GLOBAL DEFAULT    13 SetUC
+    77: 00010d33    16 FUNC    GLOBAL DEFAULT    13 SetShort
+    78: 00010cb7    82 FUNC    GLOBAL DEFAULT    13 TnsDec
+    79: 00010671   916 FUNC    GLOBAL DEFAULT    13 GetTnsData
+    80: 00011015   420 FUNC    GLOBAL DEFAULT    13 MatrixMult
+    81: 0000d971   558 FUNC    GLOBAL DEFAULT    13 MdctDequantDecodeVae
+    82: 000257e4  9216 OBJECT  GLOBAL DEFAULT    16 lsf_stage1_CB1_lbr
+    83: 0002de08   120 OBJECT  GLOBAL DEFAULT    16 mcInvIldCodebook
+    84: 000147a8    64 OBJECT  GLOBAL DEFAULT    16 bitrateTableMC7P1
+    85: 00010c49   110 FUNC    GLOBAL DEFAULT    13 TnsEnc
+    86: 00015e60  6912 OBJECT  GLOBAL DEFAULT    16 avs3_hoa_first_step_sample_point_basis_matrix
+    87: 0000c22d   324 FUNC    GLOBAL DEFAULT    13 FFT
+    88: 00010227    16 FUNC    GLOBAL DEFAULT    13 InitRangeDecoderState
+    89: 00010d1f    20 FUNC    GLOBAL DEFAULT    13 SetFloat
+    90: 0000e2cd   396 FUNC    GLOBAL DEFAULT    13 MdctQuantEncodeVae
+    91: 0000c87d    24 FUNC    GLOBAL DEFAULT    13 DestroyNeuralCodec
+    92: 000088cb    70 FUNC    GLOBAL DEFAULT    13 DestroyGdnParam
+    93: 00006dc9   136 FUNC    GLOBAL DEFAULT    13 Avs3VrExtVertexDec
+    94: 000086a5    46 FUNC    GLOBAL DEFAULT    13 ApplyReluActFunc2D
+    95: 00010f21    36 FUNC    GLOBAL DEFAULT    13 Vadd
+    96: 00008b7f    32 FUNC    GLOBAL DEFAULT    13 toUpper
+    97: 0000a861   104 FUNC    GLOBAL DEFAULT    13 BweGetPeakAvgRatio
+    98: 00010ff5    30 FUNC    GLOBAL DEFAULT    13 VMultC
+    99: 0000a7d1   144 FUNC    GLOBAL DEFAULT    13 BweGetSfm
+   100: 0000dba1   800 FUNC    GLOBAL DEFAULT    13 MdctDequantDecodeHyper
+   101: 00010f69    10 FUNC    GLOBAL DEFAULT    13 SwapS
+   102: 0000ca75   428 FUNC    GLOBAL DEFAULT    13 LsfQuantDecHbr
+   103: 00006c19   432 FUNC    GLOBAL DEFAULT    13 Avs3VrExtAudioEffectDec
+   104: 000086eb    46 FUNC    GLOBAL DEFAULT    13 ApplyLinearActFunc2D
+   105: 00009d45   164 FUNC    GLOBAL DEFAULT    13 Avs3McacDec
+   106: 00009079   668 FUNC    GLOBAL DEFAULT    13 SpectrumGroupingEnc
+   107: 00015a60  1024 OBJECT  GLOBAL DEFAULT    16 fft_reordertbl512
+   108: 00008b79     6 FUNC    GLOBAL DEFAULT    13 GetFrameLength
+   109: 000070f5  3364 FUNC    GLOBAL DEFAULT    13 Avs3MetadataDec
+   110: 0000601d  1024 FUNC    GLOBAL DEFAULT    13 Avs3InitDecoder
+   111: 0000e035   664 FUNC    GLOBAL DEFAULT    13 MdctDequantDecodeHyperLc
+   112: 00008675    48 FUNC    GLOBAL DEFAULT    13 ApplyReluActFuncVec
+   113: 000204e4    64 OBJECT  GLOBAL DEFAULT    16 mean_lsf
+   114: 00010f45    36 FUNC    GLOBAL DEFAULT    13 VMult
+   115: 0000be7d   736 FUNC    GLOBAL DEFAULT    13 SpectrumShaping
+   116: 0000a375   196 FUNC    GLOBAL DEFAULT    13 StereoMsProcess
+   117: 0000a53d   660 FUNC    GLOBAL DEFAULT    13 BweGetConfig
+   118: 00014ad4    12 OBJECT  GLOBAL DEFAULT    16 hpFilterCoff
+   119: 00009d09    58 FUNC    GLOBAL DEFAULT    13 Index2PairMapping
+   120: 00008ed9   136 FUNC    GLOBAL DEFAULT    13 Avs3SynthOutput
+   121: 0000c5c9    20 FUNC    GLOBAL DEFAULT    13 DestroyQuantizer
+   122: 000104c1    96 FUNC    GLOBAL DEFAULT    13 TnsParaInit
+   123: 000096c1   284 FUNC    GLOBAL DEFAULT    13 HoaBitrateConfigTable
+   124: 00020524    64 OBJECT  GLOBAL DEFAULT    16 mean_lsp
+   125: 00008cd9   458 FUNC    GLOBAL DEFAULT    13 WindowSignal
+   126: 0002041c   100 OBJECT  GLOBAL DEFAULT    16 sfb_table_fb_long
+   127: 0000f9bd   380 FUNC    GLOBAL DEFAULT    13 LatentNoiseFilling
+   128: 0000a8c9    56 FUNC    GLOBAL DEFAULT    13 InitBweDecData
+   129: 000146e8    64 OBJECT  GLOBAL DEFAULT    16 bitrateTableMono
+   130: 0000cc8d   356 FUNC    GLOBAL DEFAULT    13 LsfQuantDecLbr
+   131: 00014ae0   128 OBJECT  GLOBAL DEFAULT    16 fft_cos_table32
+   132: 0000c3d5    84 FUNC    GLOBAL DEFAULT    13 IFFT
+   133: 00008911   308 FUNC    GLOBAL DEFAULT    13 ApplyGdnActFunc
+   134: 000255e4   512 OBJECT  GLOBAL DEFAULT    16 lsf_stage2_CB5_hbr
+   135: 00015860   512 OBJECT  GLOBAL DEFAULT    16 fft_reordertbl256
+   136: 00005319   226 FUNC    GLOBAL DEFAULT    13 DecodeQcBits
+   137: 00014928    64 OBJECT  GLOBAL DEFAULT    16 bitrateTableFoa
+   138: 0002b990  6144 OBJECT  GLOBAL DEFAULT    16 mcr_codebook_9bit
+   139: 0000e459  1956 FUNC    GLOBAL DEFAULT    13 MdctQuantEncodeHyper
+   140: 000069e1   340 FUNC    GLOBAL DEFAULT    13 Avs3McDec
+   141: 0000a30f   100 FUNC    GLOBAL DEFAULT    13 StereoBitsAllocation
+   142: 00014b60   512 OBJECT  GLOBAL DEFAULT    16 fft_cos_table128
+   143: 0000bd05   228 FUNC    GLOBAL DEFAULT    13 LspToLpc
+   144: 00006941    56 FUNC    GLOBAL DEFAULT    13 WriteSynthData
+   145: 0002b424   320 OBJECT  GLOBAL DEFAULT    16 bweSfbTable
+   146: 00020480    98 OBJECT  GLOBAL DEFAULT    16 sfb_len_fb_long
+   147: 0000879b   100 FUNC    GLOBAL DEFAULT    13 ApplyTanhActFuncVec
+   148: 00014d60  1024 OBJECT  GLOBAL DEFAULT    16 fft_cos_table256
+   149: 0003002c     0 NOTYPE  GLOBAL DEFAULT   ABS _edata
+   150: 0000ce09    68 FUNC    GLOBAL DEFAULT    13 InitMcrConfig
+   151: 00008719    84 FUNC    GLOBAL DEFAULT    13 ApplySigmoidActFuncVec
+   152: 00015160   128 OBJECT  GLOBAL DEFAULT    16 fft_sin_table32
+   153: 00008f61   140 FUNC    GLOBAL DEFAULT    13 MdctSpectrumInterleave
+   154: 00025464   384 OBJECT  GLOBAL DEFAULT    16 lsf_stage2_CB4_hbr
+   155: 000054e5   142 FUNC    GLOBAL DEFAULT    13 Avs3PostSynthesis
+   156: 0000c545   132 FUNC    GLOBAL DEFAULT    13 LatentDequantize
+   157: 0000fc69    82 FUNC    GLOBAL DEFAULT    13 DestroyRangeCoderConfig
+   158: 0000ce85   620 FUNC    GLOBAL DEFAULT    13 McrEncode
+   159: 0000d705   620 FUNC    GLOBAL DEFAULT    13 MDCT
+   160: 0000a4d9   100 FUNC    GLOBAL DEFAULT    13 GetBwePresent
+   161: 00006609   268 FUNC    GLOBAL DEFAULT    13 Avs3DecoderDestroy
+   162: 0000fccd   362 FUNC    GLOBAL DEFAULT    13 RangeEncodeProcess
+   163: 0000876d    46 FUNC    GLOBAL DEFAULT    13 ApplySigmoidActFunc2D
+   164: 00014728    64 OBJECT  GLOBAL DEFAULT    16 bitrateTableStereo
+   165: 0000f859   356 FUNC    GLOBAL DEFAULT    13 NfParamPostProc
+   166: 00008459   264 FUNC    GLOBAL DEFAULT    13 Avs3StereoMcrDec
+   167: 00030020     8 OBJECT  GLOBAL DEFAULT    21 FilterBorders
+   168: 00010f73    94 FUNC    GLOBAL DEFAULT    13 SortS
+   169: 00010d91    40 FUNC    GLOBAL DEFAULT    13 VLinalgNorm
+   170: 000086d3    24 FUNC    GLOBAL DEFAULT    13 ApplyLinearActFuncVec
+   171: 00010237   316 FUNC    GLOBAL DEFAULT    13 RangeDecodeProcess
+   172: 0000b3b1   468 FUNC    GLOBAL DEFAULT    13 Conv1D
+   173: 0000d315   472 FUNC    GLOBAL DEFAULT    13 McrDecode
+   174: 0000882d   158 FUNC    GLOBAL DEFAULT    13 InitGdnParam
+   175: 00009de9    56 FUNC    GLOBAL DEFAULT    13 CalcChannelEnergies
+   176: 000147e8    64 OBJECT  GLOBAL DEFAULT    16 bitrateTableMC4P0
+   177: 00009fdd   580 FUNC    GLOBAL DEFAULT    13 McBitsAllocation
+   178: 00017960 27432 OBJECT  GLOBAL DEFAULT    16 avs3_hoa_sample_point_basis_matrix_second_step
+   179: 00010a05   292 FUNC    GLOBAL DEFAULT    13 RunTnsFilter
+   180: 0000b155   604 FUNC    GLOBAL DEFAULT    13 InitCnnLayer
+   181: 000087ff    46 FUNC    GLOBAL DEFAULT    13 ApplyTanhActFunc2D
+   182: 000111b9    14 FUNC    GLOBAL DEFAULT    13 SetC
+   183: 00025164   768 OBJECT  GLOBAL DEFAULT    16 lsf_stage2_CB3_hbr
+   184: 0002b6a4   160 OBJECT  GLOBAL DEFAULT    16 bweSfbTileWrapTable
+   185: 0000ffaf   340 FUNC    GLOBAL DEFAULT    13 RangeEncodeProcessBrEst
+   186: 0002fab4   112 OBJECT  GLOBAL DEFAULT    17 codecBitrateConfigTable
+   187: 0000585d  1976 FUNC    GLOBAL DEFAULT    13 Avs3HoaDec
+   188: 00009b01   132 FUNC    GLOBAL DEFAULT    13 GetSingleNeighborBasisCoeff
+   189: 000094fd   448 FUNC    GLOBAL DEFAULT    13 HoaSplitBytesGroup
+   190: 00010d09    22 FUNC    GLOBAL DEFAULT    13 SetZero
+   191: 00009e21   252 FUNC    GLOBAL DEFAULT    13 GetChRatio
+   192: 0000ae75   736 FUNC    GLOBAL DEFAULT    13 CnnFreeRuntimeBuffer
+   193: 00010531   156 FUNC    GLOBAL DEFAULT    13 TnsEncodeParam
+   194: 00006809   312 FUNC    GLOBAL DEFAULT    13 GetAvs3DecoderCommandLine
+   195: 0001f984  1028 OBJECT  GLOBAL DEFAULT    16 avs3_hoa_sin_table
+   196: 00004c31   164 FUNC    GLOBAL DEFAULT    13 DecodeStereoSideBits
+   197: 00004cd5   384 FUNC    GLOBAL DEFAULT    13 DecodeMcSideBits
+   198: 00006979   104 FUNC    GLOBAL DEFAULT    13 SynthWavHeader
+   199: 0000c499   172 FUNC    GLOBAL DEFAULT    13 LatentQuantize
+   200: 0002dd90   120 OBJECT  GLOBAL DEFAULT    16 mcIldCodebook
+   201: 0000d4ed   536 FUNC    GLOBAL DEFAULT    13 IMDCT
+   202: 000057b5   168 FUNC    GLOBAL DEFAULT    13 Avs3Decode
+   203: 00024b64  1536 OBJECT  GLOBAL DEFAULT    16 lsf_stage2_CB2_hbr
+   204: 0002a9e4  1792 OBJECT  GLOBAL DEFAULT    16 lsf_stage2_CB3_lbr
+   205: 000046c5    28 FUNC    GLOBAL DEFAULT    13 ResetBitstream
+   206: 000105cd   164 FUNC    GLOBAL DEFAULT    13 TnsDecodeParam
+   207: 000097dd    98 FUNC    GLOBAL DEFAULT    13 Avs3HoaInitConfig
+   208: 00006e51   264 FUNC    GLOBAL DEFAULT    13 Avs3VrExtSurfaceDec
+   209: 000053fd   232 FUNC    GLOBAL DEFAULT    13 Avs3InverseQC
+   210: 00005081   552 FUNC    GLOBAL DEFAULT    13 DecodeCoreSideBits
+   211: 00010fd1    36 FUNC    GLOBAL DEFAULT    13 SumFloat
+   212: 000046e1  1156 FUNC    GLOBAL DEFAULT    13 Avs3ParseBsFrameHeader
+   213: 00010d61    48 FUNC    GLOBAL DEFAULT    13 Mvf2f
+   214: 0000a2ad    98 FUNC    GLOBAL DEFAULT    13 ComputeBitsRatio
+   215: 0000cdf1    20 FUNC    GLOBAL DEFAULT    13 LsfQuantDec
+   216: 00004bc3   110 FUNC    GLOBAL DEFAULT    13 ReadBitstream
+   217: 00010db9    48 FUNC    GLOBAL DEFAULT    13 Dotp
+   218: 00009841   164 FUNC    GLOBAL DEFAULT    13 GetNeighborBasisCoeff
+   219: 0000bbe5   188 FUNC    GLOBAL DEFAULT    13 DestroyCnnLayer
+   220: 0003002c     0 NOTYPE  GLOBAL DEFAULT   ABS __bss_start
+   221: 00008349   272 FUNC    GLOBAL DEFAULT    13 Avs3StereoDec
+   222: 00014968    64 OBJECT  GLOBAL DEFAULT    16 bitrateTableHoa2
+   223: 00024564  1536 OBJECT  GLOBAL DEFAULT    16 lsf_stage2_CB1_hbr
+   224: 00008ba1   108 FUNC    GLOBAL DEFAULT    13 GetMdctWindow
+   225: 000149a8    64 OBJECT  GLOBAL DEFAULT    16 bitrateTableHoa3
+   226: 0002b124    96 OBJECT  GLOBAL DEFAULT    16 tnsCodingTable0
+   227: 0002b184    96 OBJECT  GLOBAL DEFAULT    16 tnsCodingTable1
+   228: 0000fcbb    18 FUNC    GLOBAL DEFAULT    13 InitRangeEncoderState
+   229: 0002a1e4  2048 OBJECT  GLOBAL DEFAULT    16 lsf_stage2_CB2_lbr
+   230: 0002b1e4    96 OBJECT  GLOBAL DEFAULT    16 tnsCodingTable2
+   231: 0002b244    96 OBJECT  GLOBAL DEFAULT    16 tnsCodingTable3
+   232: 0003002d     0 NOTYPE  GLOBAL DEFAULT   ABS _end
+   233: 0002b2a4    96 OBJECT  GLOBAL DEFAULT    16 tnsCodingTable4
+   234: 0000b8f9   748 FUNC    GLOBAL DEFAULT    13 Conv1DTranspose2Part
+   235: 000052a9   112 FUNC    GLOBAL DEFAULT    13 DecodeGroupBits
+   236: 0002b304    96 OBJECT  GLOBAL DEFAULT    16 tnsCodingTable5
+   237: 0000a245    18 FUNC    GLOBAL DEFAULT    13 McLfeProc
+   238: 0002b364    96 OBJECT  GLOBAL DEFAULT    16 tnsCodingTable6
+   239: 0000c429   112 FUNC    GLOBAL DEFAULT    13 InitQuantizer
+   240: 000148a8    64 OBJECT  GLOBAL DEFAULT    16 bitrateTableMC7P1P2
+   241: 0002b944    38 OBJECT  GLOBAL DEFAULT    16 mcr_sfb_table_fb
+   242: 0002b3c4    96 OBJECT  GLOBAL DEFAULT    16 tnsCodingTable7
+   243: 0002b0e4    64 OBJECT  GLOBAL DEFAULT    16 tnsCoeff4
+   244: 0000b6a5   596 FUNC    GLOBAL DEFAULT    13 Conv1DTranspose
+   245: 00010bdd   108 FUNC    GLOBAL DEFAULT    13 TnsJudge
+   246: 0001fe10   572 OBJECT  GLOBAL DEFAULT    16 avs3_hoa2_group_config
+   247: 000148e8    64 OBJECT  GLOBAL DEFAULT    16 bitrateTableMC7P1P4
+   248: 0000bca1   100 FUNC    GLOBAL DEFAULT    13 LsfToLsp
+   249: 00004e55   556 FUNC    GLOBAL DEFAULT    13 DecodeHoaSideBits
+   250: 0000f699   444 FUNC    GLOBAL DEFAULT    13 ExtractNfParam
+   251: 00005575   576 FUNC    GLOBAL DEFAULT    13 Avs3InverseMdctDecoder
+   252: 00009315   388 FUNC    GLOBAL DEFAULT    13 SpectrumDegroupingDec
+   253: 00030000    32 OBJECT  GLOBAL DEFAULT    21 tnsCodingTable
+   254: 0000a439   160 FUNC    GLOBAL DEFAULT    13 StereoInvMsProcess
+   255: 0000abc9   684 FUNC    GLOBAL DEFAULT    13 CnnMallocRuntimeBuffer
+   256: 0002b624   128 OBJECT  GLOBAL DEFAULT    16 bweSrcTileTable
+   257: 00008fed   140 FUNC    GLOBAL DEFAULT    13 MdctSpectrumDeinterleave
+   258: 0000fb39   304 FUNC    GLOBAL DEFAULT    13 InitRangeCoderConfig
+   259: 000297e4  2560 OBJECT  GLOBAL DEFAULT    16 lsf_stage2_CB1_lbr
+   260: 000082a1   168 FUNC    GLOBAL DEFAULT    13 Avs3MonoDec
+   261: 00006fb5   220 FUNC    GLOBAL DEFAULT    13 Avs3VrExtAcousticEnvDec
+   262: 000151e0   512 OBJECT  GLOBAL DEFAULT    16 fft_sin_table128
+   263: 00004b65    94 FUNC    GLOBAL DEFAULT    13 GetNextIndice
+   264: 000149e8   200 OBJECT  GLOBAL DEFAULT    16 mcChannelConfigTable
+   265: 0001e488  5372 OBJECT  GLOBAL DEFAULT    16 avs3_hoa_fixed_angle_basis_matrix
+   266: 00010de9    52 FUNC    GLOBAL DEFAULT    13 MvShort2Short
+   267: 00008ea3    54 FUNC    GLOBAL DEFAULT    13 InitCoreConfig
+   268: 00009499    52 FUNC    GLOBAL DEFAULT    13 GetAvailableBits
+   269: 000153e0  1024 OBJECT  GLOBAL DEFAULT    16 fft_sin_table256
+   270: 00022964  7168 OBJECT  GLOBAL DEFAULT    16 lsf_stage1_CB2_hbr
+   271: 0000c5dd    66 FUNC    GLOBAL DEFAULT    13 InitNeuralCodec
+   272: 00010d43    16 FUNC    GLOBAL DEFAULT    13 SetUShort
+   273: 0000ce4d    54 FUNC    GLOBAL DEFAULT    13 InitMcrData
+   274: 0000ca1d    88 FUNC    GLOBAL DEFAULT    13 InitNeuralQcData
+   275: 0000a901   712 FUNC    GLOBAL DEFAULT    13 BweApplyDec
+BuildAttributes {
+  FormatVersion: 0x41
+  Section 1 {
+    SectionLength: 53
+    Vendor: aeabi
+    Tag: Tag_File (0x1)
+    Size: 43
+    FileAttributes {
+      Attribute {
+        Tag: 5
+        TagName: CPU_name
+        Value: ARM v7
+      }
+      Attribute {
+        Tag: 6
+        Value: 10
+        TagName: CPU_arch
+        Description: ARM v7
+      }
+      Attribute {
+        Tag: 7
+        Value: 65
+        TagName: CPU_arch_profile
+        Description: Application
+      }
+      Attribute {
+        Tag: 8
+        Value: 1
+        TagName: ARM_ISA_use
+        Description: Permitted
+      }
+      Attribute {
+        Tag: 9
+        Value: 2
+        TagName: THUMB_ISA_use
+        Description: Thumb-2
+      }
+      Attribute {
+        Tag: 10
+        Value: 3
+        TagName: FP_arch
+        Description: VFPv3
+      }
+      Attribute {
+        Tag: 12
+        Value: 1
+        TagName: Advanced_SIMD_arch
+        Description: NEONv1
+      }
+      Attribute {
+        Tag: 17
+        Value: 2
+        TagName: ABI_PCS_GOT_use
+        Description: GOT-Indirect
+      }
+      Attribute {
+        Tag: 18
+        Value: 4
+        TagName: ABI_PCS_wchar_t
+        Description: 4-byte
+      }
+      Attribute {
+        Tag: 20
+        Value: 1
+        TagName: ABI_FP_denormal
+        Description: IEEE-754
+      }
+      Attribute {
+        Tag: 21
+        Value: 1
+        TagName: ABI_FP_exceptions
+        Description: IEEE-754
+      }
+      Attribute {
+        Tag: 23
+        Value: 3
+        TagName: ABI_FP_number_model
+        Description: IEEE-754
+      }
+      Attribute {
+        Tag: 24
+        Value: 1
+        TagName: ABI_align_needed
+        Description: 8-byte alignment
+      }
+      Attribute {
+        Tag: 26
+        Value: 2
+        TagName: ABI_enum_size
+        Description: Int32
+      }
+      Attribute {
+        Tag: 34
+        Value: 1
+        TagName: CPU_unaligned_access
+        Description: v6-style
+      }
+      Attribute {
+        Tag: 38
+        Value: 1
+        TagName: ABI_FP_16bit_format
+        Description: IEEE-754
+      }
+    }
+  }
+}

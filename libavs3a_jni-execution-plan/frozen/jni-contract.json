@@ -1,0 +1,125 @@
+﻿{
+    "schemaVersion":  1,
+    "apiContractVersion":  1,
+    "jniContractVersion":  1,
+    "nativeClass":  "com/inlz/avs3a/NativeBridge",
+    "pcmMetadataLongs":  8,
+    "encodedFrameMetadataLongs":  10,
+    "queueResults":  {
+                         "BACKPRESSURE":  1,
+                         "ACCEPTED":  0
+                     },
+    "receiveResults":  {
+                           "END_OF_STREAM":  2,
+                           "OUTPUT_TOO_SMALL":  3,
+                           "NEED_INPUT":  0,
+                           "READY":  1
+                       },
+    "methods":  [
+                    {
+                        "name":  "nContractVersion",
+                        "descriptor":  "()I",
+                        "static":  true
+                    },
+                    {
+                        "name":  "nProcessAbi",
+                        "descriptor":  "()I",
+                        "static":  true
+                    },
+                    {
+                        "name":  "nCapabilities",
+                        "descriptor":  "()J",
+                        "static":  true
+                    },
+                    {
+                        "name":  "nBuildInfo",
+                        "descriptor":  "()Ljava/lang/String;",
+                        "static":  true
+                    },
+                    {
+                        "name":  "nCreate",
+                        "descriptor":  "(Ljava/lang/String;Ljava/lang/String;J)J",
+                        "static":  true
+                    },
+                    {
+                        "name":  "nQueue",
+                        "descriptor":  "(J[BIIJJI)I",
+                        "static":  true
+                    },
+                    {
+                        "name":  "nReceive",
+                        "descriptor":  "(J[BII[J)I",
+                        "static":  true
+                    },
+                    {
+                        "name":  "nEnd",
+                        "descriptor":  "(J)I",
+                        "static":  true
+                    },
+                    {
+                        "name":  "nFlush",
+                        "descriptor":  "(JJ)I",
+                        "static":  true
+                    },
+                    {
+                        "name":  "nRelease",
+                        "descriptor":  "(J)V",
+                        "static":  true
+                    },
+                    {
+                        "name":  "nParserCreate",
+                        "descriptor":  "(J)J",
+                        "static":  true
+                    },
+                    {
+                        "name":  "nParserQueue",
+                        "descriptor":  "(J[BIIJJI)I",
+                        "static":  true
+                    },
+                    {
+                        "name":  "nParserReceive",
+                        "descriptor":  "(J[BII[J)I",
+                        "static":  true
+                    },
+                    {
+                        "name":  "nParserEnd",
+                        "descriptor":  "(J)I",
+                        "static":  true
+                    },
+                    {
+                        "name":  "nParserFlush",
+                        "descriptor":  "(JJ)I",
+                        "static":  true
+                    },
+                    {
+                        "name":  "nParserRelease",
+                        "descriptor":  "(J)V",
+                        "static":  true
+                    }
+                ],
+    "errors":  {
+                   "INVALID_ARGUMENT":  -1000,
+                   "BRIDGE_UNAVAILABLE":  -1001,
+                   "VENDOR_UNAVAILABLE":  -1002,
+                   "VENDOR_SYMBOL_MISSING":  -1003,
+                   "VENDOR_ABI_NOT_READY":  -1004,
+                   "NATIVE_CONTRACT_MISMATCH":  -1005,
+                   "MODEL_MISSING":  -1010,
+                   "MODEL_CORRUPT":  -1011,
+                   "MODEL_IO_FAILED":  -1012,
+                   "UNSUPPORTED_MODE":  -1020,
+                   "INVALID_HEADER":  -1021,
+                   "INPUT_TOO_LARGE":  -1022,
+                   "TRUNCATED_FRAME":  -1023,
+                   "UNSUPPORTED_CONFIG_CHANGE":  -1024,
+                   "FRAME_DIALECT_NOT_READY":  -1025,
+                   "RESYNC_LIMIT":  -1026,
+                   "CLOSED_OR_INVALID_HANDLE":  -1030,
+                   "STALE_EPOCH":  -1031,
+                   "INVALID_STATE":  -1032,
+                   "COMPLETE_SAMPLE_CONTRACT":  -1033,
+                   "HANDLE_KIND_MISMATCH":  -1034,
+                   "NO_MEMORY":  -1090,
+                   "INTERNAL":  -1091
+               }
+}

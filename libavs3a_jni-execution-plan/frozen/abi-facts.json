@@ -1,0 +1,66 @@
+﻿{
+    "schemaVersion":  1,
+    "apiContractVersion":  1,
+    "jniContractVersion":  1,
+    "known":  {
+                  "decoderSoname":  "libavs3a_decoder.so",
+                  "requiredFunctions":  [
+                                            "Avs3AllocDecoder",
+                                            "Avs3InitDecoder",
+                                            "Avs3Decode",
+                                            "Avs3DecoderDestroy",
+                                            "ResetBitstream"
+                                        ],
+                  "initArgumentMeaning":  [
+                                              "decoder",
+                                              "absoluteModelPath"
+                                          ],
+                  "decodeArgumentMeaning":  [
+                                                "decoder",
+                                                "interleavedS16Output"
+                                            ],
+                  "initAndDecodeErrorReturnContract":  "not established; never interpret an observed register as a success/error code",
+                  "frameSamplesPerChannelObserved":  1024,
+                  "pcmObserved":  "signed 16-bit interleaved; target ELF is little-endian",
+                  "resetBitstreamStructureBytesObserved":  12304,
+                  "resetSizeIsNotVerifiedPayloadCapacity":  false,
+                  "destroyAlsoFreesTopLevelDecoder":  true,
+                  "modelOpenFailureMayExitProcess":  true,
+                  "vendorLoadAlignment":  4096,
+                  "vendor16kPageCompatibility":  "not verified",
+                  "arm64":  {
+                                "decoderAllocationBytes":  264,
+                                "bitstreamPointerOffset":  80,
+                                "metadataPointerOffset":  248
+                            },
+                  "armv7":  {
+                                "exportNamesConfirmed":  true,
+                                "layoutVerified":  true,
+                                "decoderAllocationBytes":  164,
+                                "bitstreamPointerOffset":  72,
+                                "metadataPointerOffset":  156
+                            },
+                  "verifiedPayloadCapacityBytes":  12300,
+                  "bitCursorOffset":  12300
+              },
+    "notYetFrozen":  [
+                         "algorithmic priming/tail samples and real PCM verification (T08)",
+                         "runtime validity/performance of every recognized table combination",
+                         "other profiles/object/HOA and source precision 8/24: deliberately outside current contract"
+                     ],
+    "evidenceQuality":  {
+                            "arm64Disassembly":  "saved and usable for transcription; provided in evidence/",
+                            "armv7Disassembly":  "Superseded: corrected GNU Thumb-2 disassembly and original APK ARMv7 calls now included; literal pools/veneers are not treated as Thumb instructions.",
+                            "armv7Exports":  "Cross-checked with Thumb code and both APK call sites, not used alone to infer layout."
+                        },
+    "rules":  [
+                  "Current binary hashes now have a scoped static ABI/header contract; routine implementation need not repeat scanning.",
+                  "User authorized targeted reanalysis on 2026-10-09; prior blanket ban is superseded.",
+                  "Do not apply this contract to different binary hashes or unsupported profiles.",
+                  "Static ready/verified does not mean runtime device tests or redistribution approval passed."
+              ],
+    "adapterContractCompleteForScope":  true,
+    "staticT02Status":  "complete_for_profile0_mono_stereo_s16_nn0_1",
+    "staticReviewDate":  "2026-10-09",
+    "runtimeValidationStatus":  "NOT_RUN"
+}

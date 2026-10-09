@@ -1,0 +1,24 @@
+{
+    "kind":  "C_REFERENCE_ONLY",
+    "status":  "PASS",
+    "vendorExecuted":  false,
+    "deviceValidation":  "NOT_RUN",
+    "targets":  [
+                    "aarch64-linux-android24/c11",
+                    "aarch64-linux-android24/c++17",
+                    "armv7a-linux-androideabi24/c11",
+                    "armv7a-linux-androideabi24/c++17"
+                ],
+    "runtime":  "Windows x64 own reference DLL via JDK17 FFM",
+    "result":  "PASS C_REFERENCE cases=414 assertions=95634; vendor decoder NOT executed",
+    "clang":  "Android (7155654, based on r399163b1) clang version 11.0.5 (https://android.googlesource.com/toolchain/llvm-project 87f1315dfbea7c137aa2e6d362dbb457e388158d)",
+    "node":  "v24.18.0",
+    "inputSha256":  {
+                        "run-tests.ps1":  "02f422d6563ea2db8bc3117921ab0d04d82feb9da1c9d05f5bbb9e31af25bd4f",
+                        "avs3a_reference.h":  "e64e6be922164bd3e0d9921ac10fa2edeed684d412f8dbac1233103a4e996a5a",
+                        "ReferenceCheck.java":  "8078113e799fe411e93aec039c351b186975174326101470a4f3df9f9cecadf2",
+                        "avs3a_reference.c":  "a8a60625b9224247db42e6e0092286c53cea413d9698ef8d2edab2d5ffd2e505",
+                        "make-vectors.cjs":  "ea0853af42926d2fd8255c7d2090e77b6dde53dc657fa30ea6e70b65efcae9e1",
+                        "avs3a_vendor_layout.h":  "d58c28a77970d723c1dce3adf20cc827f86a8d0cbd1f8b77b964f2dc0716aa55"
+                    }
+}

@@ -1,0 +1,736 @@
+﻿
+plans\av3a\analysis\apk-root\lib\armeabi-v7a\libijkffmpeg.so:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+000b4400 <avcodec_find_encoder_by_name@@Base+0x70>:
+   b4400:	1a40      	subs	r0, r0, r1
+   b4402:	bf02      	ittt	eq
+   b4404:	4620      	moveq	r0, r4
+   b4406:	b002      	addeq	sp, #8
+   b4408:	e8bd 81f0 	ldmiaeq.w	sp!, {r4, r5, r6, r7, r8, pc}
+   b440c:	f7ec e9ec 	blx	a07e8 <__stack_chk_fail@plt>
+   b4410:	bd42      	pop	{r1, r6, pc}
+   b4412:	0052      	lsls	r2, r2, #1
+
+000b4414 <avcodec_find_decoder_by_name@@Base>:
+   b4414:	b5e0      	push	{r5, r6, r7, lr}
+   b4416:	4908      	ldr	r1, [pc, #32]	; (b4438 <avcodec_find_decoder_by_name@@Base+0x24>)
+   b4418:	4479      	add	r1, pc
+   b441a:	6809      	ldr	r1, [r1, #0]
+   b441c:	680a      	ldr	r2, [r1, #0]
+   b441e:	9201      	str	r2, [sp, #4]
+   b4420:	6809      	ldr	r1, [r1, #0]
+   b4422:	9a01      	ldr	r2, [sp, #4]
+   b4424:	1a89      	subs	r1, r1, r2
+   b4426:	bf18      	it	ne
+   b4428:	f7ec e9de 	blxne	a07e8 <__stack_chk_fail@plt>
+   b442c:	4903      	ldr	r1, [pc, #12]	; (b443c <avcodec_find_decoder_by_name@@Base+0x28>)
+   b442e:	4479      	add	r1, pc
+   b4430:	6809      	ldr	r1, [r1, #0]
+   b4432:	e8bd 408c 	ldmia.w	sp!, {r2, r3, r7, lr}
+   b4436:	e7c1      	b.n	b43bc <avcodec_find_encoder_by_name@@Base+0x2c>
+   b4438:	bcf0      	pop	{r4, r5, r6, r7}
+   b443a:	0052      	lsls	r2, r2, #1
+   b443c:	be1e      	bkpt	0x001e
+   b443e:	0052      	lsls	r2, r2, #1
+   b4440:	b5bc      	push	{r2, r3, r4, r5, r7, lr}
+   b4442:	490e      	ldr	r1, [pc, #56]	; (b447c <avcodec_find_decoder_by_name@@Base+0x68>)
+   b4444:	4479      	add	r1, pc
+   b4446:	680c      	ldr	r4, [r1, #0]
+   b4448:	6821      	ldr	r1, [r4, #0]
+   b444a:	9101      	str	r1, [sp, #4]
+   b444c:	6985      	ldr	r5, [r0, #24]
+   b444e:	6328      	str	r0, [r5, #48]	; 0x30
+   b4450:	f7ec ea5a 	blx	a0908 <Avs3AllocDecoder@plt>
+   b4454:	6368      	str	r0, [r5, #52]	; 0x34
+   b4456:	b130      	cbz	r0, b4466 <avcodec_find_decoder_by_name@@Base+0x52>
+   b4458:	4601      	mov	r1, r0
+   b445a:	2000      	movs	r0, #0
+   b445c:	e9c5 000a 	strd	r0, r0, [r5, #40]	; 0x28
+   b4460:	8588      	strh	r0, [r1, #44]	; 0x2c
+   b4462:	6068      	str	r0, [r5, #4]
+   b4464:	e001      	b.n	b446a <avcodec_find_decoder_by_name@@Base+0x56>
+   b4466:	f06f 000b 	mvn.w	r0, #11
+   b446a:	6821      	ldr	r1, [r4, #0]
+   b446c:	9a01      	ldr	r2, [sp, #4]
+   b446e:	1a89      	subs	r1, r1, r2
+   b4470:	bf04      	itt	eq
+   b4472:	b002      	addeq	sp, #8
+   b4474:	bdb0      	popeq	{r4, r5, r7, pc}
+   b4476:	f7ec e9b8 	blx	a07e8 <__stack_chk_fail@plt>
+   b447a:	bf00      	nop
+   b447c:	bcc4      	pop	{r2, r6, r7}
+   b447e:	0052      	lsls	r2, r2, #1
+   b4480:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+   b4484:	b08b      	sub	sp, #44	; 0x2c
+   b4486:	4683      	mov	fp, r0
+   b4488:	48db      	ldr	r0, [pc, #876]	; (b47f8 <avcodec_find_decoder_by_name@@Base+0x3e4>)
+   b448a:	4616      	mov	r6, r2
+   b448c:	2900      	cmp	r1, #0
+   b448e:	4478      	add	r0, pc
+   b4490:	6805      	ldr	r5, [r0, #0]
+   b4492:	6828      	ldr	r0, [r5, #0]
+   b4494:	900a      	str	r0, [sp, #40]	; 0x28
+   b4496:	d04e      	beq.n	b4536 <avcodec_find_decoder_by_name@@Base+0x122>
+   b4498:	699c      	ldr	r4, [r3, #24]
+   b449a:	468a      	mov	sl, r1
+   b449c:	2000      	movs	r0, #0
+   b449e:	a909      	add	r1, sp, #36	; 0x24
+   b44a0:	f8db 9018 	ldr.w	r9, [fp, #24]
+   b44a4:	220c      	movs	r2, #12
+   b44a6:	9009      	str	r0, [sp, #36]	; 0x24
+   b44a8:	4620      	mov	r0, r4
+   b44aa:	461f      	mov	r7, r3
+   b44ac:	f7ec ea32 	blx	a0914 <GetNextIndice@plt>
+   b44b0:	f640 71ff 	movw	r1, #4095	; 0xfff
+   b44b4:	4288      	cmp	r0, r1
+   b44b6:	f040 816d 	bne.w	b4794 <avcodec_find_decoder_by_name@@Base+0x380>
+   b44ba:	a909      	add	r1, sp, #36	; 0x24
+   b44bc:	4620      	mov	r0, r4
+   b44be:	2204      	movs	r2, #4
+   b44c0:	f7ec ea28 	blx	a0914 <GetNextIndice@plt>
+   b44c4:	2802      	cmp	r0, #2
+   b44c6:	f040 8165 	bne.w	b4794 <avcodec_find_decoder_by_name@@Base+0x380>
+   b44ca:	a909      	add	r1, sp, #36	; 0x24
+   b44cc:	4620      	mov	r0, r4
+   b44ce:	2201      	movs	r2, #1
+   b44d0:	f7ec ea20 	blx	a0914 <GetNextIndice@plt>
+   b44d4:	2801      	cmp	r0, #1
+   b44d6:	f000 815d 	beq.w	b4794 <avcodec_find_decoder_by_name@@Base+0x380>
+   b44da:	e9cd 7607 	strd	r7, r6, [sp, #28]
+   b44de:	af09      	add	r7, sp, #36	; 0x24
+   b44e0:	48c6      	ldr	r0, [pc, #792]	; (b47fc <avcodec_find_decoder_by_name@@Base+0x3e8>)
+   b44e2:	2203      	movs	r2, #3
+   b44e4:	4639      	mov	r1, r7
+   b44e6:	4478      	add	r0, pc
+   b44e8:	f8d0 8000 	ldr.w	r8, [r0]
+   b44ec:	4620      	mov	r0, r4
+   b44ee:	47c0      	blx	r8
+   b44f0:	f8a9 0008 	strh.w	r0, [r9, #8]
+   b44f4:	4620      	mov	r0, r4
+   b44f6:	4639      	mov	r1, r7
+   b44f8:	2203      	movs	r2, #3
+   b44fa:	47c0      	blx	r8
+   b44fc:	f8a9 000a 	strh.w	r0, [r9, #10]
+   b4500:	4620      	mov	r0, r4
+   b4502:	4639      	mov	r1, r7
+   b4504:	2204      	movs	r2, #4
+   b4506:	47c0      	blx	r8
+   b4508:	f8a9 000c 	strh.w	r0, [r9, #12]
+   b450c:	4620      	mov	r0, r4
+   b450e:	4639      	mov	r1, r7
+   b4510:	2208      	movs	r2, #8
+   b4512:	47c0      	blx	r8
+   b4514:	0200      	lsls	r0, r0, #8
+   b4516:	f8a9 000e 	strh.w	r0, [r9, #14]
+   b451a:	f8b9 000a 	ldrh.w	r0, [r9, #10]
+   b451e:	2802      	cmp	r0, #2
+   b4520:	d00c      	beq.n	b453c <avcodec_find_decoder_by_name@@Base+0x128>
+   b4522:	2801      	cmp	r0, #1
+   b4524:	d018      	beq.n	b4558 <avcodec_find_decoder_by_name@@Base+0x144>
+   b4526:	2800      	cmp	r0, #0
+   b4528:	d152      	bne.n	b45d0 <avcodec_find_decoder_by_name@@Base+0x1bc>
+   b452a:	a909      	add	r1, sp, #36	; 0x24
+   b452c:	4620      	mov	r0, r4
+   b452e:	2207      	movs	r2, #7
+   b4530:	f7ec e9f0 	blx	a0914 <GetNextIndice@plt>
+   b4534:	e04a      	b.n	b45cc <avcodec_find_decoder_by_name@@Base+0x1b8>
+   b4536:	2000      	movs	r0, #0
+   b4538:	6030      	str	r0, [r6, #0]
+   b453a:	e12d      	b.n	b4798 <avcodec_find_decoder_by_name@@Base+0x384>
+   b453c:	a909      	add	r1, sp, #36	; 0x24
+   b453e:	4620      	mov	r0, r4
+   b4540:	2204      	movs	r2, #4
+   b4542:	f7ec e9e8 	blx	a0914 <GetNextIndice@plt>
+   b4546:	1c41      	adds	r1, r0, #1
+   b4548:	f8a9 1018 	strh.w	r1, [r9, #24]
+   b454c:	b1e8      	cbz	r0, b458a <avcodec_find_decoder_by_name@@Base+0x176>
+   b454e:	b288      	uxth	r0, r1
+   b4550:	2802      	cmp	r0, #2
+   b4552:	d137      	bne.n	b45c4 <avcodec_find_decoder_by_name@@Base+0x1b0>
+   b4554:	200c      	movs	r0, #12
+   b4556:	e039      	b.n	b45cc <avcodec_find_decoder_by_name@@Base+0x1b8>
+   b4558:	a909      	add	r1, sp, #36	; 0x24
+   b455a:	4620      	mov	r0, r4
+   b455c:	2202      	movs	r2, #2
+   b455e:	f7ec e9da 	blx	a0914 <GetNextIndice@plt>
+   b4562:	2801      	cmp	r0, #1
+   b4564:	f8a9 0012 	strh.w	r0, [r9, #18]
+   b4568:	d011      	beq.n	b458e <avcodec_find_decoder_by_name@@Base+0x17a>
+   b456a:	bb88      	cbnz	r0, b45d0 <avcodec_find_decoder_by_name@@Base+0x1bc>
+   b456c:	af09      	add	r7, sp, #36	; 0x24
+   b456e:	4620      	mov	r0, r4
+   b4570:	2207      	movs	r2, #7
+   b4572:	4639      	mov	r1, r7
+   b4574:	f7ec e9ce 	blx	a0914 <GetNextIndice@plt>
+   b4578:	3001      	adds	r0, #1
+   b457a:	f8a9 0014 	strh.w	r0, [r9, #20]
+   b457e:	4620      	mov	r0, r4
+   b4580:	4639      	mov	r1, r7
+   b4582:	2204      	movs	r2, #4
+   b4584:	f7ec e9c6 	blx	a0914 <GetNextIndice@plt>
+   b4588:	e019      	b.n	b45be <avcodec_find_decoder_by_name@@Base+0x1aa>
+   b458a:	200b      	movs	r0, #11
+   b458c:	e01e      	b.n	b45cc <avcodec_find_decoder_by_name@@Base+0x1b8>
+   b458e:	af09      	add	r7, sp, #36	; 0x24
+   b4590:	4620      	mov	r0, r4
+   b4592:	2207      	movs	r2, #7
+   b4594:	4639      	mov	r1, r7
+   b4596:	47c0      	blx	r8
+   b4598:	f8a9 0010 	strh.w	r0, [r9, #16]
+   b459c:	4620      	mov	r0, r4
+   b459e:	4639      	mov	r1, r7
+   b45a0:	2204      	movs	r2, #4
+   b45a2:	47c0      	blx	r8
+   b45a4:	f8a9 001c 	strh.w	r0, [r9, #28]
+   b45a8:	4620      	mov	r0, r4
+   b45aa:	4639      	mov	r1, r7
+   b45ac:	2207      	movs	r2, #7
+   b45ae:	47c0      	blx	r8
+   b45b0:	3001      	adds	r0, #1
+   b45b2:	f8a9 0014 	strh.w	r0, [r9, #20]
+   b45b6:	4620      	mov	r0, r4
+   b45b8:	4639      	mov	r1, r7
+   b45ba:	2204      	movs	r2, #4
+   b45bc:	47c0      	blx	r8
+   b45be:	f8a9 0016 	strh.w	r0, [r9, #22]
+   b45c2:	e005      	b.n	b45d0 <avcodec_find_decoder_by_name@@Base+0x1bc>
+   b45c4:	2803      	cmp	r0, #3
+   b45c6:	bf14      	ite	ne
+   b45c8:	200e      	movne	r0, #14
+   b45ca:	200d      	moveq	r0, #13
+   b45cc:	f8a9 0010 	strh.w	r0, [r9, #16]
+   b45d0:	a909      	add	r1, sp, #36	; 0x24
+   b45d2:	4620      	mov	r0, r4
+   b45d4:	2202      	movs	r2, #2
+   b45d6:	f7ec e99e 	blx	a0914 <GetNextIndice@plt>
+   b45da:	f8a9 001a 	strh.w	r0, [r9, #26]
+   b45de:	f8b9 000a 	ldrh.w	r0, [r9, #10]
+   b45e2:	2801      	cmp	r0, #1
+   b45e4:	d006      	beq.n	b45f4 <avcodec_find_decoder_by_name@@Base+0x1e0>
+   b45e6:	a909      	add	r1, sp, #36	; 0x24
+   b45e8:	4620      	mov	r0, r4
+   b45ea:	2204      	movs	r2, #4
+   b45ec:	f7ec e992 	blx	a0914 <GetNextIndice@plt>
+   b45f0:	f8a9 001c 	strh.w	r0, [r9, #28]
+   b45f4:	a909      	add	r1, sp, #36	; 0x24
+   b45f6:	4620      	mov	r0, r4
+   b45f8:	2208      	movs	r2, #8
+   b45fa:	f04f 0808 	mov.w	r8, #8
+   b45fe:	f7ec e98a 	blx	a0914 <GetNextIndice@plt>
+   b4602:	f8b9 100e 	ldrh.w	r1, [r9, #14]
+   b4606:	efc4 0f10 	vmov.f32	d16, #0.125	; 0x3e000000
+   b460a:	4408      	add	r0, r1
+   b460c:	f8a9 000e 	strh.w	r0, [r9, #14]
+   b4610:	9809      	ldr	r0, [sp, #36]	; 0x24
+   b4612:	ee00 0a10 	vmov	s0, r0
+   b4616:	fffb 1680 	vcvt.f32.u32	d17, d0
+   b461a:	ff01 0db0 	vmul.f32	d0, d17, d16
+   b461e:	ee10 0a10 	vmov	r0, s0
+   b4622:	f7ec e97e 	blx	a0920 <ceilf@plt>
+   b4626:	ec40 0b30 	vmov	d16, r0, r0
+   b462a:	f44f 6180 	mov.w	r1, #1024	; 0x400
+   b462e:	ffbb 0720 	vcvt.s32.f32	d0, d16
+   b4632:	ee10 0a10 	vmov	r0, s0
+   b4636:	f8c9 0020 	str.w	r0, [r9, #32]
+   b463a:	f8d9 7034 	ldr.w	r7, [r9, #52]	; 0x34
+   b463e:	f8b9 000c 	ldrh.w	r0, [r9, #12]
+   b4642:	8639      	strh	r1, [r7, #48]	; 0x30
+   b4644:	496e      	ldr	r1, [pc, #440]	; (b4800 <avcodec_find_decoder_by_name@@Base+0x3ec>)
+   b4646:	4479      	add	r1, pc
+   b4648:	6809      	ldr	r1, [r1, #0]
+   b464a:	f851 6020 	ldr.w	r6, [r1, r0, lsl #2]
+   b464e:	607e      	str	r6, [r7, #4]
+   b4650:	f8b9 001a 	ldrh.w	r0, [r9, #26]
+   b4654:	2802      	cmp	r0, #2
+   b4656:	bf9c      	itt	ls
+   b4658:	eb08 00c0 	addls.w	r0, r8, r0, lsl #3
+   b465c:	8138      	strhls	r0, [r7, #8]
+   b465e:	f8b9 0008 	ldrh.w	r0, [r9, #8]
+   b4662:	63b8      	str	r0, [r7, #56]	; 0x38
+   b4664:	f8b9 000a 	ldrh.w	r0, [r9, #10]
+   b4668:	4b66      	ldr	r3, [pc, #408]	; (b4804 <avcodec_find_decoder_by_name@@Base+0x3f0>)
+   b466a:	2802      	cmp	r0, #2
+   b466c:	447b      	add	r3, pc
+   b466e:	d011      	beq.n	b4694 <avcodec_find_decoder_by_name@@Base+0x280>
+   b4670:	2801      	cmp	r0, #1
+   b4672:	d01c      	beq.n	b46ae <avcodec_find_decoder_by_name@@Base+0x29a>
+   b4674:	2800      	cmp	r0, #0
+   b4676:	f040 8084 	bne.w	b4782 <avcodec_find_decoder_by_name@@Base+0x36e>
+   b467a:	2000      	movs	r0, #0
+   b467c:	84f8      	strh	r0, [r7, #38]	; 0x26
+   b467e:	f8b9 4010 	ldrh.w	r4, [r9, #16]
+   b4682:	617c      	str	r4, [r7, #20]
+   b4684:	2c01      	cmp	r4, #1
+   b4686:	d025      	beq.n	b46d4 <avcodec_find_decoder_by_name@@Base+0x2c0>
+   b4688:	2c00      	cmp	r4, #0
+   b468a:	d152      	bne.n	b4732 <avcodec_find_decoder_by_name@@Base+0x31e>
+   b468c:	2001      	movs	r0, #1
+   b468e:	8338      	strh	r0, [r7, #24]
+   b4690:	2000      	movs	r0, #0
+   b4692:	e022      	b.n	b46da <avcodec_find_decoder_by_name@@Base+0x2c6>
+   b4694:	2003      	movs	r0, #3
+   b4696:	8578      	strh	r0, [r7, #42]	; 0x2a
+   b4698:	2000      	movs	r0, #0
+   b469a:	84f8      	strh	r0, [r7, #38]	; 0x26
+   b469c:	f8b9 0010 	ldrh.w	r0, [r9, #16]
+   b46a0:	6178      	str	r0, [r7, #20]
+   b46a2:	f8b9 0018 	ldrh.w	r0, [r9, #24]
+   b46a6:	3001      	adds	r0, #1
+   b46a8:	4340      	muls	r0, r0
+   b46aa:	8338      	strh	r0, [r7, #24]
+   b46ac:	e069      	b.n	b4782 <avcodec_find_decoder_by_name@@Base+0x36e>
+   b46ae:	2001      	movs	r0, #1
+   b46b0:	84f8      	strh	r0, [r7, #38]	; 0x26
+   b46b2:	f8b9 0012 	ldrh.w	r0, [r9, #18]
+   b46b6:	84b8      	strh	r0, [r7, #36]	; 0x24
+   b46b8:	2801      	cmp	r0, #1
+   b46ba:	d010      	beq.n	b46de <avcodec_find_decoder_by_name@@Base+0x2ca>
+   b46bc:	2800      	cmp	r0, #0
+   b46be:	d160      	bne.n	b4782 <avcodec_find_decoder_by_name@@Base+0x36e>
+   b46c0:	f8b9 0014 	ldrh.w	r0, [r9, #20]
+   b46c4:	8338      	strh	r0, [r7, #24]
+   b46c6:	2801      	cmp	r0, #1
+   b46c8:	8378      	strh	r0, [r7, #26]
+   b46ca:	d042      	beq.n	b4752 <avcodec_find_decoder_by_name@@Base+0x33e>
+   b46cc:	2802      	cmp	r0, #2
+   b46ce:	d142      	bne.n	b4756 <avcodec_find_decoder_by_name@@Base+0x342>
+   b46d0:	2101      	movs	r1, #1
+   b46d2:	e043      	b.n	b475c <avcodec_find_decoder_by_name@@Base+0x348>
+   b46d4:	2002      	movs	r0, #2
+   b46d6:	8338      	strh	r0, [r7, #24]
+   b46d8:	2001      	movs	r0, #1
+   b46da:	8578      	strh	r0, [r7, #42]	; 0x2a
+   b46dc:	e051      	b.n	b4782 <avcodec_find_decoder_by_name@@Base+0x36e>
+   b46de:	2002      	movs	r0, #2
+   b46e0:	f8d3 8000 	ldr.w	r8, [r3]
+   b46e4:	8578      	strh	r0, [r7, #42]	; 0x2a
+   b46e6:	f8b9 4010 	ldrh.w	r4, [r9, #16]
+   b46ea:	617c      	str	r4, [r7, #20]
+   b46ec:	f8b9 101c 	ldrh.w	r1, [r9, #28]
+   b46f0:	eb08 00c4 	add.w	r0, r8, r4, lsl #3
+   b46f4:	9305      	str	r3, [sp, #20]
+   b46f6:	6840      	ldr	r0, [r0, #4]
+   b46f8:	f850 0021 	ldr.w	r0, [r0, r1, lsl #2]
+   b46fc:	9006      	str	r0, [sp, #24]
+   b46fe:	6238      	str	r0, [r7, #32]
+   b4700:	4620      	mov	r0, r4
+   b4702:	f000 f9c1 	bl	b4a88 <avcodec_find_decoder_by_name@@Base+0x674>
+   b4706:	f9b9 1014 	ldrsh.w	r1, [r9, #20]
+   b470a:	2c06      	cmp	r4, #6
+   b470c:	8379      	strh	r1, [r7, #26]
+   b470e:	f8d8 2004 	ldr.w	r2, [r8, #4]
+   b4712:	4408      	add	r0, r1
+   b4714:	f8b9 3016 	ldrh.w	r3, [r9, #22]
+   b4718:	f852 2023 	ldr.w	r2, [r2, r3, lsl #2]
+   b471c:	8338      	strh	r0, [r7, #24]
+   b471e:	9806      	ldr	r0, [sp, #24]
+   b4720:	fb02 0001 	mla	r0, r2, r1, r0
+   b4724:	61fa      	str	r2, [r7, #28]
+   b4726:	60f8      	str	r0, [r7, #12]
+   b4728:	bf18      	it	ne
+   b472a:	2c01      	cmpne	r4, #1
+   b472c:	d126      	bne.n	b477c <avcodec_find_decoder_by_name@@Base+0x368>
+   b472e:	2000      	movs	r0, #0
+   b4730:	e025      	b.n	b477e <avcodec_find_decoder_by_name@@Base+0x36a>
+   b4732:	2c0a      	cmp	r4, #10
+   b4734:	d82e      	bhi.n	b4794 <avcodec_find_decoder_by_name@@Base+0x380>
+   b4736:	2002      	movs	r0, #2
+   b4738:	4698      	mov	r8, r3
+   b473a:	8578      	strh	r0, [r7, #42]	; 0x2a
+   b473c:	4620      	mov	r0, r4
+   b473e:	f000 f9a3 	bl	b4a88 <avcodec_find_decoder_by_name@@Base+0x674>
+   b4742:	8338      	strh	r0, [r7, #24]
+   b4744:	2c06      	cmp	r4, #6
+   b4746:	bf0c      	ite	eq
+   b4748:	2000      	moveq	r0, #0
+   b474a:	2001      	movne	r0, #1
+   b474c:	8538      	strh	r0, [r7, #40]	; 0x28
+   b474e:	4643      	mov	r3, r8
+   b4750:	e017      	b.n	b4782 <avcodec_find_decoder_by_name@@Base+0x36e>
+   b4752:	2100      	movs	r1, #0
+   b4754:	e002      	b.n	b475c <avcodec_find_decoder_by_name@@Base+0x348>
+   b4756:	2803      	cmp	r0, #3
+   b4758:	d301      	bcc.n	b475e <avcodec_find_decoder_by_name@@Base+0x34a>
+   b475a:	2102      	movs	r1, #2
+   b475c:	8579      	strh	r1, [r7, #42]	; 0x2a
+   b475e:	681a      	ldr	r2, [r3, #0]
+   b4760:	210e      	movs	r1, #14
+   b4762:	6179      	str	r1, [r7, #20]
+   b4764:	f8b9 1016 	ldrh.w	r1, [r9, #22]
+   b4768:	6852      	ldr	r2, [r2, #4]
+   b476a:	f852 1021 	ldr.w	r1, [r2, r1, lsl #2]
+   b476e:	2200      	movs	r2, #0
+   b4770:	f8c9 1024 	str.w	r1, [r9, #36]	; 0x24
+   b4774:	853a      	strh	r2, [r7, #40]	; 0x28
+   b4776:	4348      	muls	r0, r1
+   b4778:	60f8      	str	r0, [r7, #12]
+   b477a:	e002      	b.n	b4782 <avcodec_find_decoder_by_name@@Base+0x36e>
+   b477c:	2001      	movs	r0, #1
+   b477e:	8538      	strh	r0, [r7, #40]	; 0x28
+   b4780:	9b05      	ldr	r3, [sp, #20]
+   b4782:	f9b7 0018 	ldrsh.w	r0, [r7, #24]
+   b4786:	2801      	cmp	r0, #1
+   b4788:	db04      	blt.n	b4794 <avcodec_find_decoder_by_name@@Base+0x380>
+   b478a:	8cf9      	ldrh	r1, [r7, #38]	; 0x26
+   b478c:	b169      	cbz	r1, b47aa <avcodec_find_decoder_by_name@@Base+0x396>
+   b478e:	68fa      	ldr	r2, [r7, #12]
+   b4790:	6979      	ldr	r1, [r7, #20]
+   b4792:	e014      	b.n	b47be <avcodec_find_decoder_by_name@@Base+0x3aa>
+   b4794:	f06f 0015 	mvn.w	r0, #21
+   b4798:	6829      	ldr	r1, [r5, #0]
+   b479a:	9a0a      	ldr	r2, [sp, #40]	; 0x28
+   b479c:	1a89      	subs	r1, r1, r2
+   b479e:	bf04      	itt	eq
+   b47a0:	b00b      	addeq	sp, #44	; 0x2c
+   b47a2:	e8bd 8ff0 	ldmiaeq.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+   b47a6:	f7ec e820 	blx	a07e8 <__stack_chk_fail@plt>
+   b47aa:	6979      	ldr	r1, [r7, #20]
+   b47ac:	681a      	ldr	r2, [r3, #0]
+   b47ae:	f8b9 301c 	ldrh.w	r3, [r9, #28]
+   b47b2:	eb02 02c1 	add.w	r2, r2, r1, lsl #3
+   b47b6:	6852      	ldr	r2, [r2, #4]
+   b47b8:	f852 2023 	ldr.w	r2, [r2, r3, lsl #2]
+   b47bc:	60fa      	str	r2, [r7, #12]
+   b47be:	17d3      	asrs	r3, r2, #31
+   b47c0:	f8cb 6158 	str.w	r6, [fp, #344]	; 0x158
+   b47c4:	e9cb 230a 	strd	r2, r3, [fp, #40]	; 0x28
+   b47c8:	2300      	movs	r3, #0
+   b47ca:	f9b7 2008 	ldrsh.w	r2, [r7, #8]
+   b47ce:	f8cb 015c 	str.w	r0, [fp, #348]	; 0x15c
+   b47d2:	f8cb 22a4 	str.w	r2, [fp, #676]	; 0x2a4
+   b47d6:	4a91      	ldr	r2, [pc, #580]	; (b4a1c <avcodec_find_decoder_by_name@@Base+0x608>)
+   b47d8:	447a      	add	r2, pc
+   b47da:	2bf0      	cmp	r3, #240	; 0xf0
+   b47dc:	d005      	beq.n	b47ea <avcodec_find_decoder_by_name@@Base+0x3d6>
+   b47de:	18d4      	adds	r4, r2, r3
+   b47e0:	6867      	ldr	r7, [r4, #4]
+   b47e2:	428f      	cmp	r7, r1
+   b47e4:	d010      	beq.n	b4808 <avcodec_find_decoder_by_name@@Base+0x3f4>
+   b47e6:	3310      	adds	r3, #16
+   b47e8:	e7f7      	b.n	b47da <avcodec_find_decoder_by_name@@Base+0x3c6>
+   b47ea:	2100      	movs	r1, #0
+   b47ec:	f50b 74bc 	add.w	r4, fp, #376	; 0x178
+   b47f0:	e9cb 115e 	strd	r1, r1, [fp, #376]	; 0x178
+   b47f4:	e013      	b.n	b481e <avcodec_find_decoder_by_name@@Base+0x40a>
+   b47f6:	bf00      	nop
+   b47f8:	bc7a      	pop	{r1, r3, r4, r5, r6}
+   b47fa:	0052      	lsls	r2, r2, #1
+   b47fc:	bd6a      	pop	{r1, r3, r5, r6, pc}
+   b47fe:	0052      	lsls	r2, r2, #1
+   b4800:	bc0e      	pop	{r1, r2, r3}
+   b4802:	0052      	lsls	r2, r2, #1
+   b4804:	bbec      	cbnz	r4, b4882 <avcodec_find_decoder_by_name@@Base+0x46e>
+   b4806:	0052      	lsls	r2, r2, #1
+   b4808:	e9d4 2102 	ldrd	r2, r1, [r4, #8]
+   b480c:	f50b 74bc 	add.w	r4, fp, #376	; 0x178
+   b4810:	2be0      	cmp	r3, #224	; 0xe0
+   b4812:	e9cb 215e 	strd	r2, r1, [fp, #376]	; 0x178
+   b4816:	d002      	beq.n	b481e <avcodec_find_decoder_by_name@@Base+0x40a>
+   b4818:	f8b9 3014 	ldrh.w	r3, [r9, #20]
+   b481c:	b123      	cbz	r3, b4828 <avcodec_find_decoder_by_name@@Base+0x414>
+   b481e:	f286 f93d 	bl	33aa9c <av_get_default_channel_layout@@Base>
+   b4822:	4602      	mov	r2, r0
+   b4824:	e9c4 2100 	strd	r2, r1, [r4]
+   b4828:	ea52 0001 	orrs.w	r0, r2, r1
+   b482c:	d112      	bne.n	b4854 <avcodec_find_decoder_by_name@@Base+0x440>
+   b482e:	2000      	movs	r0, #0
+   b4830:	2201      	movs	r2, #1
+   b4832:	e9cb 005e 	strd	r0, r0, [fp, #376]	; 0x178
+   b4836:	2300      	movs	r3, #0
+   b4838:	f8db 115c 	ldr.w	r1, [fp, #348]	; 0x15c
+   b483c:	2700      	movs	r7, #0
+   b483e:	428f      	cmp	r7, r1
+   b4840:	da08      	bge.n	b4854 <avcodec_find_decoder_by_name@@Base+0x440>
+   b4842:	fa02 f607 	lsl.w	r6, r2, r7
+   b4846:	4330      	orrs	r0, r6
+   b4848:	ea43 73e6 	orr.w	r3, r3, r6, asr #31
+   b484c:	3701      	adds	r7, #1
+   b484e:	e9c4 0300 	strd	r0, r3, [r4]
+   b4852:	e7f4      	b.n	b483e <avcodec_find_decoder_by_name@@Base+0x42a>
+   b4854:	f44f 6080 	mov.w	r0, #1024	; 0x400
+   b4858:	f8cb 0164 	str.w	r0, [fp, #356]	; 0x164
+   b485c:	f8db 02a4 	ldr.w	r0, [fp, #676]	; 0x2a4
+   b4860:	2808      	cmp	r0, #8
+   b4862:	d007      	beq.n	b4874 <avcodec_find_decoder_by_name@@Base+0x460>
+   b4864:	e9dd 7607 	ldrd	r7, r6, [sp, #28]
+   b4868:	2818      	cmp	r0, #24
+   b486a:	d007      	beq.n	b487c <avcodec_find_decoder_by_name@@Base+0x468>
+   b486c:	2810      	cmp	r0, #16
+   b486e:	d108      	bne.n	b4882 <avcodec_find_decoder_by_name@@Base+0x46e>
+   b4870:	2001      	movs	r0, #1
+   b4872:	e004      	b.n	b487e <avcodec_find_decoder_by_name@@Base+0x46a>
+   b4874:	2000      	movs	r0, #0
+   b4876:	e9dd 7607 	ldrd	r7, r6, [sp, #28]
+   b487a:	e000      	b.n	b487e <avcodec_find_decoder_by_name@@Base+0x46a>
+   b487c:	2002      	movs	r0, #2
+   b487e:	f8cb 0160 	str.w	r0, [fp, #352]	; 0x160
+   b4882:	f8d9 4034 	ldr.w	r4, [r9, #52]	; 0x34
+   b4886:	ed9f 0a64 	vldr	s0, [pc, #400]	; b4a18 <avcodec_find_decoder_by_name@@Base+0x604>
+   b488a:	68e1      	ldr	r1, [r4, #12]
+   b488c:	6860      	ldr	r0, [r4, #4]
+   b488e:	ee01 1a10 	vmov	s2, r1
+   b4892:	fffb 0601 	vcvt.f32.s32	d16, d1
+   b4896:	ee01 0a10 	vmov	s2, r0
+   b489a:	ffbb 1601 	vcvt.f32.s32	d1, d1
+   b489e:	ff00 0d90 	vmul.f32	d0, d16, d0
+   b48a2:	ee80 0a01 	vdiv.f32	s0, s0, s2
+   b48a6:	ffbb 0700 	vcvt.s32.f32	d0, d0
+   b48aa:	ee10 0a10 	vmov	r0, s0
+   b48ae:	6360      	str	r0, [r4, #52]	; 0x34
+   b48b0:	8ce1      	ldrh	r1, [r4, #38]	; 0x26
+   b48b2:	b131      	cbz	r1, b48c2 <avcodec_find_decoder_by_name@@Base+0x4ae>
+   b48b4:	f8b9 1012 	ldrh.w	r1, [r9, #18]
+   b48b8:	2901      	cmp	r1, #1
+   b48ba:	d00b      	beq.n	b48d4 <avcodec_find_decoder_by_name@@Base+0x4c0>
+   b48bc:	b961      	cbnz	r1, b48d8 <avcodec_find_decoder_by_name@@Base+0x4c4>
+   b48be:	3840      	subs	r0, #64	; 0x40
+   b48c0:	e009      	b.n	b48d6 <avcodec_find_decoder_by_name@@Base+0x4c2>
+   b48c2:	8d61      	ldrh	r1, [r4, #42]	; 0x2a
+   b48c4:	2903      	cmp	r1, #3
+   b48c6:	d807      	bhi.n	b48d8 <avcodec_find_decoder_by_name@@Base+0x4c4>
+   b48c8:	e8df f001 	tbb	[pc, r1]
+   b48cc:	0202      	lsls	r2, r0, #8
+   b48ce:	0202      	lsls	r2, r0, #8
+   b48d0:	3838      	subs	r0, #56	; 0x38
+   b48d2:	e000      	b.n	b48d6 <avcodec_find_decoder_by_name@@Base+0x4c2>
+   b48d4:	3848      	subs	r0, #72	; 0x48
+   b48d6:	6360      	str	r0, [r4, #52]	; 0x34
+   b48d8:	ee00 0a10 	vmov	s0, r0
+   b48dc:	fffb 1600 	vcvt.f32.s32	d17, d0
+   b48e0:	efc4 0f10 	vmov.f32	d16, #0.125	; 0x3e000000
+   b48e4:	ff01 0db0 	vmul.f32	d0, d17, d16
+   b48e8:	ee10 0a10 	vmov	r0, s0
+   b48ec:	f7ec e818 	blx	a0920 <ceilf@plt>
+   b48f0:	ec40 0b30 	vmov	d16, r0, r0
+   b48f4:	ffbb 07a0 	vcvt.u32.f32	d0, d16
+   b48f8:	ee10 2a10 	vmov	r2, s0
+   b48fc:	f8a9 201e 	strh.w	r2, [r9, #30]
+   b4900:	f8d9 0004 	ldr.w	r0, [r9, #4]
+   b4904:	b958      	cbnz	r0, b491e <avcodec_find_decoder_by_name@@Base+0x50a>
+   b4906:	f8db 1380 	ldr.w	r1, [fp, #896]	; 0x380
+   b490a:	4620      	mov	r0, r4
+   b490c:	f7ec e80e 	blx	a092c <Avs3InitDecoder@plt>
+   b4910:	2001      	movs	r0, #1
+   b4912:	f8c9 0004 	str.w	r0, [r9, #4]
+   b4916:	f8b9 201e 	ldrh.w	r2, [r9, #30]
+   b491a:	f8d9 4034 	ldr.w	r4, [r9, #52]	; 0x34
+   b491e:	f8d9 0020 	ldr.w	r0, [r9, #32]
+   b4922:	b292      	uxth	r2, r2
+   b4924:	69b9      	ldr	r1, [r7, #24]
+   b4926:	4401      	add	r1, r0
+   b4928:	6ca0      	ldr	r0, [r4, #72]	; 0x48
+   b492a:	f7eb ef6a 	blx	a0800 <__aeabi_memcpy@plt>
+   b492e:	f8d9 102c 	ldr.w	r1, [r9, #44]	; 0x2c
+   b4932:	b971      	cbnz	r1, b4952 <avcodec_find_decoder_by_name@@Base+0x53e>
+   b4934:	f8db 015c 	ldr.w	r0, [fp, #348]	; 0x15c
+   b4938:	f8db 1164 	ldr.w	r1, [fp, #356]	; 0x164
+   b493c:	4348      	muls	r0, r1
+   b493e:	0040      	lsls	r0, r0, #1
+   b4940:	f8c9 0028 	str.w	r0, [r9, #40]	; 0x28
+   b4944:	f290 ff38 	bl	3457b8 <av_mallocz@@Base>
+   b4948:	4601      	mov	r1, r0
+   b494a:	2800      	cmp	r0, #0
+   b494c:	f8c9 002c 	str.w	r0, [r9, #44]	; 0x2c
+   b4950:	d05e      	beq.n	b4a10 <avcodec_find_decoder_by_name@@Base+0x5fc>
+   b4952:	f8d9 0034 	ldr.w	r0, [r9, #52]	; 0x34
+   b4956:	f7eb eff0 	blx	a0938 <Avs3Decode@plt>
+   b495a:	f8d9 0034 	ldr.w	r0, [r9, #52]	; 0x34
+   b495e:	f8d0 209c 	ldr.w	r2, [r0, #156]	; 0x9c
+   b4962:	b342      	cbz	r2, b49b6 <avcodec_find_decoder_by_name@@Base+0x5a2>
+   b4964:	f9b2 1000 	ldrsh.w	r1, [r2]
+   b4968:	f9b2 2002 	ldrsh.w	r2, [r2, #2]
+   b496c:	ea41 0302 	orr.w	r3, r1, r2
+   b4970:	041b      	lsls	r3, r3, #16
+   b4972:	d020      	beq.n	b49b6 <avcodec_find_decoder_by_name@@Base+0x5a2>
+   b4974:	e9d7 0302 	ldrd	r0, r3, [r7, #8]
+   b4978:	e9cd 0300 	strd	r0, r3, [sp]
+   b497c:	4658      	mov	r0, fp
+   b497e:	e9cd 1202 	strd	r1, r2, [sp, #8]
+   b4982:	2138      	movs	r1, #56	; 0x38
+   b4984:	4a26      	ldr	r2, [pc, #152]	; (b4a20 <avcodec_find_decoder_by_name@@Base+0x60c>)
+   b4986:	447a      	add	r2, pc
+   b4988:	f28f fd06 	bl	344398 <av_log@@Base>
+   b498c:	4650      	mov	r0, sl
+   b498e:	2113      	movs	r1, #19
+   b4990:	f644 5270 	movw	r2, #19824	; 0x4d70
+   b4994:	f28b fb70 	bl	340078 <av_frame_new_side_data@@Base>
+   b4998:	b3d0      	cbz	r0, b4a10 <avcodec_find_decoder_by_name@@Base+0x5fc>
+   b499a:	f8d9 1034 	ldr.w	r1, [r9, #52]	; 0x34
+   b499e:	f644 5270 	movw	r2, #19824	; 0x4d70
+   b49a2:	6840      	ldr	r0, [r0, #4]
+   b49a4:	f8d1 109c 	ldr.w	r1, [r1, #156]	; 0x9c
+   b49a8:	f7eb ef2a 	blx	a0800 <__aeabi_memcpy@plt>
+   b49ac:	2001      	movs	r0, #1
+   b49ae:	f8ca 0198 	str.w	r0, [sl, #408]	; 0x198
+   b49b2:	f8d9 0034 	ldr.w	r0, [r9, #52]	; 0x34
+   b49b6:	6c80      	ldr	r0, [r0, #72]	; 0x48
+   b49b8:	f7eb efc4 	blx	a0944 <ResetBitstream@plt>
+   b49bc:	f8db 0164 	ldr.w	r0, [fp, #356]	; 0x164
+   b49c0:	2401      	movs	r4, #1
+   b49c2:	f8ca 004c 	str.w	r0, [sl, #76]	; 0x4c
+   b49c6:	4651      	mov	r1, sl
+   b49c8:	f8db 0158 	ldr.w	r0, [fp, #344]	; 0x158
+   b49cc:	2200      	movs	r2, #0
+   b49ce:	f8ca 00e8 	str.w	r0, [sl, #232]	; 0xe8
+   b49d2:	f8db 015c 	ldr.w	r0, [fp, #348]	; 0x15c
+   b49d6:	f8ca 4194 	str.w	r4, [sl, #404]	; 0x194
+   b49da:	f8ca 0160 	str.w	r0, [sl, #352]	; 0x160
+   b49de:	4658      	mov	r0, fp
+   b49e0:	f01d fcf8 	bl	d23d4 <ff_get_buffer@@Base>
+   b49e4:	2800      	cmp	r0, #0
+   b49e6:	f53f aed7 	bmi.w	b4798 <avcodec_find_decoder_by_name@@Base+0x384>
+   b49ea:	f8d9 102c 	ldr.w	r1, [r9, #44]	; 0x2c
+   b49ee:	f8da 0000 	ldr.w	r0, [sl]
+   b49f2:	f8da 2020 	ldr.w	r2, [sl, #32]
+   b49f6:	f7eb ef04 	blx	a0800 <__aeabi_memcpy@plt>
+   b49fa:	e9d9 100a 	ldrd	r1, r0, [r9, #40]	; 0x28
+   b49fe:	f7eb ef12 	blx	a0824 <__aeabi_memclr@plt>
+   b4a02:	6034      	str	r4, [r6, #0]
+   b4a04:	f8b9 001e 	ldrh.w	r0, [r9, #30]
+   b4a08:	f8d9 1020 	ldr.w	r1, [r9, #32]
+   b4a0c:	4408      	add	r0, r1
+   b4a0e:	e6c3      	b.n	b4798 <avcodec_find_decoder_by_name@@Base+0x384>
+   b4a10:	f06f 000b 	mvn.w	r0, #11
+   b4a14:	e6c0      	b.n	b4798 <avcodec_find_decoder_by_name@@Base+0x384>
+   b4a16:	bf00      	nop
+   b4a18:	0000      	movs	r0, r0
+   b4a1a:	4480      	add	r8, r0
+   b4a1c:	0e84      	lsrs	r4, r0, #26
+   b4a1e:	0046      	lsls	r6, r0, #1
+   b4a20:	15a8      	asrs	r0, r5, #22
+   b4a22:	0041      	lsls	r1, r0, #1
+   b4a24:	b5bc      	push	{r2, r3, r4, r5, r7, lr}
+   b4a26:	490f      	ldr	r1, [pc, #60]	; (b4a64 <avcodec_find_decoder_by_name@@Base+0x650>)
+   b4a28:	4479      	add	r1, pc
+   b4a2a:	680c      	ldr	r4, [r1, #0]
+   b4a2c:	6821      	ldr	r1, [r4, #0]
+   b4a2e:	9101      	str	r1, [sp, #4]
+   b4a30:	6985      	ldr	r5, [r0, #24]
+   b4a32:	6ae8      	ldr	r0, [r5, #44]	; 0x2c
+   b4a34:	b120      	cbz	r0, b4a40 <avcodec_find_decoder_by_name@@Base+0x62c>
+   b4a36:	f290 fe27 	bl	345688 <av_free@@Base>
+   b4a3a:	2000      	movs	r0, #0
+   b4a3c:	e9c5 000a 	strd	r0, r0, [r5, #40]	; 0x28
+   b4a40:	6b68      	ldr	r0, [r5, #52]	; 0x34
+   b4a42:	b118      	cbz	r0, b4a4c <avcodec_find_decoder_by_name@@Base+0x638>
+   b4a44:	f7eb ef84 	blx	a0950 <Avs3DecoderDestroy@plt>
+   b4a48:	2000      	movs	r0, #0
+   b4a4a:	6368      	str	r0, [r5, #52]	; 0x34
+   b4a4c:	2000      	movs	r0, #0
+   b4a4e:	6068      	str	r0, [r5, #4]
+   b4a50:	6820      	ldr	r0, [r4, #0]
+   b4a52:	9901      	ldr	r1, [sp, #4]
+   b4a54:	1a40      	subs	r0, r0, r1
+   b4a56:	bf02      	ittt	eq
+   b4a58:	2000      	moveq	r0, #0
+   b4a5a:	b002      	addeq	sp, #8
+   b4a5c:	bdb0      	popeq	{r4, r5, r7, pc}
+   b4a5e:	f7eb eec4 	blx	a07e8 <__stack_chk_fail@plt>
+   b4a62:	bf00      	nop
+   b4a64:	b6e0      			; <UNDEFINED> instruction: 0xb6e0
+   b4a66:	0052      	lsls	r2, r2, #1
+   b4a68:	b5e0      	push	{r5, r6, r7, lr}
+   b4a6a:	4806      	ldr	r0, [pc, #24]	; (b4a84 <avcodec_find_decoder_by_name@@Base+0x670>)
+   b4a6c:	4478      	add	r0, pc
+   b4a6e:	6800      	ldr	r0, [r0, #0]
+   b4a70:	6801      	ldr	r1, [r0, #0]
+   b4a72:	9101      	str	r1, [sp, #4]
+   b4a74:	6800      	ldr	r0, [r0, #0]
+   b4a76:	9901      	ldr	r1, [sp, #4]
+   b4a78:	1a40      	subs	r0, r0, r1
+   b4a7a:	bf08      	it	eq
+   b4a7c:	bd8c      	popeq	{r2, r3, r7, pc}
+   b4a7e:	f7eb eeb4 	blx	a07e8 <__stack_chk_fail@plt>
+   b4a82:	bf00      	nop
+   b4a84:	b69c      			; <UNDEFINED> instruction: 0xb69c
+   b4a86:	0052      	lsls	r2, r2, #1
+   b4a88:	b5bc      	push	{r2, r3, r4, r5, r7, lr}
+   b4a8a:	490e      	ldr	r1, [pc, #56]	; (b4ac4 <avcodec_find_decoder_by_name@@Base+0x6b0>)
+   b4a8c:	4479      	add	r1, pc
+   b4a8e:	6809      	ldr	r1, [r1, #0]
+   b4a90:	680a      	ldr	r2, [r1, #0]
+   b4a92:	9201      	str	r2, [sp, #4]
+   b4a94:	2200      	movs	r2, #0
+   b4a96:	4b0c      	ldr	r3, [pc, #48]	; (b4ac8 <avcodec_find_decoder_by_name@@Base+0x6b4>)
+   b4a98:	447b      	add	r3, pc
+   b4a9a:	681b      	ldr	r3, [r3, #0]
+   b4a9c:	2ac8      	cmp	r2, #200	; 0xc8
+   b4a9e:	d005      	beq.n	b4aac <avcodec_find_decoder_by_name@@Base+0x698>
+   b4aa0:	189c      	adds	r4, r3, r2
+   b4aa2:	68e5      	ldr	r5, [r4, #12]
+   b4aa4:	4285      	cmp	r5, r0
+   b4aa6:	d003      	beq.n	b4ab0 <avcodec_find_decoder_by_name@@Base+0x69c>
+   b4aa8:	3214      	adds	r2, #20
+   b4aaa:	e7f7      	b.n	b4a9c <avcodec_find_decoder_by_name@@Base+0x688>
+   b4aac:	2000      	movs	r0, #0
+   b4aae:	e000      	b.n	b4ab2 <avcodec_find_decoder_by_name@@Base+0x69e>
+   b4ab0:	8a20      	ldrh	r0, [r4, #16]
+   b4ab2:	6809      	ldr	r1, [r1, #0]
+   b4ab4:	9a01      	ldr	r2, [sp, #4]
+   b4ab6:	1a89      	subs	r1, r1, r2
+   b4ab8:	bf02      	ittt	eq
+   b4aba:	b200      	sxtheq	r0, r0
+   b4abc:	b002      	addeq	sp, #8
+   b4abe:	bdb0      	popeq	{r4, r5, r7, pc}
+   b4ac0:	f7eb ee92 	blx	a07e8 <__stack_chk_fail@plt>
+   b4ac4:	b67c      			; <UNDEFINED> instruction: 0xb67c
+   b4ac6:	0052      	lsls	r2, r2, #1
+   b4ac8:	b7c4      			; <UNDEFINED> instruction: 0xb7c4
+   b4aca:	0052      	lsls	r2, r2, #1
+   b4acc:	b5e0      	push	{r5, r6, r7, lr}
+   b4ace:	4807      	ldr	r0, [pc, #28]	; (b4aec <avcodec_find_decoder_by_name@@Base+0x6d8>)
+   b4ad0:	4478      	add	r0, pc
+   b4ad2:	6800      	ldr	r0, [r0, #0]
+   b4ad4:	6801      	ldr	r1, [r0, #0]
+   b4ad6:	9101      	str	r1, [sp, #4]
+   b4ad8:	6800      	ldr	r0, [r0, #0]
+   b4ada:	9901      	ldr	r1, [sp, #4]
+   b4adc:	1a40      	subs	r0, r0, r1
+   b4ade:	bf02      	ittt	eq
+   b4ae0:	2000      	moveq	r0, #0
+   b4ae2:	b002      	addeq	sp, #8
+   b4ae4:	bd80      	popeq	{r7, pc}
+   b4ae6:	f7eb ee80 	blx	a07e8 <__stack_chk_fail@plt>
+   b4aea:	bf00      	nop
+   b4aec:	b638      			; <UNDEFINED> instruction: 0xb638
+   b4aee:	0052      	lsls	r2, r2, #1
+   b4af0:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+   b4af4:	b08b      	sub	sp, #44	; 0x2c
+   b4af6:	460d      	mov	r5, r1
+   b4af8:	49dd      	ldr	r1, [pc, #884]	; (b4e70 <avcodec_find_decoder_by_name@@Base+0xa5c>)
+   b4afa:	f8dd 8050 	ldr.w	r8, [sp, #80]	; 0x50
+   b4afe:	4699      	mov	r9, r3
+   b4b00:	4479      	add	r1, pc
+   b4b02:	f8d1 a000 	ldr.w	sl, [r1]
+   b4b06:	f8da 1000 	ldr.w	r1, [sl]
+   b4b0a:	910a      	str	r1, [sp, #40]	; 0x28
+   b4b0c:	a909      	add	r1, sp, #36	; 0x24
+   b4b0e:	6804      	ldr	r4, [r0, #0]
+   b4b10:	2000      	movs	r0, #0
+   b4b12:	f8c2 8000 	str.w	r8, [r2]
+   b4b16:	220c      	movs	r2, #12
+   b4b18:	9009      	str	r0, [sp, #36]	; 0x24
+   b4b1a:	4640      	mov	r0, r8
+   b4b1c:	f7eb eefa 	blx	a0914 <GetNextIndice@plt>
+   b4b20:	f8dd b054 	ldr.w	fp, [sp, #84]	; 0x54
+   b4b24:	f640 71ff 	movw	r1, #4095	; 0xfff
+   b4b28:	4288      	cmp	r0, r1
+   b4b2a:	d10d      	bne.n	b4b48 <avcodec_find_decoder_by_name@@Base+0x734>
+   b4b2c:	a909      	add	r1, sp, #36	; 0x24
+   b4b2e:	4640      	mov	r0, r8
+   b4b30:	2204      	movs	r2, #4
+   b4b32:	f7eb eef0 	blx	a0914 <GetNextIndice@plt>
+   b4b36:	2802      	cmp	r0, #2
+   b4b38:	d106      	bne.n	b4b48 <avcodec_find_decoder_by_name@@Base+0x734>
+   b4b3a:	a909      	add	r1, sp, #36	; 0x24
+   b4b3c:	4640      	mov	r0, r8
+   b4b3e:	2201      	movs	r2, #1
+   b4b40:	f7eb eee8 	blx	a0914 <GetNextIndice@plt>
+   b4b44:	2801      	cmp	r0, #1
+   b4b46:	d115      	bne.n	b4b74 <avcodec_find_decoder_by_name@@Base+0x760>
+   b4b48:	f8cd b000 	str.w	fp, [sp]
+   b4b4c:	4ac9      	ldr	r2, [pc, #804]	; (b4e74 <avcodec_find_decoder_by_name@@Base+0xa60>)
+   b4b4e:	447a      	add	r2, pc
