@@ -29,6 +29,7 @@ def build_elf(class64: bool, machine: int, build_id: bytes) -> bytes:
     note_off = ehsize
     shoff = note_off + len(note)
     data = bytearray(shoff + shentsize)
+    data[note_off:note_off + len(note)] = note
     data[0:4] = b"\x7fELF"
     data[4] = ei_class
     data[5] = 1  # little-endian
