@@ -12,4 +12,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "libavs3a_jni"
-include(":sdk", ":smoke-test")
+include(":sdk", ":smoke-test", ":media3-demo")

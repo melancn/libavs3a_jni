@@ -20,7 +20,7 @@ android {
         minSdk = 24
         ndk { abiFilters += setOf("arm64-v8a", "armeabi-v7a") }
         consumerProguardFiles("consumer-rules.pro")
-        buildConfigField("int", "API_CONTRACT_VERSION", "1")
+        buildConfigField("int", "API_CONTRACT_VERSION", "2")
         buildConfigField("String", "SDK_VERSION", "\"$sdkVersion\"")
         buildConfigField("String", "SOURCE_COMMIT", "\"$sourceCommit\"")
         externalNativeBuild {

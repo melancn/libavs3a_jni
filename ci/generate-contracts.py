@@ -200,11 +200,78 @@ def validate_abi_contract(contract: dict) -> dict:
 # Frame dialect validation
 # ---------------------------------------------------------------------------
 
+LAYOUT_ID_OFFSET = 1  # pcm layout id == channelConfig + 1 (MONO=1, STEREO=2, ...)
+
+
+def validate_channel_configurations(dialect: dict, bitrates: dict) -> None:
+    configs = dialect.get("channelConfigurations")
+    if not isinstance(configs, list) or not configs:
+        raise ContractError("dialect.channelConfigurations must be a non-empty list")
+    seen = set()
+    for i, entry in enumerate(configs):
+        if not isinstance(entry, dict):
+            raise ContractError(f"channelConfigurations[{i}] must be an object")
+        cfg = entry.get("channelConfig")
+        channels = entry.get("channels")
+        lfe = entry.get("lfeFlag")
+        fmt = entry.get("decoderFormat")
+        table_key = entry.get("bitrateTable")
+        layout = entry.get("layout")
+        evidence = entry.get("evidence")
+        if not is_int(cfg) or cfg != i:
+            raise ContractError(
+                f"channelConfigurations[{i}]: channelConfig {cfg!r} must equal its index (contiguous from 0)")
+        if cfg in seen:
+            raise ContractError(f"channelConfigurations: duplicate channelConfig {cfg}")
+        seen.add(cfg)
+        if not is_int(channels) or channels <= 0 or channels > 24:
+            raise ContractError(f"channelConfigurations[{i}]: invalid channels {channels!r}")
+        if lfe not in (0, 1):
+            raise ContractError(f"channelConfigurations[{i}]: lfeFlag must be 0 or 1")
+        if not is_int(fmt) or fmt < 0 or fmt > 4:
+            raise ContractError(f"channelConfigurations[{i}]: decoderFormat must be 0..4")
+        if not isinstance(layout, str) or not re.match(r"^[A-Z][A-Z0-9_]*$", layout):
+            raise ContractError(f"channelConfigurations[{i}]: invalid layout name {layout!r}")
+        if table_key is not None and table_key not in bitrates:
+            raise ContractError(
+                f"channelConfigurations[{i}]: bitrateTable {table_key!r} not in bitrateIndexTables")
+        if fmt == 2 and table_key is None:
+            # Undecodable-but-representable layouts are allowed (documented vendor gap),
+            # but they must carry an explanatory note.
+            if not entry.get("note"):
+                raise ContractError(
+                    f"channelConfigurations[{i}]: null bitrateTable requires a note")
+        if not isinstance(evidence, list) or not evidence or \
+                not all(isinstance(e, str) and e for e in evidence):
+            raise ContractError(f"channelConfigurations[{i}]: non-empty evidence list required")
+    modes = dialect.get("headerModes")
+    mode_cfgs = modes[0].get("channelConfigurations") if modes else None
+    expected = [c["channelConfig"] for c in configs]
+    if mode_cfgs is not None and sorted(mode_cfgs) != expected:
+        raise ContractError(
+            "dialect.headerModes[0].channelConfigurations must match channelConfigurations entries")
+
+
 def crc_reflect16(table: list, data: bytes) -> int:
     crc = 0xFFFF
     for byte in data:
         crc = ((crc << 8) ^ table[(crc >> 8) & 0xFF] ^ byte) & 0xFFFF
     return crc
+
+
+def validate_layout_cross_contract(dialect: dict, jni: dict) -> None:
+    """Every channel configuration layout must have a pcmLayouts entry whose
+    id equals channelConfig + LAYOUT_ID_OFFSET (the id mapping used by the
+    generated headers, native session metadata, and the Java PcmLayout)."""
+    layouts = jni.get("pcmLayouts", {})
+    for entry in dialect.get("channelConfigurations", []):
+        layout = entry.get("layout")
+        expected_id = entry.get("channelConfig") + LAYOUT_ID_OFFSET
+        actual_id = layouts.get(layout)
+        if not isinstance(actual_id, int) or actual_id != expected_id:
+            raise ContractError(
+                f"pcmLayouts.{layout}: id {actual_id!r} != channelConfig "
+                f"{entry.get('channelConfig')} + {LAYOUT_ID_OFFSET}")
 
 
 def derive_crc16_table(poly: int) -> list:
@@ -256,12 +323,15 @@ def validate_dialect(dialect: dict) -> None:
     if not isinstance(table, list) or len(table) != 9 or not all(is_int(v) and v > 0 for v in table):
         raise ContractError("dialect.sampleRateIndexTable must be 9 positive int entries")
     bitrates = dialect.get("bitrateIndexTables")
-    if not isinstance(bitrates, dict):
+    if not isinstance(bitrates, dict) or not bitrates:
         raise ContractError("dialect.bitrateIndexTables missing")
     for key in ("mono", "stereo"):
-        tbl = bitrates.get(key)
+        if key not in bitrates:
+            raise ContractError(f"dialect.bitrateIndexTables.{key} missing")
+    for key, tbl in bitrates.items():
         if not isinstance(tbl, list) or len(tbl) != 16 or not all(is_int(v) and v >= 0 for v in tbl):
             raise ContractError(f"dialect.bitrateIndexTables.{key} must be 16 non-negative int entries")
+    validate_channel_configurations(dialect, bitrates)
     crc = dialect.get("crcRules")
     if not isinstance(crc, dict):
         raise ContractError("dialect.crcRules missing")
@@ -304,13 +374,18 @@ def validate_jni(jni: dict) -> None:
             raise ContractError(f"jni-contract.methods[{i}].descriptor invalid")
         if not isinstance(m.get("static"), bool):
             raise ContractError(f"jni-contract.methods[{i}].static must be boolean")
-    for section in ("queueResults", "receiveResults", "errors"):
+    for section in ("queueResults", "receiveResults", "errors", "pcmLayouts"):
         mapping = jni.get(section)
         if not isinstance(mapping, dict) or not mapping:
             raise ContractError(f"jni-contract.{section} must be a non-empty object")
         for name, value in mapping.items():
             if not re.match(r"^[A-Z][A-Z0-9_]*$", name) or not is_int(value):
                 raise ContractError(f"jni-contract.{section}.{name} invalid")
+    layouts = jni.get("pcmLayouts", {})
+    if len(set(layouts.values())) != len(layouts):
+        raise ContractError("jni-contract.pcmLayouts values must be unique")
+    if any(v < 0 for v in layouts.values()):
+        raise ContractError("jni-contract.pcmLayouts values must be non-negative")
 
 
 # ---------------------------------------------------------------------------
@@ -343,6 +418,12 @@ def gen_status_header(jni: dict) -> str:
         f'#define AVS3A_PCM_METADATA_LONGS {jni["pcmMetadataLongs"]}',
         f'#define AVS3A_ENCODED_FRAME_METADATA_LONGS {jni["encodedFrameMetadataLongs"]}',
         f'#define AVS3A_JNI_METHOD_COUNT {len(jni["methods"])}',
+        "",
+        "// PCM layout ids (id = channelConfig + 1; see PcmLayout in the Java SDK)",
+    ]
+    for name, value in sorted(jni.get("pcmLayouts", {}).items(), key=lambda kv: kv[1]):
+        out.append(f"#define AVS3A_PCM_LAYOUT_{name} {value}")
+    out += [
         "",
         "// Queue/receive results",
     ]
@@ -447,11 +528,34 @@ def gen_dialect_header(dialect: dict) -> str:
         ", ".join(str(v) for v in dialect["sampleRateIndexTable"]) + "};",
         "",
     ]
-    for key in ("mono", "stereo"):
+    for key in sorted(dialect["bitrateIndexTables"]):
         tbl = dialect["bitrateIndexTables"][key]
         out.append(f"inline constexpr int32_t kBitrateIndexTable_{key.upper()}[{len(tbl)}] = {{")
         out.append(", ".join(str(v) for v in tbl) + "};")
         out.append("")
+    configs = dialect.get("channelConfigurations", [])
+    out += [
+        "struct ChannelConfiguration {",
+        "    int32_t channel_config;",
+        "    int32_t channels;",
+        "    int32_t lfe_flag;",
+        "    int32_t decoder_format;",
+        "    int32_t layout_id;",
+        "    const int32_t* bitrate_table;  // null when the vendor build has no table",
+        "};",
+        "",
+        f"inline constexpr int32_t kChannelConfigurationCount = {len(configs)};",
+        f"inline constexpr ChannelConfiguration kChannelConfigurations[kChannelConfigurationCount] = {{",
+    ]
+    for entry in configs:
+        table_ref = "nullptr"
+        if entry["bitrateTable"] is not None:
+            table_ref = f"kBitrateIndexTable_{entry['bitrateTable'].upper()}"
+        out.append(
+            "    {{{}, {}, {}, {}, {}, {}}},".format(
+                entry["channelConfig"], entry["channels"], entry["lfeFlag"],
+                entry["decoderFormat"], entry["channelConfig"] + LAYOUT_ID_OFFSET, table_ref))
+    out += ["};", ""]
     mode = dialect["headerModes"][0]
     out.append(f"inline constexpr int32_t kHeaderBitOffset_{mode['id'].upper().replace('-', '_')}[{len(mode['fields'])}] = {{")
     out.append(", ".join(str(f["bitOffset"]) for f in mode["fields"]) + "};")
@@ -504,6 +608,7 @@ def main(argv=None) -> int:
         abi_readiness = validate_abi_contract(abi_contract)  # both ABIs validated independently
         validate_dialect(dialect)
         validate_jni(jni)
+        validate_layout_cross_contract(dialect, jni)
 
         abi = args.abi
         entry = abi_contract["abis"].get(abi) if abi in VENDOR_ABIS else None

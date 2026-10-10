@@ -11,7 +11,7 @@
 | -1010 | MODEL_MISSING | Model file not found |
 | -1011 | MODEL_CORRUPT | Model SHA mismatch |
 | -1012 | MODEL_IO_FAILED | IO error during staging |
-| -1020 | UNSUPPORTED_MODE | Non-mono/stereo config |
+| -1020 | UNSUPPORTED_MODE | Unsupported stream config (non-channel-based profile, neural type > 1, source precision != 16, channel config without vendor bitrate table, e.g. MC_10_2/MC_22_2) |
 | -1021 | INVALID_HEADER | Bad frame header or CRC |
 | -1022 | INPUT_TOO_LARGE | Chunk exceeds MAX_INPUT_CHUNK |
 | -1023 | TRUNCATED_FRAME | Incomplete frame at EOS |

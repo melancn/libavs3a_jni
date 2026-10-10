@@ -11,11 +11,13 @@ import java.nio.channels.FileLock;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import android.content.Context;
+
 final class ModelIo {
     private static final int MAX_MODEL_SIZE = 79930;
     private static final String EXPECTED_SHA256 = "55d56a17dbfa22da21f2fa945ebe13824d246fe8b2669a63e0440316282ae068";
 
-    static VerifiedModel stageModel(File root, String vendorId, ModelSource source)
+    static VerifiedModel stageModel(Context appContext, File root, String vendorId, ModelSource source)
             throws Avs3Exception, IOException {
         File modelDir = new File(root, "avs3a" + File.separator + vendorId);
         File target = new File(modelDir, "model.bin");
@@ -34,7 +36,7 @@ final class ModelIo {
             if (target.exists() && target.isFile()) {
                 String existingSha = sha256(target);
                 if (EXPECTED_SHA256.equals(existingSha)) {
-                    return new VerifiedModel(null, target.getAbsolutePath(), vendorId, existingSha);
+                    return new VerifiedModel(appContext, target.getAbsolutePath(), vendorId, existingSha);
                 }
                 throw new Avs3Exception(Avs3Error.MODEL_CORRUPT);
             }
@@ -73,7 +75,7 @@ final class ModelIo {
                 throw new Avs3Exception(Avs3Error.MODEL_IO_FAILED);
             }
 
-            return new VerifiedModel(null, target.getAbsolutePath(), vendorId, sha);
+            return new VerifiedModel(appContext, target.getAbsolutePath(), vendorId, sha);
         } finally {
             File tempFile = new File(modelDir, ".model.tmp." + Thread.currentThread().getId());
             if (tempFile.exists()) tempFile.delete();

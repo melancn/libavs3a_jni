@@ -7,7 +7,7 @@ final class BridgeLoader {
         if (loaded) return;
         try {
             System.loadLibrary("avs3a_jni");
-            if (NativeBridge.nContractVersion() != 1)
+            if (NativeBridge.nContractVersion() != Avs3Sdk.API_CONTRACT_VERSION)
                 throw new Avs3Exception(Avs3Error.NATIVE_CONTRACT_MISMATCH);
             loaded = true;
         } catch (UnsatisfiedLinkError e) {

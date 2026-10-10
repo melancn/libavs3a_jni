@@ -4,7 +4,7 @@
   "requiredFieldsResolved": true,
   "verificationLevel": "static_binary_cross_check_and_layout_compile",
   "runtimeValidation": "NOT_RUN",
-  "scope": "profile0/channelConfig0-or-1/sourcePrecision16/nn0-or-1",
+  "scope": "profile0/channelConfig0-10/sourcePrecision16/nn0-or-1",
   "requiredFields": [
     "sampleRate",
     "sourceBits",
@@ -115,7 +115,7 @@
           "size": 4,
           "verified": true,
           "callerWrites": true,
-          "initial": "header.channelConfig (0 mono, 1 stereo)",
+          "initial": "header.channelConfig (0 mono, 1 stereo, 2..10 channel-based MC)",
           "evidence": [
             "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
             "evidence/armv7.decoder.thumb.txt",
@@ -129,7 +129,7 @@
           "size": 2,
           "verified": true,
           "callerWrites": true,
-          "initial": "header.channelConfig + 1",
+          "initial": "per channelConfig: 0->1, 1->2, 2..10 -> mcChannelConfigTable channels",
           "evidence": [
             "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
             "evidence/armv7.decoder.thumb.txt",
@@ -213,7 +213,7 @@
           "size": 2,
           "verified": true,
           "callerWrites": true,
-          "initial": 0,
+          "initial": "0 for mono/stereo; 1 for channel-based MC (channelConfig != 6)",
           "evidence": [
             "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
             "evidence/armv7.decoder.thumb.txt",
@@ -227,7 +227,7 @@
           "size": 2,
           "verified": true,
           "callerWrites": true,
-          "initial": "0 mono, 1 stereo",
+          "initial": "vendor decoderFormat: 0 mono, 1 stereo, 2 channel-based MC (channelConfig 2..10)",
           "evidence": [
             "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
             "evidence/armv7.decoder.thumb.txt",
@@ -591,7 +591,7 @@
           "size": 4,
           "verified": true,
           "callerWrites": true,
-          "initial": "header.channelConfig (0 mono, 1 stereo)",
+          "initial": "header.channelConfig (0 mono, 1 stereo, 2..10 channel-based MC)",
           "evidence": [
             "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
             "evidence/armv7.decoder.thumb.txt",
@@ -605,7 +605,7 @@
           "size": 2,
           "verified": true,
           "callerWrites": true,
-          "initial": "header.channelConfig + 1",
+          "initial": "per channelConfig: 0->1, 1->2, 2..10 -> mcChannelConfigTable channels",
           "evidence": [
             "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
             "evidence/armv7.decoder.thumb.txt",
@@ -689,7 +689,7 @@
           "size": 2,
           "verified": true,
           "callerWrites": true,
-          "initial": 0,
+          "initial": "0 for mono/stereo; 1 for channel-based MC (channelConfig != 6)",
           "evidence": [
             "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
             "evidence/armv7.decoder.thumb.txt",
@@ -703,7 +703,7 @@
           "size": 2,
           "verified": true,
           "callerWrites": true,
-          "initial": "0 mono, 1 stereo",
+          "initial": "vendor decoderFormat: 0 mono, 1 stereo, 2 channel-based MC (channelConfig 2..10)",
           "evidence": [
             "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
             "evidence/armv7.decoder.thumb.txt",

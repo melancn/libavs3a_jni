@@ -2,14 +2,14 @@ package com.inlz.avs3a;
 
 import android.content.Context;
 
-final class VerifiedModel {
+public final class VerifiedModel {
     private final Context appContext;
     private final String internalPath;
     private final String vendorId;
     private final String sha256;
 
     VerifiedModel(Context appContext, String internalPath, String vendorId, String sha256) {
-        this.appContext = appContext.getApplicationContext();
+        this.appContext = appContext == null ? null : appContext.getApplicationContext();
         this.internalPath = internalPath;
         this.vendorId = vendorId;
         this.sha256 = sha256;

@@ -231,6 +231,9 @@ def check_forbidden(checker: Checker, root: Path) -> None:
             continue
         scanned += 1
         text = path.read_text(encoding="utf-8-sig", errors="replace")
+        # Registering the standalone demo is allowed; SDK player dependencies remain forbidden.
+        if rel == "settings.gradle.kts":
+            text = text.replace('":media3-demo"', '":demo"')
         for label, pattern in FORBIDDEN_PATTERNS:
             m = pattern.search(text)
             if m:

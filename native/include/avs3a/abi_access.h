@@ -50,25 +50,27 @@ public:
         if (!ready_) return VENDOR_ABI_NOT_READY;
         if (!handle) return INVALID_ARGUMENT;
 
-        write_int32(handle, 4, cfg.sample_rate);
-        write_int16(handle, 8, 16);
-        write_int32(handle, 12, cfg.bitrate);
-        write_int32(handle, 16, cfg.bitrate);
-        write_int32(handle, 20, cfg.channel_config);
-        write_int16(handle, 24, static_cast<int16_t>(cfg.channels));
-        write_int16(handle, 26, 0);
-        write_int32(handle, 28, 0);
-        write_int32(handle, 32, 0);
-        write_int16(handle, 36, 0);
-        write_int16(handle, 38, 0);
-        write_int16(handle, 40, 0);
-        write_int16(handle, 42, static_cast<int16_t>(cfg.channel_config));
-        write_int16(handle, 44, 0);
-        write_int16(handle, 46, 0);
-        write_int16(handle, 48, 1024);
-        write_int32(handle, 52, cfg.payload_bits);
-        write_int32(handle, 56, cfg.neural_type);
-        write_int32(handle, 60, 1);
+        const VerifiedHeaderFields& v = cfg.vendor_fields;
+
+        write_int32(handle, 4, v.sample_rate);
+        write_int16(handle, 8, static_cast<int16_t>(cfg.source_bits));
+        write_int32(handle, 12, v.total_bitrate);
+        write_int32(handle, 16, v.bitrate_copy);
+        write_int32(handle, 20, v.channel_config);
+        write_int16(handle, 24, v.channel_count);
+        write_int16(handle, 26, v.object_count);
+        write_int32(handle, 28, v.object_bitrate);
+        write_int32(handle, 32, v.bed_bitrate);
+        write_int16(handle, 36, v.mixed_content_type);
+        write_int16(handle, 38, v.mixed_content);
+        write_int16(handle, 40, v.lfe_flag);
+        write_int16(handle, 42, v.decoder_format);
+        write_int16(handle, 44, v.option44);
+        write_int16(handle, 46, v.hoa_order);
+        write_int16(handle, 48, v.frame_samples);
+        write_int32(handle, 52, v.payload_bits);
+        write_int32(handle, 56, v.neural_codec_type);
+        write_int32(handle, 60, v.model_type);
 
         return OK;
     }

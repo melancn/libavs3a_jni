@@ -31,6 +31,7 @@ Status Session::queue_input(const uint8_t* data, size_t size, int64_t pts_us,
         return (state_ == SessionState::CLOSED) ? CLOSED_OR_INVALID_HANDLE : fail_status_;
     if (epoch != epoch_ && epoch_ != 0)
         return STALE_EPOCH;
+    if (input_ended_) return INVALID_STATE;
     if (flags != 0 && flags != 1)
         return INVALID_ARGUMENT;
     if (!data && size > 0)
@@ -49,9 +50,9 @@ Status Session::validate_crc_and_budget(const EncodedFrame& frame) const {
     return OK;
 }
 
-void Session::validate_pcm_shape(const OwnedPcm& pcm, const FrameConfig& cfg) const {
+Status Session::validate_pcm_shape(const OwnedPcm& pcm, const FrameConfig& cfg) const {
     size_t expected = static_cast<size_t>(cfg.samples_per_channel) * static_cast<size_t>(cfg.channels);
-    if (pcm.samples.size() < expected) return;
+    return pcm.samples.size() == expected ? OK : INTERNAL;
 }
 
 Status Session::receive(MutableByteSpan output, PcmMetadata& meta) {
@@ -78,7 +79,7 @@ Status Session::receive(MutableByteSpan output, PcmMetadata& meta) {
 
         auto& frame = fr.frame;
 
-        if (!is_channel_based_mono_or_stereo(frame.config))
+        if (!is_supported_channel_based_config(frame.config))
             return fail(UNSUPPORTED_MODE);
 
         Status crc_status = validate_crc_and_budget(frame);
@@ -101,11 +102,12 @@ Status Session::receive(MutableByteSpan output, PcmMetadata& meta) {
             return fail(UNSUPPORTED_CONFIG_CHANGE);
         }
 
-        if (!timeline_.has_anchor() && frame.pts_us != TIME_UNSET) {
+        if (frame.pts_us != TIME_UNSET) {
             timeline_.set_anchor(frame.pts_us, epoch_);
+            anchor_frame_index_ = frame_index_;
         }
 
-        int64_t computed_pts = timeline_.compute_pts(frame_index_, frame.config.sample_rate,
+        int64_t computed_pts = timeline_.compute_pts(frame_index_ - anchor_frame_index_, frame.config.sample_rate,
                                                       frame.config.samples_per_channel);
         frame.pts_us = (computed_pts != TIME_UNSET) ? computed_pts : frame.pts_us;
 
@@ -114,7 +116,8 @@ Status Session::receive(MutableByteSpan output, PcmMetadata& meta) {
         if (is_error(decode_status))
             return fail(decode_status);
 
-        validate_pcm_shape(*pcm, frame.config);
+        Status shape = validate_pcm_shape(*pcm, frame.config);
+        if (is_error(shape)) return fail(shape);
         pcm->config = frame.config;
         pcm->pts_us = frame.pts_us;
         pcm->epoch = epoch_;
@@ -130,7 +133,7 @@ Status Session::receive(MutableByteSpan output, PcmMetadata& meta) {
         meta.channels = pending_->config.channels;
         meta.samples_per_channel = pending_->config.samples_per_channel;
         meta.byte_count = static_cast<int64_t>(bytes_needed);
-        meta.layout_id = (pending_->config.channels == 1) ? 1 : 2;
+        meta.layout_id = pending_->config.layout_id;
         meta.flags = 0;
         meta.epoch = pending_->epoch;
         return RECEIVE_OUTPUT_TOO_SMALL;
@@ -144,7 +147,7 @@ Status Session::receive(MutableByteSpan output, PcmMetadata& meta) {
     meta.channels = pending_->config.channels;
     meta.samples_per_channel = pending_->config.samples_per_channel;
     meta.byte_count = static_cast<int64_t>(copied);
-    meta.layout_id = (pending_->config.channels == 1) ? 1 : 2;
+    meta.layout_id = pending_->config.layout_id;
     meta.flags = 0;
     meta.epoch = pending_->epoch;
 
@@ -176,18 +179,19 @@ Status Session::receive_frame(MutableByteSpan output, FrameMetadata& meta) {
 
         auto& frame = fr.frame;
 
-        if (!is_channel_based_mono_or_stereo(frame.config))
+        if (!is_supported_channel_based_config(frame.config))
             return fail(UNSUPPORTED_MODE);
 
         Status crc_status = validate_crc_and_budget(frame);
         if (is_error(crc_status))
             return fail(crc_status);
 
-        if (!timeline_.has_anchor() && frame.pts_us != TIME_UNSET) {
+        if (frame.pts_us != TIME_UNSET) {
             timeline_.set_anchor(frame.pts_us, epoch_);
+            anchor_frame_index_ = frame_index_;
         }
 
-        int64_t computed_pts = timeline_.compute_pts(frame_index_, frame.config.sample_rate,
+        int64_t computed_pts = timeline_.compute_pts(frame_index_ - anchor_frame_index_, frame.config.sample_rate,
                                                       frame.config.samples_per_channel);
         frame.pts_us = (computed_pts != TIME_UNSET) ? computed_pts : frame.pts_us;
 
@@ -206,6 +210,7 @@ Status Session::receive_frame(MutableByteSpan output, FrameMetadata& meta) {
         meta.payload_bytes = static_cast<int64_t>(pending_frame_->payload_size);
         meta.bitrate_bps = pending_frame_->config.bitrate;
         meta.channel_mode = static_cast<int64_t>(pending_frame_->config.mode);
+        meta.layout_id = pending_frame_->config.layout_id;
         meta.epoch = epoch_;
         return RECEIVE_OUTPUT_TOO_SMALL;
     }
@@ -222,6 +227,7 @@ Status Session::receive_frame(MutableByteSpan output, FrameMetadata& meta) {
     meta.payload_bytes = static_cast<int64_t>(pending_frame_->payload_size);
     meta.bitrate_bps = pending_frame_->config.bitrate;
     meta.channel_mode = static_cast<int64_t>(pending_frame_->config.mode);
+    meta.layout_id = pending_frame_->config.layout_id;
     meta.epoch = epoch_;
 
     pending_frame_.reset();
@@ -233,6 +239,7 @@ Status Session::end_input() {
     if (return_if_failed_or_closed())
         return (state_ == SessionState::CLOSED) ? CLOSED_OR_INVALID_HANDLE : fail_status_;
     input_ended_ = true;
+    framer_.signal_end_of_input();
     return OK;
 }
 
@@ -253,6 +260,7 @@ Status Session::flush(int64_t new_epoch) {
     input_ended_ = false;
     epoch_ = new_epoch;
     frame_index_ = 0;
+    anchor_frame_index_ = 0;
     config_.reset();
     state_ = SessionState::WAITING_HEADER;
     return OK;

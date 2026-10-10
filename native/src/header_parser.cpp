@@ -5,54 +5,11 @@
 
 namespace avs3a {
 
-static const int32_t rates[9] = {
-    192000, 96000, 48000, 44100, 32000, 24000, 22050, 16000, 8000
-};
-
-static const int32_t mono_bitrates[16] = {
-    16000, 32000, 44000, 56000, 64000, 72000, 80000, 96000,
-    128000, 144000, 164000, 192000, 0, 0, 0, 0
-};
-
-static const int32_t stereo_bitrates[16] = {
-    24000, 32000, 48000, 64000, 80000, 96000, 128000, 144000,
-    192000, 256000, 320000, 0, 0, 0, 0, 0
-};
-
-static const uint16_t crc_table[256] = {
-    0, 4129, 8258, 12387, 16516, 20645, 24774, 28903,
-    33032, 37161, 41290, 45419, 49548, 53677, 57806, 61935,
-    4657, 528, 12915, 8786, 21173, 17044, 29431, 25302,
-    37689, 33560, 45947, 41818, 54205, 50076, 62463, 58334,
-    9314, 13379, 1056, 5121, 25830, 29895, 17572, 21637,
-    42346, 46411, 34088, 38153, 58862, 62927, 50604, 54669,
-    13907, 9842, 5649, 1584, 30423, 26358, 22165, 18100,
-    46939, 42874, 38681, 34616, 63455, 59390, 55197, 51132,
-    18628, 22757, 26758, 30887, 2112, 6241, 10242, 14371,
-    51660, 55789, 59790, 63919, 35144, 39273, 43274, 47403,
-    23285, 19156, 31415, 27286, 6769, 2640, 14899, 10770,
-    56317, 52188, 64447, 60318, 39801, 35672, 47931, 43802,
-    27814, 31879, 19684, 23749, 11298, 15363, 3168, 7233,
-    60846, 64911, 52716, 56781, 44330, 48395, 36200, 40265,
-    32407, 28342, 24277, 20212, 15891, 11826, 7761, 3696,
-    65439, 61374, 57309, 53244, 48923, 44858, 40793, 36728,
-    37256, 33193, 45514, 41451, 53516, 49453, 61774, 57711,
-    4224, 161, 12482, 8419, 20484, 16421, 28742, 24679,
-    33721, 37784, 41979, 46042, 49981, 54044, 58239, 62302,
-    689, 4752, 8947, 13010, 16949, 21012, 25207, 29270,
-    46570, 42443, 38312, 34185, 62830, 58703, 54572, 50445,
-    13538, 9411, 5280, 1153, 29798, 25671, 21540, 17413,
-    42971, 47098, 34713, 38840, 59231, 63358, 50973, 55100,
-    9939, 14066, 1681, 5808, 26199, 30326, 17941, 22068,
-    55628, 51565, 63758, 59695, 39368, 35305, 47498, 43435,
-    22596, 18533, 30726, 26663, 6336, 2273, 14466, 10403,
-    52093, 56156, 60223, 64286, 35833, 39896, 43963, 48026,
-    19061, 23124, 27191, 31254, 2801, 6864, 10931, 14994,
-    64814, 60687, 56684, 52557, 48554, 44427, 40424, 36297,
-    31782, 27655, 23652, 19525, 15522, 11395, 7392, 3265,
-    61215, 65342, 53085, 57212, 44955, 49082, 36825, 40952,
-    28183, 32310, 20053, 24180, 11923, 16050, 3793, 7920
-};
+// All bitstream tables (sample rates, per-layout bitrate indexes, CRC16,
+// channel configurations) come from the generated frame dialect contract:
+// native/vendor/frame-dialect.json -> frame_dialect_generated.h.
+// Evidence: frozen evidence tables.extracted.json (both ABIs identical) and
+// vendor Avs3ParseBsFrameHeader disassembly.
 
 static uint32_t read_bits(const uint8_t* p, unsigned start, unsigned n) {
     uint32_t v = 0;
@@ -66,9 +23,26 @@ static uint32_t read_bits(const uint8_t* p, unsigned start, unsigned n) {
 uint16_t compute_crc16(const uint8_t* data, size_t n) {
     uint32_t crc = 0xffffu;
     for (size_t i = 0; i < n; ++i) {
-        crc = ((crc << 8) ^ crc_table[(crc >> 8) & 255] ^ data[i]) & 0xffffu;
+        crc = ((crc << 8) ^ kCrc16VendorTable[(crc >> 8) & 255] ^ data[i]) & 0xffffu;
     }
     return static_cast<uint16_t>(crc);
+}
+
+const ChannelConfiguration* find_channel_configuration(int32_t channel_config) {
+    for (int32_t i = 0; i < kChannelConfigurationCount; ++i) {
+        if (kChannelConfigurations[i].channel_config == channel_config)
+            return &kChannelConfigurations[i];
+    }
+    return nullptr;
+}
+
+static ChannelMode sdk_channel_mode(int32_t vendor_decoder_format) {
+    switch (vendor_decoder_format) {
+        case 0: return CHANNEL_MODE_MONO;
+        case 1: return CHANNEL_MODE_STEREO;
+        case 2: return CHANNEL_MODE_MC;
+        default: return CHANNEL_MODE_UNKNOWN;
+    }
 }
 
 HeaderResult HeaderParser::parse_header(ByteSpan bytes) const {
@@ -99,19 +73,23 @@ HeaderResult HeaderParser::parse_header(ByteSpan bytes) const {
         return HeaderResult::unsupported("neural type out of range");
     if (sr_idx >= 9u)
         return HeaderResult::invalid("sample rate index out of range");
-    if (channel_cfg > 1u)
-        return HeaderResult::unsupported("channel config out of range");
     if (precision_idx == 3u)
         return HeaderResult::invalid("reserved precision index");
     if (precision_idx != 1u)
         return HeaderResult::unsupported("unsupported source precision");
 
-    const int32_t* br_table = (channel_cfg == 0u) ? mono_bitrates : stereo_bitrates;
-    int32_t bitrate = br_table[bitrate_idx];
+    const ChannelConfiguration* cc = find_channel_configuration(
+        static_cast<int32_t>(channel_cfg));
+    if (!cc)
+        return HeaderResult::unsupported("channel config out of range");
+    if (!cc->bitrate_table)
+        return HeaderResult::unsupported("channel config has no vendor bitrate table");
+
+    int32_t bitrate = cc->bitrate_table[bitrate_idx];
     if (!bitrate)
         return HeaderResult::invalid("zero bitrate index");
 
-    int32_t rate = rates[sr_idx];
+    int32_t rate = kSampleRateIndexTable[sr_idx];
     volatile float ratio = static_cast<float>(bitrate) / static_cast<float>(rate);
     volatile float total = ratio * 1024.0f;
     uint32_t frame_bits = static_cast<uint32_t>(total);
@@ -127,13 +105,16 @@ HeaderResult HeaderParser::parse_header(ByteSpan bytes) const {
     if (payload_bits > static_cast<uint32_t>(SDK_MAX_PAYLOAD_BITS))
         return HeaderResult::unsupported("payload bits exceed signed16 budget");
 
+    ChannelMode mode = sdk_channel_mode(cc->decoder_format);
+
     FrameConfig cfg;
     cfg.sample_rate           = rate;
     cfg.bitrate               = bitrate;
-    cfg.channels              = channel_cfg + 1u;
-    cfg.mode                  = (channel_cfg == 0u) ? CHANNEL_MODE_MONO : CHANNEL_MODE_STEREO;
+    cfg.channels              = cc->channels;
+    cfg.mode                  = mode;
     cfg.neural_type           = neural_type;
     cfg.channel_config        = channel_cfg;
+    cfg.layout_id             = cc->layout_id;
     cfg.source_bits           = 16;
     cfg.samples_per_channel  = 1024;
     cfg.payload_bits          = payload_bits;
@@ -146,14 +127,14 @@ HeaderResult HeaderParser::parse_header(ByteSpan bytes) const {
     cfg.vendor_fields.total_bitrate      = bitrate;
     cfg.vendor_fields.bitrate_copy       = bitrate;
     cfg.vendor_fields.channel_config     = channel_cfg;
-    cfg.vendor_fields.channel_count       = static_cast<int16_t>(channel_cfg + 1u);
+    cfg.vendor_fields.channel_count       = static_cast<int16_t>(cc->channels);
     cfg.vendor_fields.object_count        = 0;
     cfg.vendor_fields.object_bitrate      = 0;
     cfg.vendor_fields.bed_bitrate         = 0;
     cfg.vendor_fields.mixed_content_type  = 0;
     cfg.vendor_fields.mixed_content       = 0;
-    cfg.vendor_fields.lfe_flag            = 0;
-    cfg.vendor_fields.decoder_format      = static_cast<int16_t>(channel_cfg);
+    cfg.vendor_fields.lfe_flag            = static_cast<int16_t>(cc->lfe_flag);
+    cfg.vendor_fields.decoder_format      = static_cast<int16_t>(cc->decoder_format);
     cfg.vendor_fields.option44            = 0;
     cfg.vendor_fields.hoa_order           = 0;
     cfg.vendor_fields.frame_samples       = 1024;

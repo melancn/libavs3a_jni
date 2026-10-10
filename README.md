@@ -54,3 +54,7 @@ Full table: [CODE_CONTRACTS.md](../libavs3a_jni-execution-plan/CODE_CONTRACTS.md
 - **Vendor exit risk**: model open failure may exit the process; Java/C++ catch cannot intercept.
 - **Redistribution**: `vendor.lock.json.redistributionApproved` is `false`. Full release requires authorization.
 - **Runtime validation**: NOT_RUN. Static ABI/dialect contracts are verified but real PCM/device validation is pending.
+
+## Media3 demo
+
+See [media3-demo/README.md](media3-demo/README.md) for local MP4/AVS3 playback, file selection, track selection, decoding diagnostics, build commands and validation limits. `release-sdk.yml` also packages installable bridge/full debug APKs alongside the SDK.

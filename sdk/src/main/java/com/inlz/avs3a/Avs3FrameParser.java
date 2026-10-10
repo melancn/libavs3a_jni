@@ -6,7 +6,7 @@ public final class Avs3FrameParser implements AutoCloseable {
     private final long handle;
     private long epoch;
     private final NativeCalls calls;
-    private final long[] infoScratch = new long[10];
+    private final long[] infoScratch = new long[11];
     private volatile boolean closed;
 
     Avs3FrameParser(long handle, long epoch, NativeCalls calls) {

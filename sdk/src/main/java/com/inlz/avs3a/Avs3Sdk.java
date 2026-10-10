@@ -3,7 +3,7 @@ package com.inlz.avs3a;
 import android.content.Context;
 
 public final class Avs3Sdk {
-    public static final int API_CONTRACT_VERSION = 1;
+    public static final int API_CONTRACT_VERSION = 2;
     public static final long TIME_UNSET = Long.MIN_VALUE;
     public static final int INPUT_COMPLETE_SINGLE_FRAME = 1;
 
@@ -24,12 +24,13 @@ public final class Avs3Sdk {
         boolean decodeReady = false;
 
         try {
-            RuntimeVendorVerifier.verifyApplicationVendor(context, abi);
+            RuntimeVendorVerifier.Result vendor =
+                    RuntimeVendorVerifier.verifyApplicationVendor(context, abi);
             vendorPresent = true;
-            vendorFingerprintMatched = true;
-            decodeReady = vendorAbiVerified;
+            vendorFingerprintMatched = vendor.fingerprintMatched();
+            decodeReady = vendorAbiVerified && vendorFingerprintMatched;
         } catch (Avs3Exception e) {
-            // vendor not present or not verified
+            // vendor not present or not readable; reported through the flags below
         }
 
         return new Avs3Capabilities(
@@ -48,14 +49,19 @@ public final class Avs3Sdk {
 
     public static Avs3Session open(VerifiedModel model, long epoch) throws Avs3Exception {
         if (model == null) throw new Avs3Exception(Avs3Error.INVALID_ARGUMENT);
+        if (model.appContext() == null) throw new Avs3Exception(Avs3Error.INVALID_ARGUMENT);
         if (epoch < 0) throw new Avs3Exception(Avs3Error.INVALID_ARGUMENT);
 
         BridgeLoader.ensureLoaded();
         int abi = NativeBridge.nProcessAbi();
-        String vendorPath = RuntimeVendorVerifier.verifyApplicationVendor(model.appContext(), abi);
+        RuntimeVendorVerifier.Result vendor =
+                RuntimeVendorVerifier.verifyApplicationVendor(model.appContext(), abi);
+        if (!vendor.fingerprintMatched()) {
+            throw new Avs3Exception(Avs3Error.VENDOR_UNAVAILABLE, "vendor fingerprint mismatch");
+        }
 
         NativeCalls calls = JniCalls.instance();
-        long result = calls.nCreate(model.internalPath(), vendorPath, epoch);
+        long result = calls.nCreate(model.internalPath(), vendor.path(), epoch);
         if (result <= 0) throw Avs3Exception.fromNative((int) result);
 
         return new Avs3Session(result, epoch, calls);

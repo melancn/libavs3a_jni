@@ -7,6 +7,7 @@
 #include <string>
 #include <limits>
 #include "status.h"
+#include "frame_dialect_generated.h"
 
 namespace avs3a {
 
@@ -16,6 +17,7 @@ enum ChannelMode : int32_t {
     CHANNEL_MODE_UNKNOWN = 0,
     CHANNEL_MODE_MONO    = 1,
     CHANNEL_MODE_STEREO  = 2,
+    CHANNEL_MODE_MC      = 3,
 };
 
 struct ByteSpan {
@@ -61,6 +63,7 @@ struct FrameConfig {
     ChannelMode mode               = CHANNEL_MODE_MONO;
     int32_t neural_type            = 0;
     int32_t channel_config         = 0;
+    int32_t layout_id              = 0;
     int32_t source_bits            = 16;
     int32_t payload_bits            = 0;
     int32_t payload_bytes           = 0;
@@ -106,6 +109,7 @@ struct FrameMetadata {
     int64_t payload_bytes;
     int64_t bitrate_bps;
     int64_t channel_mode;
+    int64_t layout_id;
     int64_t epoch;
 };
 
@@ -116,8 +120,21 @@ constexpr size_t MAX_FRAME_BYTES     = 5120;
 constexpr size_t MAX_ADMITTED_FRAME  = 4096;
 constexpr int32_t SDK_MAX_PAYLOAD_BITS = 32767;
 
-inline bool is_channel_based_mono_or_stereo(const FrameConfig& cfg) {
-    return cfg.channels == 1 || cfg.channels == 2;
+// A frame is decodable when its channelConfig has a vendor bitrate table.
+// Channel configs 4 (MC_10_2) and 5 (MC_22_2) are representable layouts but
+// carry a NULL codecBitrateConfigTable slot in this vendor build.
+const struct ChannelConfiguration* find_channel_configuration(int32_t channel_config);
+
+inline bool is_supported_channel_based_config(const FrameConfig& cfg) {
+    const ChannelConfiguration* cc = find_channel_configuration(cfg.channel_config);
+    if (!cc || !cc->bitrate_table) return false;
+    if (cfg.channels != cc->channels) return false;
+    switch (cc->decoder_format) {
+        case 0: return cfg.mode == CHANNEL_MODE_MONO;
+        case 1: return cfg.mode == CHANNEL_MODE_STEREO;
+        case 2: return cfg.mode == CHANNEL_MODE_MC;
+        default: return false;
+    }
 }
 
 inline bool same_codec_configuration(const FrameConfig& a, const FrameConfig& b) {
@@ -127,6 +144,7 @@ inline bool same_codec_configuration(const FrameConfig& a, const FrameConfig& b)
            a.mode            == b.mode &&
            a.neural_type     == b.neural_type &&
            a.channel_config  == b.channel_config &&
+           a.layout_id       == b.layout_id &&
            a.source_bits     == b.source_bits;
 }
 

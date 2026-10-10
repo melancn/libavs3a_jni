@@ -116,7 +116,8 @@ private:
     FrameConfig config_;
 
     Status validate_supported_config(const FrameConfig& cfg) const {
-        if (cfg.channels != 1 && cfg.channels != 2) return UNSUPPORTED_MODE;
+        if (!is_supported_channel_based_config(cfg)) return UNSUPPORTED_MODE;
+        if (cfg.channel_config < 0 || cfg.channel_config > 10) return UNSUPPORTED_MODE;
         if (cfg.source_bits != 16) return UNSUPPORTED_MODE;
         if (cfg.samples_per_channel != 1024) return UNSUPPORTED_MODE;
         if (cfg.neural_type > 1) return UNSUPPORTED_MODE;

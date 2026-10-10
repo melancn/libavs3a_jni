@@ -15,23 +15,31 @@ Status BoundedFramer::queue_input(const uint8_t* data, size_t size, int64_t pts_
     if (!data && size > 0) return INVALID_ARGUMENT;
     if (size > MAX_INPUT_CHUNK) return INPUT_TOO_LARGE;
 
-    size_t new_total = buffer_.size() + size;
-    if (new_total > QUEUE_LIMIT) return QUEUE_BACKPRESSURE;
-
-    if (size > 0) {
-        size_t old_size = buffer_.size();
-        buffer_.resize(new_total);
-        std::memcpy(buffer_.data() + old_size, data, size);
-    }
+    if (input_ended_) return INVALID_STATE;
+    if (flags != 0 && flags != 1) return INVALID_ARGUMENT;
+    (void)epoch; // Session owns epoch validation; timestamps belong to byte positions.
 
     if (flags == 1) {
-        if (buffer_.size() > MAX_FRAME_BYTES)
-            return INPUT_TOO_LARGE;
+        // Validate this sample, not all previously queued samples. Rejection is atomic.
+        HeaderResult hr = parser_.parse_header(ByteSpan(data, size));
+        bool exact = hr.kind == HeaderResult::Ready && validate_frame_bytes(hr.frame_bytes)
+                     && hr.frame_bytes == size;
+        if (!exact) {
+            // Preserve the SDK's existing completion-marker convention for a split frame.
+            // Complete samples already in the queue must not affect standalone validation.
+            if (buffer_.size() + size > QUEUE_LIMIT) return QUEUE_BACKPRESSURE;
+            std::vector<uint8_t> combined(buffer_);
+            if (size > 0) combined.insert(combined.end(), data, data + size);
+            hr = parser_.parse_header(ByteSpan(combined.data(), combined.size()));
+            if (hr.kind != HeaderResult::Ready || !validate_frame_bytes(hr.frame_bytes) ||
+                hr.frame_bytes != combined.size()) return COMPLETE_SAMPLE_CONTRACT;
+        }
     }
-
-    if (pts_us != TIME_UNSET && size > 0) {
-        pending_pts_ = pts_us;
-        pending_epoch_ = epoch;
+    if (buffer_.size() + size > QUEUE_LIMIT) return QUEUE_BACKPRESSURE;
+    if (size > 0) {
+        if (pts_us != TIME_UNSET) timestamps_.push_back({queued_bytes_, pts_us});
+        buffer_.insert(buffer_.end(), data, data + size);
+        queued_bytes_ += size;
     }
 
     return QUEUE_ACCEPTED;
@@ -95,7 +103,7 @@ FramerResult BoundedFramer::next() {
     }
 
     if (sync_pos > 0) {
-        buffer_.erase(buffer_.begin(), buffer_.begin() + sync_pos);
+        discard_prefix(sync_pos);
         search_offset_ = 0;
     }
 
@@ -107,7 +115,7 @@ FramerResult BoundedFramer::next() {
     }
     if (hr.kind == HeaderResult::Invalid) {
         if (buffer_.size() > 2) {
-            buffer_.erase(buffer_.begin(), buffer_.begin() + 1);
+            discard_prefix(1);
             search_offset_ = 0;
         }
         if (input_ended_) {
@@ -127,7 +135,7 @@ FramerResult BoundedFramer::next() {
         result.error = INVALID_HEADER;
         result.reason = "frame bytes out of bounds";
         if (buffer_.size() > 1) {
-            buffer_.erase(buffer_.begin(), buffer_.begin() + 1);
+            discard_prefix(1);
             search_offset_ = 0;
         }
         return result;
@@ -143,7 +151,7 @@ FramerResult BoundedFramer::next() {
         result.kind = FramerResult::Invalid;
         result.error = UNSUPPORTED_MODE;
         result.reason = "frame exceeds admitted size";
-        buffer_.erase(buffer_.begin(), buffer_.begin() + hr.frame_bytes);
+        discard_prefix(hr.frame_bytes);
         search_offset_ = 0;
         return result;
     }
@@ -153,7 +161,7 @@ FramerResult BoundedFramer::next() {
         result.kind = FramerResult::Invalid;
         result.error = INVALID_HEADER;
         result.reason = "CRC mismatch";
-        buffer_.erase(buffer_.begin(), buffer_.begin() + 1);
+        discard_prefix(1);
         search_offset_ = 0;
         return result;
     }
@@ -163,17 +171,28 @@ FramerResult BoundedFramer::next() {
     frame.config = hr.config;
     frame.payload_offset = hr.payload_offset;
     frame.payload_size = hr.payload_size;
-    frame.pts_us = (pending_pts_ != TIME_UNSET) ? pending_pts_ : TIME_UNSET;
+    frame.pts_us = TIME_UNSET;
+    while (!timestamps_.empty() && timestamps_.front().offset <= consumed_bytes_) {
+        frame.pts_us = timestamps_.front().pts_us;
+        timestamps_.pop_front();
+    }
 
-    buffer_.erase(buffer_.begin(), buffer_.begin() + hr.frame_bytes);
+    discard_prefix(hr.frame_bytes);
     search_offset_ = 0;
-    pending_pts_ = TIME_UNSET;
+    // A timestamp on a continuation chunk does not migrate to an unrelated frame.
+    while (!timestamps_.empty() && timestamps_.front().offset < consumed_bytes_)
+        timestamps_.pop_front();
 
     result.kind = FramerResult::Ready;
     result.frame = std::move(frame);
     result.consumed = hr.frame_bytes;
 
     return result;
+}
+
+void BoundedFramer::discard_prefix(size_t bytes) {
+    buffer_.erase(buffer_.begin(), buffer_.begin() + bytes);
+    consumed_bytes_ += bytes;
 }
 
 void BoundedFramer::signal_end_of_input() {
@@ -188,8 +207,8 @@ void BoundedFramer::flush() {
     buffer_.clear();
     search_offset_ = 0;
     input_ended_ = false;
-    pending_pts_ = 0;
-    pending_epoch_ = 0;
+    timestamps_.clear();
+    consumed_bytes_ = queued_bytes_ = 0;
 }
 
 } // namespace avs3a

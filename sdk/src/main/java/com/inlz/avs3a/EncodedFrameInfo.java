@@ -10,6 +10,7 @@ public final class EncodedFrameInfo {
     private final int payloadBytes;
     private final int bitrateBps;
     private final int channelMode;
+    private final int layoutId;
     private final long epoch;
 
     EncodedFrameInfo(long[] info) {
@@ -22,7 +23,8 @@ public final class EncodedFrameInfo {
         this.payloadBytes = (int) info[6];
         this.bitrateBps = (int) info[7];
         this.channelMode = (int) info[8];
-        this.epoch = info[9];
+        this.layoutId = (int) info[9];
+        this.epoch = info[10];
     }
 
     public long ptsUs() { return ptsUs; }
@@ -34,11 +36,15 @@ public final class EncodedFrameInfo {
     public int payloadBytes() { return payloadBytes; }
     public int bitrateBps() { return bitrateBps; }
     public int channelMode() { return channelMode; }
+    public int layoutId() { return layoutId; }
+    /** Speaker layout of the decoded stream; distinguishes e.g. MC_7_1_0 from MC_5_1_2 at equal channel counts. */
+    public PcmLayout layout() { return PcmLayout.fromId(layoutId); }
     public long epoch() { return epoch; }
 
     @Override
     public String toString() {
         return "EncodedFrameInfo{rate=" + sampleRateHz + ", ch=" + channels
-            + ", frameBytes=" + frameBytes + ", payloadBytes=" + payloadBytes + "}";
+            + ", layout=" + layout() + ", frameBytes=" + frameBytes
+            + ", payloadBytes=" + payloadBytes + "}";
     }
 }

@@ -1,5 +1,6 @@
 #include "avs3a/types.h"
 #include "avs3a/status.h"
+#include "status_generated.h"
 #include <string>
 #include <cstdio>
 
@@ -28,13 +29,14 @@ static std::string format_build_info_impl() {
     std::snprintf(buf, sizeof(buf),
         "sdkVersion=%s\n"
         "sourceCommit=%s\n"
-        "apiContract=1\n"
-        "jniContract=1\n"
+        "apiContract=%d\n"
+        "jniContract=%d\n"
         "processAbi=%d\n"
         "abiVerified=1\n"
         "dialectVerified=1\n"
         "vendorId=avs3a-ystpzs-1.4.1\n",
-        AVS3A_SDK_VERSION, AVS3A_SOURCE_COMMIT, abi);
+        AVS3A_SDK_VERSION, AVS3A_SOURCE_COMMIT,
+        AVS3A_API_CONTRACT_VERSION, AVS3A_JNI_CONTRACT_VERSION, abi);
     return std::string(buf);
 }
 

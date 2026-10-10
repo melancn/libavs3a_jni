@@ -5,6 +5,7 @@
 #include "status.h"
 #include "header_parser.h"
 #include <vector>
+#include <deque>
 #include <string>
 
 namespace avs3a {
@@ -38,8 +39,11 @@ private:
     std::vector<uint8_t> buffer_;
     size_t search_offset_ = 0;
     bool input_ended_ = false;
-    int64_t pending_pts_ = 0;
-    int64_t pending_epoch_ = 0;
+    struct Timestamp { uint64_t offset; int64_t pts_us; };
+    std::deque<Timestamp> timestamps_;
+    uint64_t consumed_bytes_ = 0;
+    uint64_t queued_bytes_ = 0;
+    void discard_prefix(size_t bytes);
     HeaderParser parser_;
 
     Status find_sync(size_t& sync_pos, bool& found);

@@ -90,8 +90,13 @@ public final class Avs3Session implements AutoCloseable {
         if (info[1] <= 0)
             throw new Avs3Exception(Avs3Error.INTERNAL, "invalid sample rate");
         int channels = (int) info[2];
-        if (channels != 1 && channels != 2)
+        if (channels <= 0)
             throw new Avs3Exception(Avs3Error.INTERNAL, "invalid channel count");
+        PcmLayout layout = PcmLayout.fromId((int) info[5]);
+        if (layout == PcmLayout.UNKNOWN)
+            throw new Avs3Exception(Avs3Error.INTERNAL, "unknown pcm layout");
+        if (layout.channels() != channels)
+            throw new Avs3Exception(Avs3Error.INTERNAL, "layout channel mismatch");
         int samples = (int) info[3];
         if (samples <= 0)
             throw new Avs3Exception(Avs3Error.INTERNAL, "invalid samples");

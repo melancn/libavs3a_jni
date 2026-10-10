@@ -1,10 +1,24 @@
 ﻿{
     "schemaVersion":  1,
-    "apiContractVersion":  1,
-    "jniContractVersion":  1,
+    "apiContractVersion":  2,
+    "jniContractVersion":  2,
     "nativeClass":  "com/inlz/avs3a/NativeBridge",
     "pcmMetadataLongs":  8,
-    "encodedFrameMetadataLongs":  10,
+    "encodedFrameMetadataLongs":  11,
+    "pcmLayouts":  {
+                       "UNKNOWN":  0,
+                       "MONO":  1,
+                       "STEREO":  2,
+                       "MC_5_1_0":  3,
+                       "MC_7_1_0":  4,
+                       "MC_10_2":  5,
+                       "MC_22_2":  6,
+                       "MC_4_0":  7,
+                       "MC_5_1_2":  8,
+                       "MC_5_1_4":  9,
+                       "MC_7_1_2":  10,
+                       "MC_7_1_4":  11
+                   },
     "queueResults":  {
                          "BACKPRESSURE":  1,
                          "ACCEPTED":  0

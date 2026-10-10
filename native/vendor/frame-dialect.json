@@ -2,8 +2,8 @@
   "schemaVersion": 1,
   "vendorId": "avs3a-ystpzs-1.4.1",
   "verified": true,
-  "verificationLevel": "static_cross_ABI_tables+two_APK_call_sites+compiled_C_reference_tests",
-  "scope": "channel-based profile 0, mono/stereo, 16-bit source precision, neural types 0/1",
+  "verificationLevel": "static_cross_ABI_tables+two_APK_call_sites+compiled_C_reference_tests+mc_layout_extraction",
+  "scope": "profile0/channelConfig0-10/sourcePrecision16/nn0-or-1",
   "bitOrder": "MSB first within byte; offsets from first bit of syncword",
   "knownPrefix": {
     "syncBits": 12,
@@ -62,15 +62,307 @@
       0,
       0,
       0
+    ],
+    "mc5p1": [
+      192000,
+      256000,
+      320000,
+      384000,
+      448000,
+      512000,
+      640000,
+      720000,
+      144000,
+      96000,
+      128000,
+      160000,
+      0,
+      0,
+      0,
+      0
+    ],
+    "mc7p1": [
+      192000,
+      480000,
+      256000,
+      384000,
+      576000,
+      640000,
+      128000,
+      160000,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "mc4p0": [
+      48000,
+      96000,
+      128000,
+      192000,
+      256000,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "mc5p1p2": [
+      152000,
+      320000,
+      480000,
+      576000,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "mc5p1p4": [
+      176000,
+      384000,
+      576000,
+      704000,
+      256000,
+      448000,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "mc7p1p2": [
+      216000,
+      480000,
+      576000,
+      384000,
+      768000,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "mc7p1p4": [
+      240000,
+      608000,
+      384000,
+      512000,
+      832000,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
     ]
+  },
+  "channelConfigurations": [
+    {
+      "channelConfig": 0,
+      "layout": "MONO",
+      "channels": 1,
+      "lfeFlag": 0,
+      "decoderFormat": 0,
+      "bitrateTable": "mono",
+      "evidence": [
+        "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+        "evidence/armv7.decoder.thumb.txt"
+      ]
+    },
+    {
+      "channelConfig": 1,
+      "layout": "STEREO",
+      "channels": 2,
+      "lfeFlag": 0,
+      "decoderFormat": 1,
+      "bitrateTable": "stereo",
+      "evidence": [
+        "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+        "evidence/armv7.decoder.thumb.txt"
+      ]
+    },
+    {
+      "channelConfig": 2,
+      "layout": "MC_5_1_0",
+      "channels": 6,
+      "lfeFlag": 1,
+      "decoderFormat": 2,
+      "bitrateTable": "mc5p1",
+      "evidence": [
+        "evidence/tables.extracted.json",
+        "evidence/arm64-v8a.decoder.symbols-relocations.txt",
+        "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+        "evidence/armv7.decoder.thumb.txt"
+      ]
+    },
+    {
+      "channelConfig": 3,
+      "layout": "MC_7_1_0",
+      "channels": 8,
+      "lfeFlag": 1,
+      "decoderFormat": 2,
+      "bitrateTable": "mc7p1",
+      "evidence": [
+        "evidence/tables.extracted.json",
+        "evidence/arm64-v8a.decoder.symbols-relocations.txt",
+        "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+        "evidence/armv7.decoder.thumb.txt"
+      ]
+    },
+    {
+      "channelConfig": 4,
+      "layout": "MC_10_2",
+      "channels": 12,
+      "lfeFlag": 1,
+      "decoderFormat": 2,
+      "bitrateTable": null,
+      "note": "codecBitrateConfigTable slot 4 is NULL in both vendor ABIs; layout is representable but not decodable by this vendor build",
+      "evidence": [
+        "evidence/tables.extracted.json",
+        "evidence/arm64-v8a.decoder.symbols-relocations.txt"
+      ]
+    },
+    {
+      "channelConfig": 5,
+      "layout": "MC_22_2",
+      "channels": 24,
+      "lfeFlag": 1,
+      "decoderFormat": 2,
+      "bitrateTable": null,
+      "note": "codecBitrateConfigTable slot 5 is NULL in both vendor ABIs; layout is representable but not decodable by this vendor build",
+      "evidence": [
+        "evidence/tables.extracted.json",
+        "evidence/arm64-v8a.decoder.symbols-relocations.txt"
+      ]
+    },
+    {
+      "channelConfig": 6,
+      "layout": "MC_4_0",
+      "channels": 4,
+      "lfeFlag": 0,
+      "decoderFormat": 2,
+      "bitrateTable": "mc4p0",
+      "note": "lfeFlag = (channelConfig != 6): MC_4_0 is the only channel-based MC layout without LFE",
+      "evidence": [
+        "evidence/tables.extracted.json",
+        "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+        "evidence/armv7.decoder.thumb.txt"
+      ]
+    },
+    {
+      "channelConfig": 7,
+      "layout": "MC_5_1_2",
+      "channels": 8,
+      "lfeFlag": 1,
+      "decoderFormat": 2,
+      "bitrateTable": "mc5p1p2",
+      "evidence": [
+        "evidence/tables.extracted.json",
+        "evidence/arm64-v8a.decoder.symbols-relocations.txt",
+        "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+        "evidence/armv7.decoder.thumb.txt"
+      ]
+    },
+    {
+      "channelConfig": 8,
+      "layout": "MC_5_1_4",
+      "channels": 10,
+      "lfeFlag": 1,
+      "decoderFormat": 2,
+      "bitrateTable": "mc5p1p4",
+      "evidence": [
+        "evidence/tables.extracted.json",
+        "evidence/arm64-v8a.decoder.symbols-relocations.txt",
+        "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+        "evidence/armv7.decoder.thumb.txt"
+      ]
+    },
+    {
+      "channelConfig": 9,
+      "layout": "MC_7_1_2",
+      "channels": 10,
+      "lfeFlag": 1,
+      "decoderFormat": 2,
+      "bitrateTable": "mc7p1p2",
+      "evidence": [
+        "evidence/tables.extracted.json",
+        "evidence/arm64-v8a.decoder.symbols-relocations.txt",
+        "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+        "evidence/armv7.decoder.thumb.txt"
+      ]
+    },
+    {
+      "channelConfig": 10,
+      "layout": "MC_7_1_4",
+      "channels": 12,
+      "lfeFlag": 1,
+      "decoderFormat": 2,
+      "bitrateTable": "mc7p1p4",
+      "evidence": [
+        "evidence/tables.extracted.json",
+        "evidence/arm64-v8a.decoder.symbols-relocations.txt",
+        "evidence/arm64-v8a.libavs3a_decoder.disassembly.txt",
+        "evidence/armv7.decoder.thumb.txt"
+      ]
+    }
+  ],
+  "channelConfigurationEvidence": {
+    "codecBitrateConfigTable": "14 entries x 16 bytes {int32 key=channelConfig; int32 pad; const int32* table} in both vendor ABIs; slots 4/5 have no relocation (NULL); slot mapping verified from .rela.dyn ABS64 relocations (arm64-v8a.decoder.symbols-relocations.txt) and the ARMv7 GOT",
+    "mcChannelConfigTable": "10 entries x 20 bytes {char name[12]; int32 id @+12; int16 channels @+16; int16 pad @+18}; names/ids/channels extracted in tables.extracted.json and equal across ABIs",
+    "headerDispatch": "Avs3ParseBsFrameHeader profile-0 path: channelConfig 0 -> decoderFormat 0/channels 1; 1 -> 1/2; 2..10 -> decoderFormat 2 with channels from mcChannelConfigTable id lookup; >10 rejected; lfeFlag = (channelConfig != 6)",
+    "payloadBitsRule": "payloadBits-sub jump tables are all-zero entries on both ABIs (ARM64 @0x22460/0x22469, ARMv7 tbb @0x4a2c): every channel-based decoderFormat subtracts 56; -72/-64 exist only on mixed-content paths",
+    "decodeDispatch": "Avs3Decode decoderFormat jump table @0x22464 = [0,16,8,12,4]: 0=Avs3MonoDec, 1=Avs3StereoDec/Avs3StereoMcrDec, 2=Avs3McDec, 3=Avs3HoaDec, 4=Avs3MixDec"
   },
   "headerModes": [
     {
-      "id": "channel-based-mono-stereo",
+      "id": "channel-based",
       "profile": 0,
       "channelConfigurations": [
         0,
-        1
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
       ],
       "neuralTypes": [
         0,
@@ -431,7 +723,7 @@
     "bitrateIndex": "zero table entries invalid",
     "neuralType": "2..7 unsupported; inverse QC does not dispatch them",
     "profile": "1 mixed/object and 2 HOA use other header grammars; out of this completed contract",
-    "channelConfig": "2..127 outside mono/stereo contract",
+    "channelConfig": "11..127 rejected by the vendor parser (b.hi #10); 4..5 are representable layouts but have no vendor bitrate table (NULL codecBitrateConfigTable slot) and are rejected as undecodable",
     "precisionIndex": "0=8bit and 2=24bit outside accepted policy; 3 reserved"
   },
   "sdkSafetyPolicy": {

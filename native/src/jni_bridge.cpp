@@ -6,6 +6,7 @@
 #include "avs3a/header_parser.h"
 #include "avs3a/timeline.h"
 #include "vendor_api.h"
+#include "status_generated.h"
 
 #include <jni.h>
 #include <cstring>
@@ -63,7 +64,9 @@ static int64_t create_session(JNIEnv* env, const char* model_path, const char* v
 } // namespace avs3a
 
 static const JNINativeMethod kNativeMethods[] = {
-    {"nContractVersion", "()I", (void*)(+[](JNIEnv*, jclass) -> jint { return 1; })},
+    {"nContractVersion", "()I", (void*)(+[](JNIEnv*, jclass) -> jint {
+        return AVS3A_API_CONTRACT_VERSION;
+    })},
     {"nProcessAbi", "()I", (void*)(+[](JNIEnv*, jclass) -> jint {
         return avs3a_get_process_abi();
     })},
@@ -99,8 +102,8 @@ static const JNINativeMethod kNativeMethods[] = {
             if (!data) return avs3a::INTERNAL;
         }
 
-        int result = session->queue_input(
-            reinterpret_cast<const uint8_t*>(data), length, pts_us, epoch, flags);
+        const uint8_t* base = data ? reinterpret_cast<const uint8_t*>(data) + offset : nullptr;
+        int result = session->queue_input(base, length, pts_us, epoch, flags);
 
         if (data) env->ReleaseByteArrayElements(input, data, JNI_ABORT);
         return result;
@@ -119,7 +122,7 @@ static const JNINativeMethod kNativeMethods[] = {
             static_cast<int64_t>(offset) + static_cast<int64_t>(capacity) > static_cast<int64_t>(array_len))
             return avs3a::INVALID_ARGUMENT;
 
-        if (info && env->GetArrayLength(info) < 8)
+        if (info && env->GetArrayLength(info) < AVS3A_PCM_METADATA_LONGS)
             return avs3a::INVALID_ARGUMENT;
 
         jbyte* data = env->GetByteArrayElements(output, nullptr);
@@ -132,12 +135,12 @@ static const JNINativeMethod kNativeMethods[] = {
         env->ReleaseByteArrayElements(output, data, 0);
 
         if (info) {
-            jlong meta_longs[8] = {
+            jlong meta_longs[AVS3A_PCM_METADATA_LONGS] = {
                 meta.pts_us, meta.sample_rate, meta.channels,
                 meta.samples_per_channel, meta.byte_count, meta.layout_id,
                 meta.flags, meta.epoch
             };
-            env->SetLongArrayRegion(info, 0, 8, meta_longs);
+            env->SetLongArrayRegion(info, 0, AVS3A_PCM_METADATA_LONGS, meta_longs);
         }
 
         return result;
@@ -195,8 +198,8 @@ static const JNINativeMethod kNativeMethods[] = {
             if (!data) return avs3a::INTERNAL;
         }
 
-        int result = session->queue_input(
-            reinterpret_cast<const uint8_t*>(data), length, pts_us, epoch, flags);
+        const uint8_t* base = data ? reinterpret_cast<const uint8_t*>(data) + offset : nullptr;
+        int result = session->queue_input(base, length, pts_us, epoch, flags);
         if (data) env->ReleaseByteArrayElements(input, data, JNI_ABORT);
         return result;
     })},
@@ -214,7 +217,7 @@ static const JNINativeMethod kNativeMethods[] = {
             static_cast<int64_t>(offset) + static_cast<int64_t>(capacity) > static_cast<int64_t>(array_len))
             return avs3a::INVALID_ARGUMENT;
 
-        if (info && env->GetArrayLength(info) < 10)
+        if (info && env->GetArrayLength(info) < AVS3A_ENCODED_FRAME_METADATA_LONGS)
             return avs3a::INVALID_ARGUMENT;
 
         jbyte* data = env->GetByteArrayElements(output, nullptr);
@@ -227,12 +230,13 @@ static const JNINativeMethod kNativeMethods[] = {
         env->ReleaseByteArrayElements(output, data, 0);
 
         if (info) {
-            jlong meta_longs[10] = {
+            jlong meta_longs[AVS3A_ENCODED_FRAME_METADATA_LONGS] = {
                 meta.pts_us, meta.sample_rate, meta.channels,
                 meta.samples_per_channel, meta.frame_bytes, meta.payload_offset,
-                meta.payload_bytes, meta.bitrate_bps, meta.channel_mode, meta.epoch
+                meta.payload_bytes, meta.bitrate_bps, meta.channel_mode,
+                meta.layout_id, meta.epoch
             };
-            env->SetLongArrayRegion(info, 0, 10, meta_longs);
+            env->SetLongArrayRegion(info, 0, AVS3A_ENCODED_FRAME_METADATA_LONGS, meta_longs);
         }
 
         return result;

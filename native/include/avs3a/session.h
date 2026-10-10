@@ -63,12 +63,13 @@ private:
     std::unique_ptr<EncodedFrame> pending_frame_;
     bool input_ended_ = false;
     int64_t frame_index_ = 0;
+    int64_t anchor_frame_index_ = 0;
     std::optional<FrameConfig> config_;
 
     Status fail(Status s);
     bool return_if_failed_or_closed();
     Status validate_crc_and_budget(const EncodedFrame& frame) const;
-    void validate_pcm_shape(const OwnedPcm& pcm, const FrameConfig& cfg) const;
+    Status validate_pcm_shape(const OwnedPcm& pcm, const FrameConfig& cfg) const;
 };
 
 } // namespace avs3a
