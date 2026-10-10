@@ -29,7 +29,8 @@ enum class HandleKind : int32_t {
 
 class Session {
 public:
-    Session(HandleKind kind, std::unique_ptr<DecoderBackend> backend);
+    Session(HandleKind kind, std::unique_ptr<DecoderBackend> backend,
+            std::string model_path = std::string());
     ~Session();
 
     Status queue_input(const uint8_t* data, size_t size, int64_t pts_us,
@@ -57,6 +58,7 @@ private:
     BoundedFramer framer_;
     Timeline timeline_;
     std::unique_ptr<DecoderBackend> backend_;
+    std::string model_path_;
     std::unique_ptr<OwnedPcm> pending_;
     std::unique_ptr<EncodedFrame> pending_frame_;
     bool input_ended_ = false;

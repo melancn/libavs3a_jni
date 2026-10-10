@@ -3,25 +3,13 @@
 #include "avs3a/status.h"
 #include "avs3a/header_parser.h"
 #include "avs3a/abi_access.h"
+#include "vendor_api.h"
+#include <dlfcn.h>
 #include <cstring>
 #include <string>
 #include <memory>
 
 namespace avs3a {
-
-typedef void* (*Avs3AllocFn)(void);
-typedef void (*Avs3InitFn)(void*, const char*);
-typedef void (*Avs3DecodeFn)(void*, int16_t*);
-typedef void (*Avs3DestroyFn)(void*);
-typedef void (*Avs3ResetFn)(void*);
-
-struct VendorApi {
-    Avs3AllocFn alloc        = nullptr;
-    Avs3InitFn init           = nullptr;
-    Avs3DecodeFn decode       = nullptr;
-    Avs3DestroyFn destroy     = nullptr;
-    Avs3ResetFn reset_bitstream = nullptr;
-};
 
 class VendorBackend : public DecoderBackend {
 public:
@@ -29,7 +17,13 @@ public:
         : process_abi_(process_abi), lib_handle_(lib_handle), api_(api),
           abi_(create_abi_accessor(process_abi)) {}
 
-    ~VendorBackend() override { destroy(); }
+    ~VendorBackend() override {
+        destroy();
+        if (lib_handle_) {
+            dlclose(lib_handle_);
+            lib_handle_ = nullptr;
+        }
+    }
 
     Status initialize(const FrameConfig& cfg, const VerifiedModelPath& model) override {
         if (!abi_.ready()) return VENDOR_ABI_NOT_READY;
@@ -114,7 +108,7 @@ public:
 
 private:
     [[maybe_unused]] int process_abi_;
-    [[maybe_unused]] void* lib_handle_;
+    void* lib_handle_;
     VendorApi api_;
     AbiAccessor abi_;
     void* handle_ = nullptr;

@@ -28,11 +28,18 @@ jobs:
       ANDROID_MIN_SDK: '24'
       ANDROID_NDK_VERSION: '27.2.12479018'
       ANDROID_CMAKE_VERSION: '3.22.1'
-      SDK_VERSION: ${{ inputs.sdkVersion || github.ref_name }}
     steps:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
+
+      - name: Resolve SDK version
+        shell: bash
+        run: |
+          ver="${{ inputs.sdkVersion }}"
+          if [ -z "$ver" ]; then ver="${{ github.ref_name }}"; fi
+          ver="${ver#v}"
+          echo "SDK_VERSION=$ver" >> "$GITHUB_ENV"
 
       - uses: actions/setup-java@v4
         with:
@@ -148,10 +155,17 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Resolve SDK version
+        shell: bash
+        run: |
+          ver="${{ github.ref_name }}"
+          ver="${ver#v}"
+          echo "SDK_VERSION=$ver" >> "$GITHUB_ENV"
+
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: avs3a-full-${{ github.ref_name }}
+          name: avs3a-full-${{ env.SDK_VERSION }}
           path: dist
 
       - name: Create GitHub Release

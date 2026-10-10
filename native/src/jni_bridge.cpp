@@ -5,6 +5,7 @@
 #include "avs3a/backend.h"
 #include "avs3a/header_parser.h"
 #include "avs3a/timeline.h"
+#include "vendor_api.h"
 
 #include <jni.h>
 #include <cstring>
@@ -14,43 +15,13 @@
 #include <new>
 #include <cstdint>
 
-#ifndef AVS3A_SDK_VERSION
-#define AVS3A_SDK_VERSION "unknown"
-#endif
-#ifndef AVS3A_SOURCE_COMMIT
-#define AVS3A_SOURCE_COMMIT "uncommitted"
-#endif
+extern "C" const char* avs3a_get_build_info_cstr();
+extern "C" int avs3a_get_process_abi();
 
 namespace avs3a {
 
 static Registry g_registry;
 static std::mutex g_registry_mutex;
-
-static int get_process_abi_internal();
-
-static std::string build_info_string() {
-    std::string s;
-    s += "sdkVersion="; s += AVS3A_SDK_VERSION; s += "\n";
-    s += "sourceCommit="; s += AVS3A_SOURCE_COMMIT; s += "\n";
-    s += "apiContract=1\n";
-    s += "jniContract=1\n";
-    int abi = get_process_abi_internal();
-    s += "processAbi="; s += std::to_string(abi); s += "\n";
-    s += "abiVerified=1\n";
-    s += "dialectVerified=1\n";
-    s += "vendorId=avs3a-ystpzs-1.4.1\n";
-    return s;
-}
-
-static int get_process_abi_internal() {
-#if defined(__aarch64__)
-    return 1;
-#elif defined(__arm__)
-    return 2;
-#else
-    return 0;
-#endif
-}
 
 struct JniString {
     JNIEnv* env;
@@ -69,9 +40,18 @@ struct JniString {
 static int64_t create_session(JNIEnv* env, const char* model_path, const char* vendor_path,
                               int64_t epoch, HandleKind kind) {
     (void)env;
-    (void)model_path;
-    (void)vendor_path;
-    auto session = std::make_shared<Session>(kind, nullptr);
+    std::unique_ptr<DecoderBackend> backend;
+    if (kind == HandleKind::DECODER) {
+        int abi = avs3a_get_process_abi();
+        if (abi != 1 && abi != 2)
+            return VENDOR_ABI_NOT_READY;
+        backend = load_vendor_backend(vendor_path, abi);
+        if (!backend)
+            return VENDOR_UNAVAILABLE;
+    }
+
+    auto session = std::make_shared<Session>(kind, std::move(backend),
+                                             model_path ? model_path : "");
     session->set_epoch(epoch);
 
     std::lock_guard<std::mutex> lock(g_registry_mutex);
@@ -85,14 +65,13 @@ static int64_t create_session(JNIEnv* env, const char* model_path, const char* v
 static const JNINativeMethod kNativeMethods[] = {
     {"nContractVersion", "()I", (void*)(+[](JNIEnv*, jclass) -> jint { return 1; })},
     {"nProcessAbi", "()I", (void*)(+[](JNIEnv*, jclass) -> jint {
-        return avs3a::get_process_abi_internal();
+        return avs3a_get_process_abi();
     })},
     {"nCapabilities", "()J", (void*)(+[](JNIEnv*, jclass) -> jlong {
         return 0;
     })},
     {"nBuildInfo", "()Ljava/lang/String;", (void*)(+[](JNIEnv* env, jclass) -> jstring {
-        std::string info = avs3a::build_info_string();
-        return env->NewStringUTF(info.c_str());
+        return env->NewStringUTF(avs3a_get_build_info_cstr());
     })},
     {"nCreate", "(Ljava/lang/String;Ljava/lang/String;J)J",
      (void*)(+[](JNIEnv* env, jclass, jstring model_path, jstring vendor_path, jlong epoch) -> jlong {
@@ -110,7 +89,8 @@ static const JNINativeMethod kNativeMethods[] = {
 
         if (!input && length > 0) return avs3a::INVALID_ARGUMENT;
         jsize array_len = input ? env->GetArrayLength(input) : 0;
-        if (offset < 0 || length < 0 || static_cast<jsize>(offset + length) > array_len)
+        if (offset < 0 || length < 0 ||
+            static_cast<int64_t>(offset) + static_cast<int64_t>(length) > static_cast<int64_t>(array_len))
             return avs3a::INVALID_ARGUMENT;
 
         jbyte* data = nullptr;
@@ -135,7 +115,8 @@ static const JNINativeMethod kNativeMethods[] = {
 
         if (!output) return avs3a::INVALID_ARGUMENT;
         jsize array_len = env->GetArrayLength(output);
-        if (offset < 0 || capacity < 0 || static_cast<jsize>(offset + capacity) > array_len)
+        if (offset < 0 || capacity < 0 ||
+            static_cast<int64_t>(offset) + static_cast<int64_t>(capacity) > static_cast<int64_t>(array_len))
             return avs3a::INVALID_ARGUMENT;
 
         if (info && env->GetArrayLength(info) < 8)
@@ -204,7 +185,8 @@ static const JNINativeMethod kNativeMethods[] = {
 
         if (!input && length > 0) return avs3a::INVALID_ARGUMENT;
         jsize array_len = input ? env->GetArrayLength(input) : 0;
-        if (offset < 0 || length < 0 || static_cast<jsize>(offset + length) > array_len)
+        if (offset < 0 || length < 0 ||
+            static_cast<int64_t>(offset) + static_cast<int64_t>(length) > static_cast<int64_t>(array_len))
             return avs3a::INVALID_ARGUMENT;
 
         jbyte* data = nullptr;
@@ -228,7 +210,8 @@ static const JNINativeMethod kNativeMethods[] = {
 
         if (!output) return avs3a::INVALID_ARGUMENT;
         jsize array_len = env->GetArrayLength(output);
-        if (offset < 0 || capacity < 0 || static_cast<jsize>(offset + capacity) > array_len)
+        if (offset < 0 || capacity < 0 ||
+            static_cast<int64_t>(offset) + static_cast<int64_t>(capacity) > static_cast<int64_t>(array_len))
             return avs3a::INVALID_ARGUMENT;
 
         if (info && env->GetArrayLength(info) < 10)

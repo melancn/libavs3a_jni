@@ -4,8 +4,8 @@
 
 namespace avs3a {
 
-Session::Session(HandleKind kind, std::unique_ptr<DecoderBackend> backend)
-    : kind_(kind), backend_(std::move(backend)) {}
+Session::Session(HandleKind kind, std::unique_ptr<DecoderBackend> backend, std::string model_path)
+    : kind_(kind), backend_(std::move(backend)), model_path_(std::move(model_path)) {}
 
 Session::~Session() {
     close();
@@ -91,7 +91,9 @@ Status Session::receive(MutableByteSpan output, PcmMetadata& meta) {
             if (!backend_ || !backend_->is_ready())
                 return fail(VENDOR_ABI_NOT_READY);
 
-            Status init_status = backend_->initialize(frame.config, VerifiedModelPath{});
+            VerifiedModelPath model;
+            model.absolute_path = model_path_;
+            Status init_status = backend_->initialize(frame.config, model);
             if (is_error(init_status))
                 return fail(init_status);
             config_ = frame.config;
@@ -134,14 +136,14 @@ Status Session::receive(MutableByteSpan output, PcmMetadata& meta) {
         return RECEIVE_OUTPUT_TOO_SMALL;
     }
 
-    std::memcpy(output.data, pending_->samples.data(),
-                std::min(bytes_needed, pending_->samples.size() * 2));
+    size_t copied = std::min(bytes_needed, pending_->samples.size() * 2);
+    std::memcpy(output.data, pending_->samples.data(), copied);
 
     meta.pts_us = pending_->pts_us;
     meta.sample_rate = pending_->config.sample_rate;
     meta.channels = pending_->config.channels;
     meta.samples_per_channel = pending_->config.samples_per_channel;
-    meta.byte_count = static_cast<int64_t>(bytes_needed);
+    meta.byte_count = static_cast<int64_t>(copied);
     meta.layout_id = (pending_->config.channels == 1) ? 1 : 2;
     meta.flags = 0;
     meta.epoch = pending_->epoch;

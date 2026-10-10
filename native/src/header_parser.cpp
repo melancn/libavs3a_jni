@@ -174,7 +174,7 @@ Status HeaderParser::validate_frame(const uint8_t* data, size_t size, FrameConfi
     if (size < hr.frame_bytes) return RECEIVE_NEED_INPUT;
 
     uint16_t computed = compute_crc16(data + 7, hr.payload_size);
-    if (computed != cfg.crc) {
+    if (computed != hr.config.crc) {
         cfg = hr.config;
         return INVALID_HEADER;
     }
