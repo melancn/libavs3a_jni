@@ -94,6 +94,23 @@ jobs:
           "$CMAKE" --build build/host --parallel 2
           "$CTEST" --test-dir build/host --output-on-failure
 
+      - name: Prepare vendor inputs from execution-plan package
+        shell: bash
+        run: |
+          set -euo pipefail
+          plan="libavs3a_jni-execution-plan/root"
+          for f in \
+            "$plan/arm64-v8a/libavs3a_decoder.so" \
+            "$plan/armeabi-v7a/libavs3a_decoder.so" \
+            "$plan/assets/model.bin"; do
+            test -f "$f" || { echo "Vendor input missing (not committed?): $f" >&2; exit 1; }
+          done
+          rm -rf vendor-inputs
+          mkdir -p vendor-inputs/arm64-v8a vendor-inputs/armeabi-v7a
+          cp "$plan/arm64-v8a/libavs3a_decoder.so" vendor-inputs/arm64-v8a/libavs3a_decoder.so
+          cp "$plan/armeabi-v7a/libavs3a_decoder.so" vendor-inputs/armeabi-v7a/libavs3a_decoder.so
+          cp "$plan/assets/model.bin" vendor-inputs/model.bin
+
       - name: Stage vendor inputs
         shell: bash
         run: |
@@ -157,8 +174,8 @@ jobs:
             --full media3-demo/build/outputs/apk/full/debug/media3-demo-full-debug.apk \
             --version "$SDK_VERSION" \
             --lock vendor/manifest.lock.json \
-            --dist dist
-          (cd dist && sha256sum --check SHA256SUMS)
+            --dist "dist/avs3a-full-$SDK_VERSION"
+          (cd "dist/avs3a-full-$SDK_VERSION" && sha256sum --check SHA256SUMS)
 
       - name: Verify device evidence (if reports provided)
         shell: bash
@@ -168,7 +185,7 @@ jobs:
              [ -f private-validation/devices/armeabi-v7a/report.json ]; then
             python3 ci/verify-device-evidence.py \
               --aar sdk/build/outputs/aar/sdk-full-release.aar \
-              --manifest dist/sdk-manifest.json \
+              --manifest "dist/avs3a-full-$SDK_VERSION/sdk-manifest.json" \
               --device-report private-validation/devices \
               --fixture-manifest private-validation/fixture-manifest.json
           else

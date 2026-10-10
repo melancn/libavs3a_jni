@@ -22,9 +22,6 @@ private-validation/
 # Private reference evidence (not published)
 reference/evidence/
 
-# Vendor binaries in execution plan package (never commit)
-libavs3a_jni-execution-plan/root/
-
 # IDE
 .idea/
 *.iml
