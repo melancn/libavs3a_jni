@@ -4,13 +4,15 @@
 bridge: only com/inlz/avs3a/avs3a-sdk-bridge/<version>/ is taken from the CI
 Maven repo; full: only com/inlz/avs3a/avs3a-sdk/<version>/. The whole
 build/ci-maven tree is never packaged. Output contains the AAR, a Maven zip,
-unstripped symbol packages matched by ELF Build ID, sdk-manifest.json and
-SHA256SUMS. deviceValidation is fixed to NOT_RUN. Exit 0 on success.
-Standard library only.
+unstripped symbol packages matched by ELF Build ID, one self-contained per-ABI
+zip under arch/ (single-ABI AAR + .so(s) + symbol + usage guide), a Chinese
+usage guide README.md, sdk-manifest.json and SHA256SUMS. deviceValidation is
+fixed to NOT_RUN. Exit 0 on success. Standard library only.
 """
 
 import argparse
 import hashlib
+import io
 import json
 import os
 import re
@@ -27,6 +29,7 @@ GROUP_PATH = "com/inlz/avs3a"
 BRIDGE_ARTIFACT = "avs3a-sdk-bridge"
 FULL_ARTIFACT = "avs3a-sdk"
 BRIDGE_LIB = "libavs3a_jni.so"
+DECODER_LIB = "libavs3a_decoder.so"
 # Gradle 9 maven-publish emits checksum files (.md5/.sha1/.sha256/.sha512)
 # next to every artifact; the coordinate check above still requires each file
 # to be prefixed with artifactId-version, so stale/foreign versions fail.
@@ -202,6 +205,135 @@ def atomic_write(path: Path, content: str) -> None:
     os.replace(tmp, path)
 
 
+def collect_optional_aar_libs(aar_path: Path, lib_name: str) -> dict:
+    """Return {abi: bytes} for jni/<abi>/<lib_name> entries present in the AAR."""
+    out = {}
+    with zipfile.ZipFile(aar_path) as zf:
+        for name in zf.namelist():
+            if name.startswith("jni/") and name.endswith(f"/{lib_name}"):
+                out[name.split("/")[1]] = zf.read(name)
+    return out
+
+
+def build_single_abi_aar(src_aar: Path, abi: str) -> bytes:
+    """Copy the fat AAR, keeping jni/ entries for `abi` only; everything else
+    (classes.jar, manifest, assets/model.bin, META-INF) is preserved verbatim so
+    the result is a valid self-contained single-ABI AAR."""
+    buf = io.BytesIO()
+    with zipfile.ZipFile(src_aar) as zin, \
+            zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as zout:
+        for info in zin.infolist():
+            parts = info.filename.split("/")
+            if parts[0] == "jni" and len(parts) >= 2 and parts[1] and parts[1] != abi:
+                continue
+            zout.writestr(info, zin.read(info.filename))
+    return buf.getvalue()
+
+
+def build_arch_package(zip_path: Path, src_aar: Path, abi: str, artifact_id: str,
+                       version: str, decoder_bytes, symbol_path: Path,
+                       readme_text: str) -> None:
+    """Write one self-contained per-ABI zip: single-ABI AAR + standalone .so(s)
+    + unstripped symbol + the usage guide. Deterministic (fixed zip timestamps)."""
+    aar_bytes = build_single_abi_aar(src_aar, abi)
+    with zipfile.ZipFile(src_aar) as zf:
+        bridge_bytes = zf.read(f"jni/{abi}/{BRIDGE_LIB}")
+    symbol_bytes = Path(symbol_path).read_bytes()
+    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+        z.writestr(f"{artifact_id}-{version}-{abi}.aar", aar_bytes)
+        z.writestr(f"jni/{abi}/{BRIDGE_LIB}", bridge_bytes)
+        if decoder_bytes is not None:
+            z.writestr(f"jni/{abi}/{DECODER_LIB}", decoder_bytes)
+        z.writestr(f"symbols/{abi}/{BRIDGE_LIB}.unstripped", symbol_bytes)
+        z.writestr("README.md", readme_text)
+
+
+def render_readme(distribution: str, artifact_id: str, version: str,
+                  source_commit: str, aar_libs: dict, vendor: dict) -> str:
+    """Render the Chinese usage guide placed at the distribution root and inside
+    each per-ABI zip. Deterministic: no build timestamps, only pinned inputs."""
+    abis = sorted(aar_libs)
+    is_full = distribution == "full"
+    coord = f"com.inlz.avs3a:{artifact_id}:{version}"
+    lines = [
+        f"# AVS3A SDK 发布包使用说明（{distribution}）",
+        "",
+        "## 概览",
+        "",
+        f"- 发行类型：`{distribution}`" + ("（含厂商解码器与模型，需授权后方可再分发）"
+                                           if is_full else "（仅 JNI 桥接，不含厂商二进制）"),
+        f"- Maven 坐标：`{coord}`",
+        f"- 版本：`{version}`",
+        f"- 源提交：`{source_commit}`",
+        f"- 支持架构：{', '.join(f'`{a}`' for a in abis)}",
+        "",
+        "## 目录结构",
+        "",
+        "```",
+        "aar/        通用 AAR（含全部架构，推荐常规集成方式）",
+        "maven/      按 Maven 坐标组织的仓库文件，以及 *-maven.zip",
+        "arch/       按架构拆分的独立 zip 包，每个仅含单一 ABI",
+        "symbols/    各架构未裁剪符号（libavs3a_jni.so.unstripped），用于崩溃符号化",
+        "README.md   本说明",
+        "sdk-manifest.json  清单（坐标、文件哈希、校验状态）",
+        "SHA256SUMS  全部产物的 SHA256 校验清单",
+        "```",
+        "",
+        "## 集成方式",
+        "",
+        "### 方式一：通用 AAR / Maven（推荐）",
+        "",
+        "直接引用 `aar/` 下的通用 AAR，或将 `maven/*-maven.zip` 解压后作为本地 Maven 仓库：",
+        "",
+        "```kotlin",
+        "repositories { maven { url = uri(\"<解压后的 maven 目录>\") } }",
+        f"dependencies {{ implementation(\"{coord}\") }}",
+        "```",
+        "",
+        "通用 AAR 含全部架构，由 AGP 在应用打包阶段自动裁剪无用 ABI，无需手动分架构。",
+        "",
+        "### 方式二：按架构 zip（arch/）",
+        "",
+        "当需要为单一 ABI 精简分发时，使用 `arch/avs3a-" + distribution
+        + "-" + version + "-<abi>.zip`。每个 zip 自包含：",
+        "",
+        "- `" + artifact_id + "-" + version + "-<abi>.aar`：仅含该架构的单 ABI AAR",
+        "- `jni/<abi>/" + BRIDGE_LIB + "`：独立桥接库",
+    ]
+    if is_full:
+        lines.append("- `jni/<abi>/" + DECODER_LIB + "`：厂商解码库（需授权再分发）")
+    lines += [
+        "- `symbols/<abi>/" + BRIDGE_LIB + ".unstripped`：该架构未裁剪符号",
+        "- `README.md`：本说明",
+        "",
+        "## 校验",
+        "",
+        "在发布包根目录执行以下命令校验完整性：",
+        "",
+        "```bash",
+        "sha256sum --check SHA256SUMS",
+        "```",
+        "",
+        "`sdk-manifest.json` 另记录了各产物的坐标、大小与 SHA256。",
+        "",
+        "## 符号与崩溃定位",
+        "",
+        "`symbols/<abi>/" + BRIDGE_LIB + ".unstripped` 通过 ELF Build ID 与 AAR 内的 "
+        "`" + BRIDGE_LIB + "` 一一对应，可配合 `ndk-stack` / `llvm-addr2line` 做崩溃符号化。",
+        "",
+        "## 限制与声明",
+        "",
+        "- 设备级验证状态：`NOT_RUN`。主机编译与主机测试不代表 ARM 真机解码通过。",
+        "- 16KB page 兼容性未验证（厂商 LOAD 对齐为 4KB）。",
+    ]
+    if is_full:
+        approved = vendor.get("redistributionApproved")
+        lines.append("- 再分发授权：`redistributionApproved="
+                     + json.dumps(approved) + "`。为 `false` 时产物仅限 CI 内部，不得公开分发。")
+    lines.append("")
+    return "\n".join(lines)
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--aar", required=True, type=Path)
@@ -285,6 +417,25 @@ def main(argv=None) -> int:
             vendor["vendorId"] = lock.get("vendorId")
             vendor["redistributionApproved"] = lock.get("redistributionApproved")
 
+        # 4a. Usage guide at the distribution root (also embedded in each arch zip)
+        readme_text = render_readme(args.distribution, artifact_id, args.version,
+                                    args.source_commit, aar_libs, vendor)
+        (dist_root / "README.md").write_text(readme_text, encoding="utf-8", newline="\n")
+
+        # 4b. Per-architecture packages: one self-contained single-ABI zip per ABI
+        decoder_libs = collect_optional_aar_libs(args.aar, DECODER_LIB)
+        arch_dir = dist_root / "arch"
+        arch_dir.mkdir()
+        arch_packages = []
+        for abi in sorted(aar_libs):
+            zip_path = arch_dir / f"avs3a-{args.distribution}-{args.version}-{abi}.zip"
+            build_arch_package(zip_path, args.aar, abi, artifact_id, args.version,
+                               decoder_libs.get(abi), symbols[abi], readme_text)
+            arch_packages.append({
+                "abi": abi,
+                "path": zip_path.relative_to(dist_root).as_posix(),
+            })
+
         manifest = {
             "aar": {
                 "file": aar_out.relative_to(dist_root).as_posix(),
@@ -292,6 +443,7 @@ def main(argv=None) -> int:
                 "size": aar_out.stat().st_size,
             },
             "apiContractVersion": jni.get("apiContractVersion"),
+            "archPackages": arch_packages,
             "artifactId": artifact_id,
             "distribution": args.distribution,
             "deviceValidation": "NOT_RUN",
@@ -305,6 +457,7 @@ def main(argv=None) -> int:
             "sdkVersion": args.version,
             "sourceCommit": args.source_commit,
             "symbols": [symbols_out[abi] for abi in sorted(symbols_out)],
+            "usageGuide": "README.md",
             "vendor": vendor,
         }
         for out_file in sorted(p for p in dist_root.rglob("*") if p.is_file()):

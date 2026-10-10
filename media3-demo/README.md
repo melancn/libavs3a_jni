@@ -4,7 +4,8 @@
 
 ## 功能与范围
 
-- 系统文件选择器读取 `content://`，无需存储全盘权限，不把 URI 强转为文件路径。
+- 应用内文件浏览器（遥控器可用）：方向键逐项导航、OK 进入目录或打开文件、返回键回上一级，适配 Android TV / 机顶盒无 DocumentsUI 的场景。
+- 浏览器直接遍历外部存储 / U 盘，以 `file://` 读取；需存储访问权限：API ≤ 29 请求 `READ_EXTERNAL_STORAGE`，API ≥ 30 请求“所有文件访问”(`MANAGE_EXTERNAL_STORAGE`)。AVS3 裸码流不是媒体类型，`READ_MEDIA_*` 不覆盖，故未采用分区媒体权限。
 - 普通 MP4：保留 Media3 视频及常规音频解码；新增 `av3a` 音轨识别和 `dca3` 配置透传。
 - AVS3 裸码流：分块解析、播放，时长未知、不提供猜测的随机定位。
 - AVS3 JNI Renderer/Decoder：完整单帧输入；首版 Demo 接受单声道、双声道、5.1。
