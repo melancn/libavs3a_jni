@@ -1,4 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 遥控器可用的应用内文件浏览器需要读取本地文件；AVS3 裸码流不是媒体类型，READ_MEDIA_* 不覆盖。 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="29" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <application android:theme="@android:style/Theme.Material.Light.NoActionBar"
         android:label="AVS3 Media3 Demo" android:allowBackup="false"
         android:supportsRtl="true">
@@ -8,5 +11,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".FileBrowserActivity" android:exported="false" />
     </application>
 </manifest>

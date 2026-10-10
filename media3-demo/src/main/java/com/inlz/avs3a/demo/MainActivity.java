@@ -3,10 +3,12 @@ package com.inlz.avs3a.demo;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.*;
 import android.provider.OpenableColumns;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.*;
 import androidx.media3.common.*;
@@ -26,6 +28,8 @@ import java.util.concurrent.*;
 @UnstableApi
 public final class MainActivity extends Activity {
     private static final int OPEN_FILE = 20;
+    private static final int REQUEST_READ_PERMISSION = 21;
+    private static final int REQUEST_MANAGE_STORAGE = 22;
     private final Handler main = new Handler(Looper.getMainLooper());
     private final ExecutorService io = Executors.newSingleThreadExecutor();
     private final PlaybackDiagnostics diagnostics = new PlaybackDiagnostics();
@@ -60,13 +64,7 @@ public final class MainActivity extends Activity {
         downmixView.setOnCheckedChangeListener((button, checked) -> {
             savePositionAndRelease(); if (started && prepared && uri != null) startPlayer(false);
         });
-        findViewById(R.id.open_file).setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT).setType("*/*")
-                    .addCategory(Intent.CATEGORY_OPENABLE)
-                    .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-            try { startActivityForResult(intent, OPEN_FILE); }
-            catch (RuntimeException e) { showError("无法打开系统文件选择器：" + e.getMessage()); }
-        });
+        findViewById(R.id.open_file).setOnClickListener(v -> openFile());
         findViewById(R.id.audio_tracks).setOnClickListener(v -> showAudioTracks());
         findViewById(R.id.stop).setOnClickListener(v -> { if (player != null) { player.pause(); player.stop(); } });
         findViewById(R.id.replay).setOnClickListener(v -> {
@@ -101,8 +99,44 @@ public final class MainActivity extends Activity {
             });
         });
     }
+    // 遥控器可用的应用内文件浏览器入口：直接遍历本地存储，不走系统 SAF 选择器。
+    private void openFile() {
+        if (hasStorageAccess()) { launchBrowser(); return; }
+        requestStorageAccess();
+    }
+    private boolean hasStorageAccess() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) return Environment.isExternalStorageManager();
+        return checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+    private void requestStorageAccess() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                startActivityForResult(new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+                        Uri.parse("package:" + getPackageName())), REQUEST_MANAGE_STORAGE);
+            } catch (RuntimeException e) {
+                try { startActivityForResult(new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION), REQUEST_MANAGE_STORAGE); }
+                catch (RuntimeException e2) { showError("无法打开“所有文件访问”授权页：" + e2.getMessage()); }
+            }
+        } else {
+            requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_PERMISSION);
+        }
+    }
+    private void launchBrowser() {
+        try { startActivityForResult(new Intent(this, FileBrowserActivity.class), OPEN_FILE); }
+        catch (RuntimeException e) { showError("无法打开文件浏览器：" + e.getMessage()); }
+    }
+    @Override public void onRequestPermissionsResult(int request, String[] permissions, int[] results) {
+        super.onRequestPermissionsResult(request, permissions, results);
+        if (request != REQUEST_READ_PERMISSION) return;
+        if (results.length > 0 && results[0] == PackageManager.PERMISSION_GRANTED) launchBrowser();
+        else showError("未授予存储读取权限，无法浏览本地文件");
+    }
     @Override protected void onActivityResult(int request, int result, Intent data) {
         super.onActivityResult(request, result, data);
+        if (request == REQUEST_MANAGE_STORAGE) {
+            if (hasStorageAccess()) launchBrowser(); else showError("未授予“所有文件访问”权限，无法浏览本地文件");
+            return;
+        }
         if (request != OPEN_FILE || result != RESULT_OK || data == null || data.getData() == null) return;
         savePositionAndRelease(); uri = data.getData(); autoplayRequested = true; position = 0; error = ""; diagnostics.reset();
         int flags = data.getFlags();
