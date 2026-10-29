@@ -1,4 +1,4 @@
-﻿cmake_minimum_required(VERSION 3.22.1)
+cmake_minimum_required(VERSION 3.22.1)
 project(avs3a_jni LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -77,6 +77,18 @@ elseif(AVS3A_BUILD_HOST_TESTS)
     target_link_libraries(avs3a_core_tests PRIVATE avs3a_core Threads::Threads)
     target_include_directories(avs3a_core_tests PRIVATE tests/support)
     add_test(NAME avs3a_core_tests COMMAND avs3a_core_tests)
+
+    # Exercise the actual registered JNI callbacks, not only Session::close().
+    # This executable is host-test-only and never enters either SDK AAR.
+    find_package(JNI REQUIRED)
+    add_executable(avs3a_jni_release_tests src/jni_bridge.cpp tests/jni_release_test.cpp)
+    target_include_directories(avs3a_jni_release_tests PRIVATE ${JNI_INCLUDE_DIRS})
+    target_link_libraries(avs3a_jni_release_tests PRIVATE avs3a_core Threads::Threads)
+    target_compile_options(avs3a_jni_release_tests PRIVATE -Wall -Wextra -Werror -UNDEBUG)
+    add_test(NAME avs3a_jni_decoder_release COMMAND avs3a_jni_release_tests decoder)
+    add_test(NAME avs3a_jni_parser_release COMMAND avs3a_jni_release_tests parser)
+    # A release regression must fail on a deadline instead of wedging the test runner.
+    set_tests_properties(avs3a_jni_decoder_release avs3a_jni_parser_release PROPERTIES TIMEOUT 10)
 else()
     message(FATAL_ERROR "Desktop configure must explicitly select host tests")
 endif()

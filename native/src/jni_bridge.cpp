@@ -166,7 +166,7 @@ static const JNINativeMethod kNativeMethods[] = {
         if (handle <= 0) return;
         auto session = avs3a::g_registry.remove(handle);
         if (session) {
-            std::lock_guard<std::mutex> lock(session->mutex());
+            // close() owns the session mutex; locking it here would self-deadlock.
             session->close();
         }
     })},
@@ -262,7 +262,7 @@ static const JNINativeMethod kNativeMethods[] = {
         if (handle <= 0) return;
         auto session = avs3a::g_registry.remove(handle);
         if (session) {
-            std::lock_guard<std::mutex> lock(session->mutex());
+            // close() owns the session mutex; locking it here would self-deadlock.
             session->close();
         }
     })},
