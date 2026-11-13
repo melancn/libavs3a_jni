@@ -185,7 +185,7 @@ static const JNINativeMethod kNativeMethods[] = {
         session->set_epoch(epoch);
         std::lock_guard<std::mutex> lock(avs3a::g_registry_mutex);
         int64_t id = avs3a::g_registry.register_session(session);
-        return id > 0 ? id : avs3a::NO_MEMORY;
+        return id > 0 ? id : static_cast<int64_t>(avs3a::NO_MEMORY);
     })},
     {jni_name("nParserQueue"), jni_name("(J[BIIJJI)I"),
      (void*)(+[](JNIEnv* env, jclass, jlong handle, jbyteArray input, jint offset, jint length,
