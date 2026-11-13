@@ -29,7 +29,7 @@ Status Session::queue_input(const uint8_t* data, size_t size, int64_t pts_us,
     std::lock_guard<std::mutex> lock(mutex_);
     if (return_if_failed_or_closed())
         return (state_ == SessionState::CLOSED) ? CLOSED_OR_INVALID_HANDLE : fail_status_;
-    if (epoch != epoch_ && epoch_ != 0)
+    if (epoch != epoch_)
         return STALE_EPOCH;
     if (input_ended_) return INVALID_STATE;
     if (flags != 0 && flags != 1)
@@ -247,7 +247,7 @@ Status Session::flush(int64_t new_epoch) {
     std::lock_guard<std::mutex> lock(mutex_);
     if (state_ == SessionState::CLOSED)
         return CLOSED_OR_INVALID_HANDLE;
-    if (new_epoch <= epoch_ && epoch_ != 0)
+    if (new_epoch <= epoch_)
         return STALE_EPOCH;
 
     if (backend_) {

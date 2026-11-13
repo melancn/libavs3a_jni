@@ -5,6 +5,7 @@
 #include "status.h"
 #include <string>
 #include <cstdio>
+#include <memory>
 
 namespace avs3a {
 
@@ -29,6 +30,11 @@ public:
     virtual void destroy() noexcept = 0;
     virtual bool is_ready() const = 0;
 };
+
+// Static reference backend (full build). Returns nullptr when the decoder is not
+// compiled into this variant (bridge build).
+std::unique_ptr<DecoderBackend> create_source_backend();
+bool source_backend_available();
 
 } // namespace avs3a
 

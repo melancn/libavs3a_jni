@@ -5,7 +5,7 @@
 | Method | Description |
 | --- | --- |
 | `capabilities(Context)` | Load bridge, return ABI/vendor readiness |
-| `prepareBundledModel(Context)` | Stage bundled model.bin to private storage |
+| `prepareBundledModel(Context)` | Return the model embedded in the full-variant SO (no asset staging) |
 | `prepareModel(Context, ModelSource)` | Stage external model with SHA verification |
 | `open(VerifiedModel, long epoch)` | Create decoder session |
 | `newFrameParser(long epoch)` | Create header-only frame parser |

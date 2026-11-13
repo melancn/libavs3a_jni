@@ -4,8 +4,8 @@
 Checks ZIP structure, classes.jar + NativeBridge JNI signatures against
 protocol/jni-contract.json (via javap when available), the JNI .so per expected
 ABI with no extra ABIs, ELF machine/NEEDED/alignment via NDK llvm-readelf, and
-distribution-specific content rules (bridge: no decoder/model/test artifacts;
-full: decoder/model size+SHA256 exactly matching vendor/manifest.lock.json).
+distribution-specific content rules (both variants: exactly one
+libavs3a_jni.so per ABI, no separate decoder SO and no model asset).
 Exit 0 on success, 1 on failure. Standard library only.
 """
 
@@ -263,7 +263,7 @@ def check_jni_layout(checker, zf, names, expected_abis, readelf, tmp):
         if BRIDGE_LIB not in files:
             checker.error(f"jni/{abi}/{BRIDGE_LIB} missing")
             continue
-        unexpected = sorted(files - {BRIDGE_LIB, DECODER_LIB})
+        unexpected = sorted(files - {BRIDGE_LIB})
         if unexpected:
             checker.error(f"unexpected files in jni/{abi}: {unexpected}")
         if readelf is not None:
@@ -273,41 +273,14 @@ def check_jni_layout(checker, zf, names, expected_abis, readelf, tmp):
 
 
 def check_distribution_content(checker, zf, names, distribution, lock, tmp):
-    has_decoder = [n for n in names if n.endswith(DECODER_LIB)]
-    has_model = MODEL_ENTRY in names
-    if distribution == "bridge":
-        if has_decoder:
-            checker.error(f"bridge AAR must not bundle vendor decoder: {sorted(has_decoder)}")
-        if has_model:
-            checker.error("bridge AAR must not bundle model asset")
-        assets = sorted(n for n in names if n.startswith("assets/"))
-        if assets:
-            checker.error(f"bridge AAR must not bundle assets: {assets}")
-        if not checker.errors:
-            checker.ok("bridge AAR free of decoder/model/assets")
-        return
-    # full distribution
-    if lock is None:
-        raise AarError("full distribution requires the vendor lock (--lock)")
-    for entry in lock["files"]:
-        abi = entry.get("abi")
-        if abi:
-            member = f"jni/{abi}/{DECODER_LIB}"
-        else:
-            member = entry["destination"].split("sdk/src/full/")[-1]
-        if member not in names:
-            checker.error(f"full AAR missing locked vendor member {member}")
-            continue
-        data = zf.read(member)
-        if len(data) != entry["size"]:
-            checker.error(f"{member}: size {len(data)} != lock size {entry['size']}")
-            continue
-        digest = sha256_bytes(data)
-        if digest != entry["sha256"]:
-            checker.error(f"{member}: SHA256 mismatch against lock")
-            continue
-    if not any("vendor member" in e or "SHA256" in e or "size" in e for e in checker.errors):
-        checker.ok("full AAR vendor members match lock size+SHA256")
+    decoder = sorted(n for n in names if n.endswith(DECODER_LIB))
+    if decoder:
+        checker.error(f"{distribution} AAR must not bundle a separate decoder SO: {decoder}")
+    assets = sorted(n for n in names if n.startswith("assets/"))
+    if assets:
+        checker.error(f"{distribution} AAR must not bundle a model asset: {assets}")
+    if not decoder and not assets:
+        checker.ok(f"{distribution} AAR contains only the single SDK SO and no model asset")
 
 
 class Checker:
@@ -347,9 +320,8 @@ def main(argv=None) -> int:
         if not isinstance(jni_contract.get("methods"), list) or not jni_contract["methods"]:
             raise AarError("jni-contract has no methods")
         lock = None
-        if args.lock is not None or args.distribution == "full":
-            lock_path = args.lock or (root / "vendor" / "manifest.lock.json")
-            lock = load_json(lock_path, "vendor lock")
+        if args.lock is not None:
+            lock = load_json(args.lock, "vendor lock")
 
         if not args.aar.is_file():
             raise AarError(f"AAR not found: {args.aar.name}")

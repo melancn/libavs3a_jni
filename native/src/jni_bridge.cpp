@@ -5,7 +5,6 @@
 #include "avs3a/backend.h"
 #include "avs3a/header_parser.h"
 #include "avs3a/timeline.h"
-#include "vendor_api.h"
 #include "status_generated.h"
 
 #include <jni.h>
@@ -46,12 +45,16 @@ struct JniString {
 static int64_t create_session(JNIEnv* env, const char* model_path, const char* vendor_path,
                               int64_t epoch, HandleKind kind) {
     (void)env;
+    (void)vendor_path;  // Historical compatibility argument; the static backend ignores it.
+    if (epoch < 0) return INVALID_ARGUMENT;
     std::unique_ptr<DecoderBackend> backend;
     if (kind == HandleKind::DECODER) {
+        if (!source_backend_available())
+            return VENDOR_UNAVAILABLE;
         int abi = avs3a_get_process_abi();
         if (abi != 1 && abi != 2)
             return VENDOR_ABI_NOT_READY;
-        backend = load_vendor_backend(vendor_path, abi);
+        backend = create_source_backend();
         if (!backend)
             return VENDOR_UNAVAILABLE;
     }
@@ -169,7 +172,7 @@ static const JNINativeMethod kNativeMethods[] = {
     {jni_name("nRelease"), jni_name("(J)V"),
      (void*)(+[](JNIEnv*, jclass, jlong handle) -> void {
         if (handle <= 0) return;
-        auto session = avs3a::g_registry.remove(handle);
+        auto session = avs3a::g_registry.remove_kind(handle, avs3a::HandleKind::DECODER);
         if (session) {
             // close() owns the session mutex; locking it here would self-deadlock.
             session->close();
@@ -177,11 +180,12 @@ static const JNINativeMethod kNativeMethods[] = {
     })},
     {jni_name("nParserCreate"), jni_name("(J)J"),
      (void*)(+[](JNIEnv*, jclass, jlong epoch) -> jlong {
+        if (epoch < 0) return avs3a::INVALID_ARGUMENT;
         auto session = std::make_shared<avs3a::Session>(avs3a::HandleKind::PARSER, nullptr);
         session->set_epoch(epoch);
         std::lock_guard<std::mutex> lock(avs3a::g_registry_mutex);
         int64_t id = avs3a::g_registry.register_session(session);
-        return id;
+        return id > 0 ? id : avs3a::NO_MEMORY;
     })},
     {jni_name("nParserQueue"), jni_name("(J[BIIJJI)I"),
      (void*)(+[](JNIEnv* env, jclass, jlong handle, jbyteArray input, jint offset, jint length,
@@ -265,7 +269,7 @@ static const JNINativeMethod kNativeMethods[] = {
     {jni_name("nParserRelease"), jni_name("(J)V"),
      (void*)(+[](JNIEnv*, jclass, jlong handle) -> void {
         if (handle <= 0) return;
-        auto session = avs3a::g_registry.remove(handle);
+        auto session = avs3a::g_registry.remove_kind(handle, avs3a::HandleKind::PARSER);
         if (session) {
             // close() owns the session mutex; locking it here would self-deadlock.
             session->close();

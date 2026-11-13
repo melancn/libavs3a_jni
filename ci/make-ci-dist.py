@@ -217,7 +217,7 @@ def collect_optional_aar_libs(aar_path: Path, lib_name: str) -> dict:
 
 def build_single_abi_aar(src_aar: Path, abi: str) -> bytes:
     """Copy the fat AAR, keeping jni/ entries for `abi` only; everything else
-    (classes.jar, manifest, assets/model.bin, META-INF) is preserved verbatim so
+    (classes.jar, manifest, META-INF) is preserved verbatim so
     the result is a valid self-contained single-ABI AAR."""
     buf = io.BytesIO()
     with zipfile.ZipFile(src_aar) as zin, \

@@ -105,14 +105,14 @@ void exercise_release(const char* mode, JNIEnv* env) {
 }
 } // namespace
 
-// Only this standalone test target substitutes the vendor loader/build identity.
+// Only this standalone test target substitutes the static backend factory.
 // The production JNI registration table and both release callbacks are unchanged.
 namespace avs3a {
-std::unique_ptr<DecoderBackend> load_vendor_backend(const char*, int process_abi) {
-    assert(process_abi == 1 || process_abi == 2);
+bool source_backend_available() { return true; }
+std::unique_ptr<DecoderBackend> create_source_backend() {
     return std::make_unique<ReleaseBackend>();
 }
-} // namespace avs3a
+}
 extern "C" const char* avs3a_get_build_info_cstr() { return "jni-release-test"; }
 extern "C" int avs3a_get_process_abi() { return 1; }
 

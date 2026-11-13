@@ -57,11 +57,11 @@ public final class Avs3Sdk {
         RuntimeVendorVerifier.Result vendor =
                 RuntimeVendorVerifier.verifyApplicationVendor(model.appContext(), abi);
         if (!vendor.fingerprintMatched()) {
-            throw new Avs3Exception(Avs3Error.VENDOR_UNAVAILABLE, "vendor fingerprint mismatch");
+            throw new Avs3Exception(Avs3Error.VENDOR_UNAVAILABLE, "decoder provider mismatch");
         }
 
         NativeCalls calls = JniCalls.instance();
-        long result = calls.nCreate(model.internalPath(), vendor.path(), epoch);
+        long result = calls.nCreate(model.internalPath(), "", epoch);
         if (result <= 0) throw Avs3Exception.fromNative((int) result);
 
         return new Avs3Session(result, epoch, calls);

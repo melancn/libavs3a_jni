@@ -43,14 +43,16 @@ android {
         create("bridge") {
             dimension = "distribution"
             buildConfigField("boolean", "BUNDLED_VENDOR", "false")
-            externalNativeBuild.cmake.arguments +=
-                "-DAVS3A_UNSTRIPPED_DIR=${rootProject.layout.buildDirectory.get().asFile.invariantSeparatorsPath}/unstripped/bridge"
+            externalNativeBuild.cmake.arguments += listOf(
+                "-DAVS3A_WITH_DECODER=OFF",
+                "-DAVS3A_UNSTRIPPED_DIR=${rootProject.layout.buildDirectory.get().asFile.invariantSeparatorsPath}/unstripped/bridge")
         }
         create("full") {
             dimension = "distribution"
             buildConfigField("boolean", "BUNDLED_VENDOR", "true")
-            externalNativeBuild.cmake.arguments +=
-                "-DAVS3A_UNSTRIPPED_DIR=${rootProject.layout.buildDirectory.get().asFile.invariantSeparatorsPath}/unstripped/full"
+            externalNativeBuild.cmake.arguments += listOf(
+                "-DAVS3A_WITH_DECODER=ON",
+                "-DAVS3A_UNSTRIPPED_DIR=${rootProject.layout.buildDirectory.get().asFile.invariantSeparatorsPath}/unstripped/full")
         }
     }
     externalNativeBuild {
@@ -59,7 +61,6 @@ android {
             version = cmakePin
         }
     }
-    packaging { jniLibs.keepDebugSymbols += "**/libavs3a_decoder.so" }
     publishing {
         singleVariant("bridgeRelease") { withSourcesJar() }
         singleVariant("fullRelease") { withSourcesJar() }
@@ -67,17 +68,8 @@ android {
 }
 dependencies { testImplementation("junit:junit:4.13.2") }
 
-// The script must verify staged bytes AND both ABI/dialect readiness.
-// Do not touch vendor files when only bridge tasks are requested.
-val verifyFullInputs by tasks.registering(Exec::class) {
-    workingDir = rootProject.projectDir
-    commandLine("python3", "ci/verify-vendor-inputs.py",
-        "--lock", "vendor/manifest.lock.json", "--staged-root", ".",
-        "--require-abi-ready", "native/vendor/abi-contract.json",
-        "--require-dialect-ready", "native/vendor/frame-dialect.json")
-}
-tasks.matching { it.name == "preFullDebugBuild" || it.name == "preFullReleaseBuild" }
-    .configureEach { dependsOn(verifyFullInputs) }
+// The full variant statically links the vendored reference decoder and its
+// embedded model; no external decoder SO or model asset is staged anymore.
 
 afterEvaluate {
     publishing {

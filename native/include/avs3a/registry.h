@@ -15,6 +15,8 @@ public:
     int64_t register_session(std::shared_ptr<Session> session);
     std::shared_ptr<Session> find(int64_t id);
     std::shared_ptr<Session> remove(int64_t id);
+    // Atomically remove only when the stored handle has the expected kind.
+    std::shared_ptr<Session> remove_kind(int64_t id, HandleKind kind);
     bool exists(int64_t id) const;
 
 private:

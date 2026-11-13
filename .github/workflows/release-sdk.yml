@@ -94,32 +94,6 @@ jobs:
           "$CMAKE" --build build/host --parallel 2
           "$CTEST" --test-dir build/host --output-on-failure
 
-      - name: Prepare vendor inputs from execution-plan package
-        shell: bash
-        run: |
-          set -euo pipefail
-          plan="libavs3a_jni-execution-plan/root"
-          for f in \
-            "$plan/arm64-v8a/libavs3a_decoder.so" \
-            "$plan/armeabi-v7a/libavs3a_decoder.so" \
-            "$plan/assets/model.bin"; do
-            test -f "$f" || { echo "Vendor input missing (not committed?): $f" >&2; exit 1; }
-          done
-          rm -rf vendor-inputs
-          mkdir -p vendor-inputs/arm64-v8a vendor-inputs/armeabi-v7a
-          cp "$plan/arm64-v8a/libavs3a_decoder.so" vendor-inputs/arm64-v8a/libavs3a_decoder.so
-          cp "$plan/armeabi-v7a/libavs3a_decoder.so" vendor-inputs/armeabi-v7a/libavs3a_decoder.so
-          cp "$plan/assets/model.bin" vendor-inputs/model.bin
-
-      - name: Stage vendor inputs
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 ci/verify-vendor-inputs.py \
-            --lock vendor/manifest.lock.json \
-            --input-root vendor-inputs \
-            --stage-root .
-
       - name: Build full AAR and installable demo APKs
         shell: bash
         run: |
