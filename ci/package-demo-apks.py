@@ -35,18 +35,12 @@ def verify_apk(path, flavor, lock):
         native_abis = {n.split('/')[1] for n in names if n.startswith('lib/') and n.endswith('.so')}
         if native_abis != set(ABIS):
             raise ValueError(f"{flavor}: unexpected native ABIs: {sorted(native_abis)}")
-        if flavor == "bridge":
-            if any(Path(n).name in ("libavs3a_decoder.so", "model.bin") for n in names):
-                raise ValueError("bridge: vendor/model leaked into bridge APK")
-        else:
-            for item in lock["files"]:
-                source = item["source"]
-                name = "assets/avs3a/model.bin" if source == "model.bin" else "lib/" + source
-                if name not in names:
-                    raise ValueError(f"full: missing {name}")
-                data = apk.read(name)
-                if len(data) != item["size"] or digest(data) != item["sha256"]:
-                    raise ValueError(f"full: lock mismatch for {name}")
+        leaked = [n for n in names
+                  if Path(n).name in ("libavs3a_decoder.so", "model.bin")]
+        if leaked:
+            raise ValueError(f"{flavor}: vendor/model leaked into APK: {leaked}")
+        if any(n.startswith("assets/") for n in names):
+            raise ValueError(f"{flavor}: model assets must not be bundled")
 
 
 def package(bridge, full, version, lock_path, dist):

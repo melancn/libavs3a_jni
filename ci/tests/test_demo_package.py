@@ -38,7 +38,7 @@ class DemoPackageTest(unittest.TestCase):
             z.writestr('AndroidManifest.xml',b'test manifest')
             z.writestr('classes.dex',b'test dex')
             for abi in mod.ABIS: z.writestr(f'lib/{abi}/libavs3a_jni.so',b'test bridge')
-            if flavor == 'full' or leak:
+            if leak:
                 for name, data in self.vendor.items():
                     z.writestr('assets/avs3a/model.bin' if name=='model.bin' else 'lib/'+name,data)
         return path
@@ -59,10 +59,9 @@ class DemoPackageTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'leaked'):
             mod.verify_apk(self.apk('bridge',leak=True),'bridge',self.lock)
 
-    def test_rejects_vendor_hash_mismatch(self):
-        self.lock['files'][0]['sha256']='0'*64
-        with self.assertRaisesRegex(ValueError,'lock mismatch'):
-            mod.verify_apk(self.full,'full',self.lock)
+    def test_rejects_vendor_in_full(self):
+        with self.assertRaisesRegex(ValueError,'leaked'):
+            mod.verify_apk(self.apk('full',leak=True),'full',self.lock)
 
     def test_rejects_bad_version_before_copy(self):
         with self.assertRaisesRegex(ValueError,'Invalid SDK version'):
